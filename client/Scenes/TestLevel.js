@@ -14,23 +14,24 @@ export default class Test extends Phaser.Scene {
         this.load.image('space', 'assets/', 'assets/space.json')
      }
     create() {
-    this.bg = this.add.image(640, 380, 'background');
+        this.bg = this.add.image(640, 380, 'background');
         this.lastFired = 0
         this.angle1 = 0
         this.distance1 = 250
-    this.planet = this.add.sprite(640, 380, 'planet');
+        this.planet = this.add.sprite(640, 380, 'planet');
 
-    this.satellite = this.add.sprite(840, 380, 'satellite')
+        this.satellite = this.add.sprite(840, 380, 'satellite')
 
-    this.ship = this.physics.add.sprite(800, 600,'ship').setDepth(1);
-    this.ship.setDrag(300);
-    this.ship.setAngularDrag(400);
-    this.ship.setMaxVelocity(600);
+        this.ship = this.physics.add.sprite(800, 600,'ship').setDepth(1);
+        this.ship.setDrag(300);
+        this.ship.setAngularDrag(400);
+        this.ship.setMaxVelocity(600);
+        this.ship.setCollideWorldBounds(true)
 
 
-    this.bullet = new Bullet(this)
+        this.bullet = new Bullet(this)
 
-    this.bullets = this.physics.add.group({
+        this.bullets = this.physics.add.group({
         classType: Bullet,
         maxSize: 30,
         runChildUpdate: true
@@ -99,7 +100,7 @@ export default class Test extends Phaser.Scene {
         this.ship.setAcceleration(0)
     }
 
-    if (this.bullet.fire.isDown && this.bullet.time > this.lastFired)
+    if (this.bullet.fire.isDown && time > this.lastFired)
     {
         var bullet = this.bullets.get();
 
@@ -107,7 +108,7 @@ export default class Test extends Phaser.Scene {
         {
             bullet.fire(this.ship);
 
-            this.lastFired = this.time + 100;
+            this.lastFired = time + 100;
         }
     }
     }
