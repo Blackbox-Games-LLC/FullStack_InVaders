@@ -7,14 +7,15 @@ var config = {
     width: 1280,
     height: 760,
     physics: {
+        default: 'arcade',
         arcade: {
             debug: true,
             gravity: { scale: 0 }
         },
-        matter: {
-            debug: true,
-            gravity: { scale: 0 }
-        }
+        // matter: {
+        //     debug: true,
+        //     gravity: { scale: 0 }
+        // }
     },
 };
 
