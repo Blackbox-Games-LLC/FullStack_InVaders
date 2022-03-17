@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import Bullet from '../HelperClasses/bullets'
+import Ship from '../HelperClasses/ship'
 
 export default class Test extends Phaser.Scene {
     constructor() {
@@ -22,12 +23,20 @@ export default class Test extends Phaser.Scene {
 
         this.satellite = this.add.sprite(840, 380, 'satellite')
 
-        this.ship = this.physics.add.sprite(800, 600,'ship').setDepth(1);
-        this.ship.setDrag(300);
-        this.ship.setAngularDrag(400);
-        this.ship.setMaxVelocity(600);
-        this.ship.setCollideWorldBounds(true)
+        // this.ship = this.physics.add.sprite(800, 600,'ship').setDepth(1);
+        // this.ship.setDrag(300);
+        // this.ship.setAngularDrag(400);
+        // this.ship.setMaxVelocity(600);
 
+        // this.ship.setCollideWorldBounds(true)
+
+        const ship = new Ship(this)
+        this.ship = ship.render(this)
+
+        // this.ship.setDepth(1)
+        // this.ship.setDrag(300);
+        // this.ship.setAngularDrag(400);
+        // this.ship.setMaxVelocity(600);
 
         this.bullet = new Bullet(this)
 
@@ -73,14 +82,15 @@ export default class Test extends Phaser.Scene {
     }
 
 
-    update(time) {
-
+    update(time, delta) {
     this.satellite.setPosition(640, 380);
    Phaser.Math.RotateAroundDistance(this.satellite, this.planet.x, this.planet.y, this.angle1, this.distance1);
    this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.02);
 
    this.ship.body.velocity.x = 0;
-   this.ship.body.velocity.y = 0;
+    this.ship.body.velocity.y = 0;
+
+
 
    if (this.cursors.left.isDown)
     {
@@ -107,9 +117,13 @@ export default class Test extends Phaser.Scene {
         if (bullet)
         {
             bullet.fire(this.ship);
-
+            bullet.setCollideWorldBounds(true)
             this.lastFired = time + 100;
+            bullet.update(time, delta) // this is logic for when bullet hits something
         }
     }
     }
 }
+
+
+
