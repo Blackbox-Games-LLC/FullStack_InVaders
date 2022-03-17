@@ -1,8 +1,9 @@
 import Phaser from 'phaser'
+import Bullet from '../HelperClasses/bullets'
 
 export default class Test extends Phaser.Scene {
     constructor() {
-        super('Test')
+        super('Test_Level')
     }
     preload() {
         this.load.image('background', 'assets/space-background-reduced.png');
@@ -11,150 +12,100 @@ export default class Test extends Phaser.Scene {
         this.load.image('satellite', 'assets/satellite-transparent.png')
         this.load.image('laser_bullet', 'assets/medium_laser_bullets.png')
         this.load.image('space', 'assets/', 'assets/space.json')
-     }
-    create() { 
-        bg = this.add.image(640, 380, 'background');
-    
-    planet = this.add.sprite(640, 380, 'planet');
-    
-    satellite = this.add.sprite(640, 380, 'satellite');
+    }
+    create() {
+        this.bg = this.add.image(640, 380, 'background');
 
-    ship = this.physics.add.sprite(800, 600,'ship').setDepth(1);
-    ship.setDrag(300);
-    ship.setAngularDrag(400);
-    ship.setMaxVelocity(600);
+        this.lastFired = 0
+        this.angle1 = 0
+        this.distance1 = 250
+        this.planet = this.add.sprite(640, 380, 'planet');
 
+        this.satellite = this.add.sprite(840, 380, 'satellite')
 
-    var Bullet = new Phaser.Class({
-
-        Extends: Phaser.Physics.Arcade.Image,
-
-        initialize:
-
-        function Bullet (scene)
-        {
-            Phaser.Physics.Arcade.Image.call(this, scene, 0, 0, 'laser_bullet');
-
-            this.setBlendMode(5);
-            this.setDepth(1);
-
-            this.speed = 10000;
-            this.lifespan = 5000;
-
-            this._temp = new Phaser.Math.Vector2();
-        },
-
-        fire: function (ship)
-        {
-            this.lifespan = 5000;
-
-            this.setActive(true);
-            this.setVisible(true);
-
-            this.setAngle(ship.body.rotation);
-            this.setPosition(ship.x, ship.y);
-            this.body.reset(ship.x, ship.y);
+        this.ship = this.physics.add.sprite(800, 600, 'ship').setDepth(1);
+        this.ship.setDrag(300);
+        this.ship.setAngularDrag(400);
+        this.ship.setMaxVelocity(600);
 
 
-            var angle = Phaser.Math.DegToRad(ship.body.rotation);
-            
-            this.scene.physics.velocityFromRotation(angle, this.speed, this.body.velocity);
+        this.bullet = new Bullet(this, 'laser_bullet')
 
-            this.body.velocity.x *= 2;
-            this.body.velocity.y *= 2;
-        },
+        this.bullets = this.physics.add.group({
+            classType: Bullet,
+            maxSize: 30,
+            runChildUpdate: true
+        });
 
-        update: function (time, delta)
-        {
-            this.lifespan -= delta;
+        // var particles = this.add.particles();
 
-            if (this.lifespan <= 0)
-            {
-                this.setActive(false);
-                this.setVisible(false);
-                this.body.stop();
-            }
+        // var emitter = particles.createEmitter({
+        //     frame: 'blue',
+        //     speed: 100,
+        //     lifespan: {
+        //         onEmit: function (particle, key, t, value)
+        //         {
+        //             return Phaser.Math.Percent(ship.body.speed, 1, 300) * 2000;
+        //         }
+        //     },
+        //     alpha: {
+        //         onEmit: function (particle, key, t, value)
+        //         {
+        //             return Phaser.Math.Percent(ship.body.speed, 1, 300);
+        //         }
+        //     },
+        //     angle: {
+        //         onEmit: function (particle, key, t, value)
+        //         {
+        //             var v = Phaser.Math.Between(-10, 10);
+        //             return (ship.angle - 180) + v;
+        //         }
+        //     },
+        //     scale: { start: 0.6, end: 0 },
+        //     blendMode: 'ADD'
+        // });
+
+        // emitter.startFollow(ship);
+
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    }
+
+
+    update(time) {
+
+        this.satellite.setPosition(640, 380);
+        Phaser.Math.RotateAroundDistance(this.satellite, this.planet.x, this.planet.y, this.angle1, this.distance1);
+        this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.02);
+
+        this.ship.body.velocity.x = 0;
+        this.ship.body.velocity.y = 0;
+
+        if (this.cursors.left.isDown) {
+            this.ship.setAngularVelocity(-150);
+        }
+        else if (this.cursors.right.isDown) {
+            this.ship.setAngularVelocity(150);
+        }
+        else {
+            this.ship.setAngularVelocity(0)
+        }
+        if (this.cursors.up.isDown) {
+            this.physics.velocityFromRotation(this.ship.rotation, 10000, this.ship.body.acceleration)
+        } else {
+            this.ship.setAcceleration(0)
         }
 
-    });
+        if (this.fire.isDown && time > this.lastFired) {
+            var bullet = this.bullets.get();
 
-    bullets = this.physics.add.group({
-        classType: Bullet,
-        maxSize: 30,
-        runChildUpdate: true
-    });
+            if (bullet) {
+                bullet.fire(this.ship);
 
-    var particles = this.add.particles();
-
-    var emitter = particles.createEmitter({
-        frame: 'blue',
-        speed: 100,
-        lifespan: {
-            onEmit: function (particle, key, t, value)
-            {
-                return Phaser.Math.Percent(ship.body.speed, 1, 300) * 2000;
+                this.lastFired = time + 100;
             }
-        },
-        alpha: {
-            onEmit: function (particle, key, t, value)
-            {
-                return Phaser.Math.Percent(ship.body.speed, 1, 300);
-            }
-        },
-        angle: {
-            onEmit: function (particle, key, t, value)
-            {
-                var v = Phaser.Math.Between(-10, 10);
-                return (ship.angle - 180) + v;
-            }
-        },
-        scale: { start: 0.6, end: 0 },
-        blendMode: 'ADD'
-    });
-
-    emitter.startFollow(ship);
-
-
-    cursors = this.input.keyboard.createCursorKeys();
-    fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    }
-    update() { 
-        satellite.setPosition(640, 380);
-   Phaser.Math.RotateAroundDistance(satellite, planet.x, planet.y, angle1, distance1);
-   angle1 = Phaser.Math.Angle.Wrap(angle1 + 0.02);
-
-   ship.body.velocity.x = 0;
-   ship.body.velocity.y = 0;
-
-   if (cursors.left.isDown)
-    {
-        ship.setAngularVelocity(-150);
-    }
-    else if (cursors.right.isDown)
-    {
-        ship.setAngularVelocity(150);
-    }
-    else {
-        ship.setAngularVelocity(0)
-    }
-    if (cursors.up.isDown)
-    {
-        this.physics.velocityFromRotation(ship.rotation, 10000, ship.body.acceleration)
-    } else {
-        ship.setAcceleration(0)
-    }
-
-    if (fire.isDown && time > lastFired)
-    {
-        var bullet = bullets.get();
-
-        if (bullet)
-        {
-            bullet.fire(ship);
-
-            lastFired = time + 100;
         }
-    }
 
     }
 }
