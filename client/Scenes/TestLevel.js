@@ -67,7 +67,7 @@ export default class Test extends Phaser.Scene {
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.bullet.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
 
@@ -99,7 +99,7 @@ export default class Test extends Phaser.Scene {
         this.ship.setAcceleration(0)
     }
 
-    if (this.bullet.fire.isDown && time > this.lastFired)
+    if (this.fire.isDown && time > this.lastFired)
     {
         var bullet = this.bullets.get();
 
