@@ -13,9 +13,10 @@ export default class Test extends Phaser.Scene {
         this.load.image('satellite', 'assets/satellite-transparent.png')
         this.load.image('laser_bullet', 'assets/medium_laser_bullets.png')
         this.load.image('space', 'assets/', 'assets/space.json')
-     }
+    }
     create() {
         this.bg = this.add.image(640, 380, 'background');
+
         this.lastFired = 0
         this.angle1 = 0
         this.distance1 = 250
@@ -23,20 +24,8 @@ export default class Test extends Phaser.Scene {
 
         this.satellite = this.add.sprite(840, 380, 'satellite')
 
-        // this.ship = this.physics.add.sprite(800, 600,'ship').setDepth(1);
-        // this.ship.setDrag(300);
-        // this.ship.setAngularDrag(400);
-        // this.ship.setMaxVelocity(600);
-
-        // this.ship.setCollideWorldBounds(true)
-
         const ship = new Ship(this)
         this.ship = ship.render(this)
-
-        // this.ship.setDepth(1)
-        // this.ship.setDrag(300);
-        // this.ship.setAngularDrag(400);
-        // this.ship.setMaxVelocity(600);
 
         this.bullet = new Bullet(this)
 
@@ -78,7 +67,7 @@ export default class Test extends Phaser.Scene {
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.bullet.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
 
@@ -90,38 +79,30 @@ export default class Test extends Phaser.Scene {
    this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
 
-
-
-   if (this.cursors.left.isDown)
-    {
-        this.ship.setAngularVelocity(-150);
-    }
-    else if (this.cursors.right.isDown)
-    {
-        this.ship.setAngularVelocity(150);
-    }
-    else {
-        this.ship.setAngularVelocity(0)
-    }
-    if (this.cursors.up.isDown)
-    {
-        this.physics.velocityFromRotation(this.ship.rotation, 10000, this.ship.body.acceleration)
-    } else {
-        this.ship.setAcceleration(0)
-    }
-
-    if (this.bullet.fire.isDown && time > this.lastFired)
-    {
-        var bullet = this.bullets.get();
-
-        if (bullet)
-        {
-            bullet.fire(this.ship);
-            bullet.setCollideWorldBounds(true)
-            this.lastFired = time + 100;
-            bullet.update(time, delta) // this is logic for when bullet hits something
+        if (this.cursors.left.isDown) {
+            this.ship.setAngularVelocity(-150);
         }
-    }
+        else if (this.cursors.right.isDown) {
+            this.ship.setAngularVelocity(150);
+        }
+        else {
+            this.ship.setAngularVelocity(0)
+        }
+        if (this.cursors.up.isDown) {
+            this.physics.velocityFromRotation(this.ship.rotation, 10000, this.ship.body.acceleration)
+        } else {
+            this.ship.setAcceleration(0)
+        }
+
+        if (this.fire.isDown && time > this.lastFired) {
+            var bullet = this.bullets.get();
+
+            if (bullet) {
+                bullet.fire(this.ship);
+
+                this.lastFired = time + 100;
+            }
+        }
     }
 }
 
