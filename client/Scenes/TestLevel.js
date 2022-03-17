@@ -15,7 +15,6 @@ export default class Test extends Phaser.Scene {
      }
     create() {
     this.bg = this.add.image(640, 380, 'background');
-
         this.lastFired = 0
         this.angle1 = 0
         this.distance1 = 250
@@ -69,11 +68,11 @@ export default class Test extends Phaser.Scene {
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.bullet.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
 
-    update() {
+    update(time) {
 
     this.satellite.setPosition(640, 380);
    Phaser.Math.RotateAroundDistance(this.satellite, this.planet.x, this.planet.y, this.angle1, this.distance1);
@@ -100,7 +99,7 @@ export default class Test extends Phaser.Scene {
         this.ship.setAcceleration(0)
     }
 
-    if (this.fire.isDown && this.time > this.lastFired)
+    if (this.bullet.fire.isDown && this.bullet.time > this.lastFired)
     {
         var bullet = this.bullets.get();
 
@@ -111,6 +110,5 @@ export default class Test extends Phaser.Scene {
             this.lastFired = this.time + 100;
         }
     }
-
     }
 }

@@ -3,9 +3,10 @@ import Phaser from 'phaser'
 export default class Bullet extends Phaser.Physics.Arcade.Image {
     constructor(scene, bullet = 'bullet')
     {
-        super()
+        super(scene)
         this.scene = scene
         this.key = bullet
+
     }
         Bullet (scene)
         {
