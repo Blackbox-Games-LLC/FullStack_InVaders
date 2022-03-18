@@ -6,18 +6,19 @@ export default class Test extends Phaser.Scene {
         super('Test_Level')
     }
     preload() {
-        this.load.image('background', 'assets/backgroundtile.png');
+        this.load.image('background', 'assets/backgroundtile-min.png');
         this.load.image('planet', 'assets/earth-transparent-min.png');
         this.load.image('ship', 'assets/spaceship-sprite(1).png');
         this.load.image('satellite', 'assets/space-wall-defense.png')
         this.load.image('laser_bullet', 'assets/medium_laser_bullets.png')
-        this.load.image('space', 'assets/', 'assets/space.json')
     }
     create() {
         this.bg = this.add.tileSprite(400, 300, 8000, 6000, 'background').setScrollFactor(0);
 
         this.lastFired = 0
         this.angle1 = 0
+        this.galaxyAngle = 0
+        this.galaxyDistance = 0
         this.distance1 = 750
         
         this.planet = this.physics.add.sprite(2000, 1500, 'planet');
@@ -33,9 +34,9 @@ export default class Test extends Phaser.Scene {
         this.ship = this.physics.add.sprite(1280, 1500, 'ship').setDepth(1);
         this.ship.setDrag(300);
         this.ship.setAngularDrag(400);
-        this.ship.setMaxVelocity(600);
+        this.ship.setMaxVelocity(10000);
 
-        // this.camera = scene.camera.main
+
         this.cameras.main.startFollow(this.ship)
 
         this.bullet = new Bullet(this, 'laser_bullet')
@@ -76,8 +77,6 @@ export default class Test extends Phaser.Scene {
 
         // emitter.startFollow(ship);
 
-        // this.scene.cameras.main.startFollow(ship);
-
         this.cursors = this.input.keyboard.createCursorKeys();
         this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
@@ -102,9 +101,9 @@ export default class Test extends Phaser.Scene {
             this.ship.setAngularVelocity(0)
         }
         if (this.cursors.up.isDown) {
-            this.physics.velocityFromRotation(this.ship.rotation, 10000, this.ship.body.acceleration)
+            this.physics.velocityFromRotation(this.ship.rotation, 100000, this.ship.body.acceleration)
         } else {
-            this.ship.setAcceleration(0)
+            this.ship.setAcceleration(2)
         }
 
         if (this.fire.isDown && time > this.lastFired) {
