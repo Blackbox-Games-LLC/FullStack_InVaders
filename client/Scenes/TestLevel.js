@@ -70,8 +70,8 @@ export default class Test extends Phaser.Scene {
 
 
         this.mothership = new MotherShip(this, 0, 0, 'mothership')
-        //this.cameras.main.startFollow(this.ship)
-        this.cameras.main.setZoom(0.09, 0.09)
+        this.cameras.main.startFollow(this.ship)
+        // this.cameras.main.setZoom(0.09, 0.09)
 
 
     }
