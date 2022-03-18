@@ -2,28 +2,29 @@ import Phaser from 'phaser'
 
 export default class Bullet extends Phaser.Physics.Arcade.Image {
     constructor(scene) {
-        super(scene)
-        Phaser.Physics.Arcade.Image.call(this, scene, 0, 0, 'laser_bullet');
+        super(scene, 0, 0, 'laser_bullet')
 
-        this.speed = 1000;
+        scene.add.existing(this)
+        scene.physics.add.existing(this)
+        scene.physics.add.collider(this, scene.alien, () => {
+            console.log('test')
+        })
+
+        this.setCircle(8, 15)
         this.setBlendMode(5);
         this.setDepth(1);
-
+        this.speed = 1000;
         this.lifespan = 5000;
-
         this._temp = new Phaser.Math.Vector2();
+
     }
 
     fire(ship) {
-        this.lifespan = 5000;
-
-        this.setActive(true);
-        this.setVisible(true);
+        this.lifespan = 3000;
 
         this.setAngle(ship.body.rotation);
         this.setPosition(ship.x, ship.y);
         this.body.reset(ship.x, ship.y);
-
 
         var angle = Phaser.Math.DegToRad(ship.body.rotation);
 
@@ -35,11 +36,8 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
 
     update(time, delta) {
         this.lifespan -= delta;
-
         if (this.lifespan <= 0) {
-            this.setActive(false);
-            this.setVisible(false);
-            this.body.stop();
+            this.destroy();
         }
     }
 }
