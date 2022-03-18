@@ -22,13 +22,7 @@ export default class Test extends Phaser.Scene {
         this.planet = this.add.sprite(640, 380, 'planet');
 
         this.satellite = this.add.sprite(840, 380, 'satellite')
-
-        const ship = new Ship(this)
-        this.ship = ship.render(this)
-
-
-        this.bullet = new Bullet(this)
-
+        this.ship = new Ship(this, 500, 500)
         this.bullets = this.physics.add.group({
         classType: Bullet,
         maxSize: 30,
@@ -101,14 +95,14 @@ export default class Test extends Phaser.Scene {
 
     if (this.fire.isDown && time > this.lastFired)
     {
-        var bullet = this.bullets.get();
+        this.bullet = this.bullets.get();
 
-        if (bullet)
+        if (this.bullet)
         {
-            bullet.fire(this.ship);
-            bullet.setCollideWorldBounds(true)
+            this.bullet.fire(this.ship);
+            this.bullet.setCollideWorldBounds(true)
             this.lastFired = time + 100;
-            bullet.update(time, delta) // this is logic for when bullet hits something
+            this.bullet.update(time, delta) // this is logic for when bullet hits something
         }
     }
     }

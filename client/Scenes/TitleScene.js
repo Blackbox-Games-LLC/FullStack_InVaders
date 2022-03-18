@@ -17,6 +17,6 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   clickButton() {
-    this.scene.switch('Test_level')
+    this.scene.start('Test_level')
   }
 }
