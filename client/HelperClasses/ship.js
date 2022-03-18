@@ -16,16 +16,17 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite{
           ship.setCollideWorldBounds(true)
 
           ship.health = 100;
-
-          this.hp = new HealthBar(
+          this.health = new HealthBar(
             scene,
-            0, 0,
+            50, 50,
             health
           )
 
 
           return ship
         }
+
   }
 }
+
 
