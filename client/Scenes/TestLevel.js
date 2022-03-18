@@ -8,9 +8,10 @@ export default class Test extends Phaser.Scene {
     preload() {
         this.load.image('background', 'assets/backgroundtile-min.png');
         this.load.image('planet', 'assets/earth-transparent-min.png');
-        this.load.image('ship', 'assets/spaceship-sprite(1).png');
-        this.load.image('satellite', 'assets/space-wall-defense.png')
-        this.load.image('laser_bullet', 'assets/medium_laser_bullets.png')
+        this.load.image('ship', 'assets/spaceship-sprite.png');
+        this.load.image('satellite', 'assets/space-wall-defense.png');
+        this.load.image('laser_bullet', 'assets/medium_laser_bullets.png');
+        this.load.multiatlas('space-sprite-sheet', 'assets/space-sprite-sheet.json', 'assets')
     }
     create() {
         this.bg = this.add.tileSprite(400, 300, 8000, 6000, 'background').setScrollFactor(0);
@@ -36,8 +37,9 @@ export default class Test extends Phaser.Scene {
         this.ship.setAngularDrag(400);
         this.ship.setMaxVelocity(10000);
 
-
         this.cameras.main.startFollow(this.ship)
+
+        this.textures.addSpriteSheetFromAtlas('galaxy-sheet', {atlas: 'space-sprite-sheet-0', frame: 'galaxy-min', frameWidth: 2048})
 
         this.bullet = new Bullet(this, 'laser_bullet')
 
