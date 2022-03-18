@@ -13,6 +13,7 @@ export default class Test extends Phaser.Scene {
         this.load.image('satellite', 'assets/satellite-transparent.png')
         this.load.image('laser_bullet', 'assets/medium_laser_bullets.png')
         this.load.image('space', 'assets/', 'assets/space.json')
+        this.load.image('exhaust', 'assets/exhaust.png')
      }
     create() {
         this.bg = this.add.image(640, 380, 'background');
@@ -22,42 +23,37 @@ export default class Test extends Phaser.Scene {
         this.planet = this.add.sprite(640, 380, 'planet');
 
         this.satellite = this.add.sprite(840, 380, 'satellite')
-        this.ship = new Ship(this, 500, 500)
+
         this.bullets = this.physics.add.group({
         classType: Bullet,
         maxSize: 30,
         runChildUpdate: true
-    });
 
-    // var particles = this.add.particles();
+        });
 
-    // var emitter = particles.createEmitter({
-    //     frame: 'blue',
-    //     speed: 100,
-    //     lifespan: {
-    //         onEmit: function (particle, key, t, value)
-    //         {
-    //             return Phaser.Math.Percent(ship.body.speed, 1, 300) * 2000;
-    //         }
-    //     },
-    //     alpha: {
-    //         onEmit: function (particle, key, t, value)
-    //         {
-    //             return Phaser.Math.Percent(ship.body.speed, 1, 300);
-    //         }
-    //     },
-    //     angle: {
-    //         onEmit: function (particle, key, t, value)
-    //         {
-    //             var v = Phaser.Math.Between(-10, 10);
-    //             return (ship.angle - 180) + v;
-    //         }
-    //     },
-    //     scale: { start: 0.6, end: 0 },
-    //     blendMode: 'ADD'
-    // });
+        const particles = this.add.particles('exhaust')
+        this.ship = new Ship(this, 500, 500)
 
-    // emitter.startFollow(ship);
+        const direction =  new Phaser.Math.Vector2(1, 0)
+        direction.setToPolar(this.ship.rotation, 1)
+        const dx = -direction.x
+        const dy = -direction.y
+        particles.createEmitter({
+            quantity: 50,
+            speedY: { min: 20 * dy, max: 50 *dx },
+            speedX: { min: -10 * dx, max: 10 *dx },
+            accelerationY: 1000 * dy,
+            accelerationx: 1000 * dx,
+            lifespan: { min: 100, max: 1000 },
+            alpha: { start: 0.5, end: 0, ease: 'Sine.easeIn' },
+            rotate: { min: -180, max: 180 },
+            angle: { min: 30, max: 110 },
+            blendMode: 'ADD',
+            frequency: 100,
+            scale: {start: 0.07, end: 0.07},
+            follow: this.ship,
+            followOffset: { y: this.ship.height * 0.5 },
+        })
 
 
     this.cursors = this.input.keyboard.createCursorKeys();

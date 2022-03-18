@@ -26,8 +26,7 @@ const game = new Phaser.Game(config)
 
 game.scene.add('Title_Scene', TitleScene)
 game.scene.add('Test_Level', Test)
-// game.scene.start('Title_Scene')
-game.scene.start('Test_Level')
+game.scene.start('Title_Scene')
 
 const Home = () => {
     return (<div></div>)
