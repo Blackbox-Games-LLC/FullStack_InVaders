@@ -8,7 +8,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite{
         // this.ship = this.physics.add.sprite(this, scene, 800, 600,'ship').setDepth(1);
 
 
-        this.render = (scene, health) => {
+        this.render = (scene) => {
           let ship = scene.physics.add.sprite(800, 600, `ship`).setDepth(1)
           ship.setDrag(300);
           ship.setAngularDrag(400);
@@ -16,10 +16,10 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite{
           ship.setCollideWorldBounds(true)
 
           ship.health = 100;
-          this.health = new HealthBar(
-            scene,
+          ship.hp = new HealthBar(
+            ship.scene,
             50, 50,
-            health
+            ship.health
           )
 
 
