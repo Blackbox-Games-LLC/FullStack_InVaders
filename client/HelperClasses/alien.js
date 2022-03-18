@@ -7,10 +7,8 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this)
         scene.physics.add.collider(this, scene.bullets, () => {
             if (this.health > 0) {
-                scene.bullet.destroy()
                 this.health -= 10
             } else {
-                scene.bullet.destroy()
                 this.destroy()
             }
         })

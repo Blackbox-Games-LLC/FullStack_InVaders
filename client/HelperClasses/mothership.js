@@ -28,6 +28,5 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     spawnAliens() {
         let b = this.getBottomCenter()
         new Alien(this.scene, b.x + Phaser.Math.Between(-100, 100), b.y, 'alien')
-        console.log(b)
     }
 }

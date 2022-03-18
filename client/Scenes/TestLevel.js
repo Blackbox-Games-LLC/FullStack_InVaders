@@ -11,7 +11,7 @@ export default class Test extends Phaser.Scene {
     preload() {
         this.load.image('background', 'assets/backgroundtile-min.png');
         this.load.image('planet', 'assets/earth-transparent-min.png');
-        this.load.image('ship', 'assets/spaceship-sprite(1).png');
+        this.load.image('ship', 'assets/spaceship-sprite.png');
         this.load.image('satellite', 'assets/space-wall-defense.png')
         this.load.image('laser_bullet', 'assets/medium_laser_bullets.png')
         this.load.image('space', 'assets/', 'assets/space.json')
@@ -28,8 +28,10 @@ export default class Test extends Phaser.Scene {
         this.galaxyDistance = 0
         this.distance1 = 750
 
+        //needs class
         this.planet = this.physics.add.sprite(2000, 1500, 'planet');
 
+        //needs class
         this.satellite = this.physics.add.sprite(1280, 720, 'satellite')
 
 
@@ -38,10 +40,10 @@ export default class Test extends Phaser.Scene {
         this.ship.setAngularDrag(400);
         this.ship.setMaxVelocity(10000);
 
+        this.mothership = new MotherShip(this, 0, 0, 'mothership')
 
-        this.cameras.main.startFollow(this.ship)
-
-        this.bullet = new Bullet(this, 'laser_bullet')
+        //this.cameras.main.startFollow(this.ship)
+        this.cameras.main.setZoom(0.09, 0.09)
 
         this.bullets = this.physics.add.group({
             classType: Bullet,
@@ -51,7 +53,6 @@ export default class Test extends Phaser.Scene {
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.satellite = this.add.sprite(840, 380, 'satellite')
     }
 
 
