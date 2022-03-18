@@ -7,8 +7,8 @@ import TitleScene from '../Scenes/TitleScene'
 
 var config = {
     type: Phaser.AUTO,
-    width: 1280,
-    height: 760,
+    width: 4000,
+    height: 3000,
     physics: {
         default: 'arcade',
         arcade: {
