@@ -5,7 +5,9 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
     super(scene, 0, 0, "laser_bullet");
 
     scene.add.existing(this);
-    scene.physics.add.existing(this);
+      scene.physics.add.existing(this);
+
+
 
     this.setCircle(8, 15);
     this.setBlendMode(5);
@@ -37,7 +39,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
   update(time, delta) {
     this.lifespan -= delta;
     if (this.lifespan <= 0) {
-      this.destroy();
+        this.destroy();
     }
   }
 }

@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Bullet from "../HelperClasses/bullets";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
+import Planet from "../HelperClasses/planet"
 
 export default class Test extends Phaser.Scene {
   constructor() {
@@ -30,8 +31,7 @@ export default class Test extends Phaser.Scene {
     this.galaxyDistance = 0;
     this.distance1 = 750;
 
-    //needs class
-    this.planet = this.physics.add.sprite(2000, 1500, "planet");
+    this.planet = new Planet(this, 2000, 1500, "planet")
 
     //needs class
     this.satellite = this.physics.add.sprite(1280, 720, "satellite");
@@ -41,6 +41,8 @@ export default class Test extends Phaser.Scene {
       maxSize: 30,
       runChildUpdate: true,
     });
+
+    this.mothership = new MotherShip(this, 0, 0, "mothership");
 
     const particles = this.add.particles("exhaust");
     this.ship = new Ship(this, 500, 500);
@@ -71,7 +73,7 @@ export default class Test extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    this.mothership = new MotherShip(this, 0, 0, "mothership");
+
 
     //camera
 
@@ -127,9 +129,8 @@ export default class Test extends Phaser.Scene {
 
       if (this.bullet) {
         this.bullet.fire(this.ship);
-        //this.bullet.setCollideWorldBounds(true)
+        // this.bullet.setCollideWorldBounds(true)
         this.lastFired = time + 100;
-        this.bullet.update(time, delta); // this is logic for when bullet hits something
       }
     }
   }
