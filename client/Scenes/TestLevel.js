@@ -2,8 +2,10 @@ import Phaser from "phaser";
 import Bullet from "../HelperClasses/bullets";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
-import Defense from "../HelperClasses/defense-satellite";
-import Offense from "../HelperClasses/offense-satellite";
+import Planet from "../HelperClasses/planet"
+import Defense from "../HelperClasses/defenseSatellite";
+import Offense from "../HelperClasses/offenseSatellite";
+import Base from "../HelperClasses/bases"
 
 export default class Test extends Phaser.Scene {
   constructor() {
@@ -36,15 +38,17 @@ export default class Test extends Phaser.Scene {
     this.galaxyDistance = 0;
     this.distance1 = 750;
 
+
+    this.planet = new Planet(this, 2000, 1500, "planet")
     this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
-    //needs class
-    this.planet = this.physics.add.sprite(2000, 1500, "planet");
-    this.defbase = this.physics.add.sprite(2000, 900, "defense-base")
-    this.offbase = this.physics.add.sprite(1900, 875, "offense-base")
+      this.offbase = new Base(this, 2625, 1500, "offense-base")
+      this.defbase = new Base(this, 2000, 900, "defense-base")
+      this.offbase.setAngle(90)
+
+
 
     this.defense = new Defense(this, 1280, 720, "defense");
-
     this.offense = new Offense(this, 2000, 1500, "offense");
 
     this.bullets = this.physics.add.group({
@@ -52,6 +56,7 @@ export default class Test extends Phaser.Scene {
       maxSize: 30,
       runChildUpdate: true,
     });
+
 
     const particles = this.add.particles("exhaust");
     this.ship = new Ship(this, 1200, 1200);
@@ -109,6 +114,13 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+
+
+    //satellite base spawner. still kinda buggy. need to play with some numbers?
+    if (this.defbase && time > this.spawnDelay) {
+          this.defbase.spawnSatellites()
+          this.spawnDelay = time + 10000
+    }
 
     //satellite rotation
     Phaser.Math.RotateAroundDistance(

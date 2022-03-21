@@ -44,7 +44,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
   update(time, delta) {
     this.lifespan -= delta;
     if (this.lifespan <= 0) {
-      this.destroy();
+        this.destroy();
     }
   }
 }
