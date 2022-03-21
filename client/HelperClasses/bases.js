@@ -18,7 +18,7 @@ export default class Base extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
-    // this.setSize(100,100)
+    this.setSize(100,100)
     this.health = 100
 
   }

@@ -42,8 +42,9 @@ export default class Test extends Phaser.Scene {
     this.planet = new Planet(this, 2000, 1500, "planet")
     this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
-      this.offbase = new Base(this, 1900, 875, "offense-base")
+      this.offbase = new Base(this, 2625, 1500, "offense-base")
       this.defbase = new Base(this, 2000, 900, "defense-base")
+      this.offbase.setAngle(90)
 
 
 
@@ -108,7 +109,7 @@ export default class Test extends Phaser.Scene {
       this.spawnDelay = time + 2000;
     }
 
-    //satellite base spawner
+    //satellite base spawner. still kinda buggy. need to play with some numbers?
     if (this.defbase && time > this.spawnDelay) {
           this.defbase.spawnSatellites()
           this.spawnDelay = time + 10000
