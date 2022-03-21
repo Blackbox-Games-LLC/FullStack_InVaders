@@ -5,8 +5,18 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
     super(scene, 0, 0, "laser_bullet");
 
     scene.add.existing(this);
+<<<<<<< HEAD
       scene.physics.add.existing(this);
 
+=======
+    scene.physics.add.existing(this);
+    scene.physics.add.collider(this, scene.motherships, () => {
+      this.destroy();
+    })
+    scene.physics.add.collider(this, scene.aliens, () => {
+      this.destroy();
+    })
+>>>>>>> origin/main
 
 
     this.setCircle(8, 15);

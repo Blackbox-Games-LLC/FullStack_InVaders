@@ -88,10 +88,27 @@ export default class Test extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
+<<<<<<< HEAD
 
+=======
+    //Davids Changes
+    this.motherships = this.physics.add.group({
+      classType: MotherShip,
+      scene: this,
+      maxSize: 4,
+      immovable: true,
+      runChildUpdate: true,
+    });
+
+    this.motherships.get()
+    this.motherships.get(2000, 0)
+    this.motherships.get(0, 2000)
+
+    //camera
+>>>>>>> origin/main
 
     this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.6, 0.6);
+    //this.cameras.main.setZoom(0.22, 0.22);
   }
 
   update(time) {
@@ -103,6 +120,7 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
 
+<<<<<<< HEAD
     //mothership spawner
     if (this.mothership && time > this.spawnDelay) {
       this.mothership.spawnAliens();
@@ -115,6 +133,8 @@ export default class Test extends Phaser.Scene {
           this.spawnDelay = time + 10000
     }
 
+=======
+>>>>>>> origin/main
     //satellite rotation
     Phaser.Math.RotateAroundDistance(
       this.defense,
@@ -149,11 +169,17 @@ export default class Test extends Phaser.Scene {
 
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
-      this.bullet = this.bullets.get();
+      let bullet = this.bullets.get();
 
+<<<<<<< HEAD
       if (this.bullet) {
         this.bullet.fire(this.ship);
         // this.bullet.setCollideWorldBounds(true)
+=======
+      if (bullet) {
+        bullet.fire(this.ship);
+        //this.bullet.setCollideWorldBounds(true)
+>>>>>>> origin/main
         this.lastFired = time + 100;
       }
     }
