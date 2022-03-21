@@ -72,12 +72,29 @@ export default class Test extends Phaser.Scene {
     );
 
     this.mothership = new MotherShip(this, 0, 0, "mothership");
+
+    //camera
+
     //this.cameras.main.startFollow(this.ship)
     this.cameras.main.setZoom(0.22, 0.22);
   }
 
   update(time, delta) {
+    //vars
     this.satellite.setPosition(640, 380);
+    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
+    this.ship.body.velocity.x = 0;
+    this.ship.body.velocity.y = 0;
+    this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+
+    //mothership spawner
+    if (this.mothership && time > this.spawnDelay) {
+      this.mothership.spawnAliens();
+      this.spawnDelay = time + 2000;
+    }
+
+    //satellite rotation
     Phaser.Math.RotateAroundDistance(
       this.satellite,
       this.planet.x,
@@ -85,11 +102,8 @@ export default class Test extends Phaser.Scene {
       this.angle1,
       this.distance1
     );
-    this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
 
-    this.ship.body.velocity.x = 0;
-    this.ship.body.velocity.y = 0;
-
+    //ship movement
     if (this.cursors.left.isDown) {
       this.ship.setAngularVelocity(-150);
     } else if (this.cursors.right.isDown) {
@@ -107,33 +121,15 @@ export default class Test extends Phaser.Scene {
       this.ship.setAcceleration(2);
     }
 
+    //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
       this.bullet = this.bullets.get();
 
-      if (this.fire.isDown && time > this.lastFired) {
-        this.bullet = this.bullets.get();
-
-        if (this.bullet) {
-          this.bullet.fire(this.ship);
-          this.bullet.setCollideWorldBounds(true);
-          this.lastFired = time + 100;
-          this.bullet.update(time, delta); // this is logic for when bullet hits something
-        }
-
-        this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-        this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
-
-        if (this.bullet) {
-          this.bullet.fire(this.ship);
-          //this.bullet.setCollideWorldBounds(true)
-          this.lastFired = time + 100;
-          this.bullet.update(time, delta); // this is logic for when bullet hits something
-        }
-
-        if (this.mothership && time > this.spawnDelay) {
-          this.mothership.spawnAliens();
-          this.spawnDelay = time + 2000;
-        }
+      if (this.bullet) {
+        this.bullet.fire(this.ship);
+        //this.bullet.setCollideWorldBounds(true)
+        this.lastFired = time + 100;
+        this.bullet.update(time, delta); // this is logic for when bullet hits something
       }
     }
   }
