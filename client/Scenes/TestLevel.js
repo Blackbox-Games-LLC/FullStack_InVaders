@@ -38,16 +38,16 @@ export default class Test extends Phaser.Scene {
     this.galaxyDistance = 0;
     this.distance1 = 750;
 
-    this.defbase = new Base(this, 2000, 900, "defense-base")
+
     this.planet = new Planet(this, 2000, 1500, "planet")
     this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
-    this.offbase = new Base(this, 1900, 875, "offense-base")
+      this.offbase = new Base(this, 1900, 875, "offense-base")
+      this.defbase = new Base(this, 2000, 900, "defense-base")
 
 
 
     this.defense = new Defense(this, 1280, 720, "defense");
-
     this.offense = new Offense(this, 2000, 1500, "offense");
 
     this.bullets = this.physics.add.group({
@@ -106,6 +106,12 @@ export default class Test extends Phaser.Scene {
     if (this.mothership && time > this.spawnDelay) {
       this.mothership.spawnAliens();
       this.spawnDelay = time + 2000;
+    }
+
+    //satellite base spawner
+    if (this.defbase && time > this.spawnDelay) {
+          this.defbase.spawnSatellites()
+          this.spawnDelay = time + 10000
     }
 
     //satellite rotation
