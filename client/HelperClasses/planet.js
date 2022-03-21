@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import Bases from "./bases"
 
 export default class Planet extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, spritekey) {
@@ -15,10 +14,6 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
-
-  }
-
-  spawnBases() {
 
   }
 }

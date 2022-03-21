@@ -3,8 +3,9 @@ import Bullet from "../HelperClasses/bullets";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet"
-import Defense from "../HelperClasses/defense-satellite";
-import Offense from "../HelperClasses/offense-satellite";
+import Defense from "../HelperClasses/defenseSatellite";
+import Offense from "../HelperClasses/offenseSatellite";
+import Base from "../HelperClasses/bases"
 
 export default class Test extends Phaser.Scene {
   constructor() {
@@ -36,13 +37,14 @@ export default class Test extends Phaser.Scene {
     this.galaxyAngle = 0;
     this.galaxyDistance = 0;
     this.distance1 = 750;
-
+ this.defbase = new Base(this, 2000, 900, "defense-base")
     this.planet = new Planet(this, 2000, 1500, "planet")
     this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
     //needs class
-    this.defbase = this.physics.add.sprite(2000, 900, "defense-base")
-    this.offbase = this.physics.add.sprite(1900, 875, "offense-base")
+    // this.defbase = this.physics.add.sprite(2000, 900, "defense-base")
+    //   this.offbase = this.physics.add.sprite(1900, 875, "offense-base")
+
 
     this.defense = new Defense(this, 1280, 720, "defense");
 
