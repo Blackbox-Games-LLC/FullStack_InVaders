@@ -3,6 +3,8 @@ import Bullet from "../HelperClasses/bullets";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet"
+import Defense from "../HelperClasses/defense-satellite";
+import Offense from "../HelperClasses/offense-satellite";
 
 export default class Test extends Phaser.Scene {
   constructor() {
@@ -11,13 +13,17 @@ export default class Test extends Phaser.Scene {
   preload() {
     this.load.image("background", "assets/backgroundtile-min.png");
     this.load.image("planet", "assets/earth-transparent-min.png");
+    this.load.image("defense-base", "assets/defense-base.png");
+    this.load.image("offense-base", "assets/offense-base.png");
     this.load.image("ship", "assets/spaceship-sprite.png");
-    this.load.image("satellite", "assets/space-wall-defense.png");
+    this.load.image("defense", "assets/space-wall-defense.png");
+    this.load.image("offense", "assets/space-wall-offense.png")
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
-    this.load.image("space", "assets/", "assets/space.json");
     this.load.image("exhaust", "assets/exhaust.png");
     this.load.image("alien", "assets/alien.png");
     this.load.image("mothership", "assets/mothership.png");
+    this.load.image("galaxy", "assets/galaxy-min.png")
+    this.load.multiatlas("space", 'assets/space-sprite-sheet.json', 'assets');
   }
   create() {
     this.bg = this.add
@@ -32,9 +38,15 @@ export default class Test extends Phaser.Scene {
     this.distance1 = 750;
 
     this.planet = new Planet(this, 2000, 1500, "planet")
+    this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
     //needs class
-    this.satellite = this.physics.add.sprite(1280, 720, "satellite");
+    this.defbase = this.physics.add.sprite(2000, 900, "defense-base")
+    this.offbase = this.physics.add.sprite(1900, 875, "offense-base")
+
+    this.defense = new Defense(this, 1280, 720, "defense");
+
+    this.offense = new Offense(this, 2000, 1500, "offense");
 
     this.bullets = this.physics.add.group({
       classType: Bullet,
@@ -45,7 +57,7 @@ export default class Test extends Phaser.Scene {
     this.mothership = new MotherShip(this, 0, 0, "mothership");
 
     const particles = this.add.particles("exhaust");
-    this.ship = new Ship(this, 500, 500);
+    this.ship = new Ship(this, 1200, 1200);
 
     const direction = new Phaser.Math.Vector2(1, 0);
     direction.setToPolar(this.ship.rotation, 1);
@@ -75,15 +87,13 @@ export default class Test extends Phaser.Scene {
 
 
 
-    //camera
-
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.22, 0.22);
+    this.cameras.main.startFollow(this.ship)
+    this.cameras.main.setZoom(0.6, 0.6);
   }
 
   update(time) {
     //vars
-    this.satellite.setPosition(640, 380);
+    this.defense.setPosition(640, 380);
     this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
     this.ship.body.velocity.x = 0;
@@ -98,7 +108,7 @@ export default class Test extends Phaser.Scene {
 
     //satellite rotation
     Phaser.Math.RotateAroundDistance(
-      this.satellite,
+      this.defense,
       this.planet.x,
       this.planet.y,
       this.angle1,
@@ -116,12 +126,17 @@ export default class Test extends Phaser.Scene {
     if (this.cursors.up.isDown) {
       this.physics.velocityFromRotation(
         this.ship.rotation,
-        100000,
+        50000,
         this.ship.body.acceleration
       );
     } else {
-      this.ship.setAcceleration(2);
+      this.ship.setAcceleration(0);
     }
+
+
+    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
+
 
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
