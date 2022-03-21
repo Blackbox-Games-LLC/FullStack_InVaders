@@ -17,7 +17,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
 
     this.setDrag(300);
     this.setAngularDrag(400);
-    this.setMaxVelocity(600);
+    this.setMaxVelocity(1000);
     this.setDepth(1);
 
     this.setCollideWorldBounds(true);

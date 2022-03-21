@@ -20,7 +20,7 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
 
     this.setSize(400, 550);
 
-    this.setCollideWorldBounds(true);
+    // this.setCollideWorldBounds(true);
     this.setImmovable(true);
 
     this.health = 100000;
