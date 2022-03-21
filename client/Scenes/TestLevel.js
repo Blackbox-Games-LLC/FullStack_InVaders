@@ -57,7 +57,6 @@ export default class Test extends Phaser.Scene {
       runChildUpdate: true,
     });
 
-    this.mothership = new MotherShip(this, 0, 0, "mothership");
 
     const particles = this.add.particles("exhaust");
     this.ship = new Ship(this, 1200, 1200);
@@ -116,11 +115,6 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
 
-    //mothership spawner
-    if (this.mothership && time > this.spawnDelay) {
-      this.mothership.spawnAliens();
-      this.spawnDelay = time + 2000;
-    }
 
     //satellite base spawner. still kinda buggy. need to play with some numbers?
     if (this.defbase && time > this.spawnDelay) {
