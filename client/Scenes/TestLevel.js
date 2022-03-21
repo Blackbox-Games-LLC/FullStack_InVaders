@@ -37,13 +37,13 @@ export default class Test extends Phaser.Scene {
     this.galaxyAngle = 0;
     this.galaxyDistance = 0;
     this.distance1 = 750;
- this.defbase = new Base(this, 2000, 900, "defense-base")
+
+    this.defbase = new Base(this, 2000, 900, "defense-base")
     this.planet = new Planet(this, 2000, 1500, "planet")
     this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
-    //needs class
-    // this.defbase = this.physics.add.sprite(2000, 900, "defense-base")
-    //   this.offbase = this.physics.add.sprite(1900, 875, "offense-base")
+    this.offbase = new Base(this, 1900, 875, "offense-base")
+
 
 
     this.defense = new Defense(this, 1280, 720, "defense");
