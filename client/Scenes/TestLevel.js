@@ -43,7 +43,7 @@ export default class Test extends Phaser.Scene {
     });
 
     const particles = this.add.particles("exhaust");
-    this.ship = new Ship(this, 500, 500);
+    this.ship = new Ship(this, 1200, 1200);
 
     const direction = new Phaser.Math.Vector2(1, 0);
     direction.setToPolar(this.ship.rotation, 1);
@@ -72,11 +72,8 @@ export default class Test extends Phaser.Scene {
     );
 
     this.mothership = new MotherShip(this, 0, 0, "mothership");
-
-    //camera
-
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.22, 0.22);
+    this.cameras.main.startFollow(this.ship)
+    this.cameras.main.setZoom(0.6, 0.6);
   }
 
   update(time, delta) {
@@ -114,12 +111,17 @@ export default class Test extends Phaser.Scene {
     if (this.cursors.up.isDown) {
       this.physics.velocityFromRotation(
         this.ship.rotation,
-        100000,
+        50000,
         this.ship.body.acceleration
       );
     } else {
-      this.ship.setAcceleration(2);
+      this.ship.setAcceleration(0);
     }
+
+
+    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
+
 
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
