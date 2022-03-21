@@ -41,7 +41,7 @@ export default class Test extends Phaser.Scene {
     //needs class
     this.planet = this.physics.add.sprite(2000, 1500, "planet");
     this.defbase = this.physics.add.sprite(2000, 900, "defense-base")
-    this.offbase = this.physics.add.sprite(1900, 900, "offense-base")
+    this.offbase = this.physics.add.sprite(1900, 875, "offense-base")
 
     this.defense = new Defense(this, 1280, 720, "defense");
 
