@@ -81,7 +81,7 @@ export default class Test extends Phaser.Scene {
     this.cameras.main.setZoom(0.22, 0.22);
   }
 
-  update(time, delta) {
+  update(time) {
     //vars
     this.satellite.setPosition(640, 380);
     this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
