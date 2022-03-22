@@ -50,12 +50,7 @@ export default class Test extends Phaser.Scene {
     this.planet = new Planet(this, 2000, 1500, "planet")
 
 
-      //should probably make a satellite base group?
-      this.defbase2 = new Base(this, 2625, 1500, "defense-base")
-       this.defbase2.setAngle(90)
-      this.defbase = new Base(this, 2000, 900, "defense-base")
-      this.defbase3 = new Base(this, 1400, 1500, "defense-base")
-      this.defbase3.setAngle(-90)
+
 
 
 
@@ -105,8 +100,18 @@ export default class Test extends Phaser.Scene {
     this.motherships.get(2000, 0)
     this.motherships.get(0, 2000)
 
-    //camera
+    this.bases = this.physics.add.group({
+      classType: Base,
+      scene: this,
+      immovable: true,
+      runChildUpdate: true
+    })
 
+    this.bases.get(2625, 1500).setAngle(90)
+    this.bases.get(2000, 900)
+    this.bases.get(1400, 1500).setAngle(-90)
+
+    //camera
     this.cameras.main.startFollow(this.ship)
     //this.cameras.main.setZoom(0.22, 0.22);
   }
@@ -120,13 +125,11 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
       this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
       this.gameWon = false
-    // console.log(time)
 
     //completing the game condition and the associated timer
     if (time >= 100000) {
           this.gameWon = true
           this.command.setVisible(true)
-        //   console.log('game won!')
     }
 
 

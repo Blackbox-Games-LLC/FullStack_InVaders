@@ -3,8 +3,8 @@ import defenseSatellite from "./defenseSatellite";
 import offenseSatellite from "./offenseSatellite";
 
 export default class Base extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, spritekey) {
-    super(scene, x, y, spritekey);
+  constructor(scene, x, y) {
+    super(scene, x, y, 'defense-base');
     this.scene = scene;
    scene.add.existing(this);
     scene.physics.add.existing(this);
