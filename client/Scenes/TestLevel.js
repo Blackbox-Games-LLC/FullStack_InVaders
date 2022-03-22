@@ -35,8 +35,9 @@ export default class Test extends Phaser.Scene {
     //figure out how to set a timer on update and change setVisible() to true after 10 minutes
     this.command = this.physics.add.sprite(2000, 1500, "command")
           .setDepth(2)
-          .setVisible(false)
+        .setVisible(false)
 
+    this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
     this.lastFired = 0;
     this.spawnDelay = 0;
@@ -47,7 +48,7 @@ export default class Test extends Phaser.Scene {
 
 
     this.planet = new Planet(this, 2000, 1500, "planet")
-    this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
+
 
       //should probably make a satellite base group?
       this.defbase2 = new Base(this, 2625, 1500, "defense-base")
