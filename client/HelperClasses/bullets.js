@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 
 export default class Bullet extends Phaser.Physics.Arcade.Image {
-  constructor(scene) {
-    super(scene, 0, 0, "laser_bullet");
+  constructor(scene, x, y, key) {
+    super(scene, 0, 0, key);
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -10,6 +10,9 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
       this.destroy();
     })
     scene.physics.add.collider(this, scene.aliens, () => {
+      this.destroy();
+    })
+    scene.physics.add.collider(this, scene.ship, () => {
       this.destroy();
     })
 
@@ -43,8 +46,8 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
 
   update(time, delta) {
     this.lifespan -= delta;
-    if (this.lifespan <= 0) {
-        this.destroy();
+    if (this.lifespan <= 0 || this.speed == 0) {
+      this.destroy();
     }
   }
 }
