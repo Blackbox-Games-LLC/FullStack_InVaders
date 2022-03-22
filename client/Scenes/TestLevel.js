@@ -1,10 +1,8 @@
 import Phaser from "phaser";
-import Bullet from "../HelperClasses/bullets";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet"
 import Defense from "../HelperClasses/defenseSatellite";
-import Offense from "../HelperClasses/offenseSatellite";
 import Base from "../HelperClasses/bases"
 
 export default class Test extends Phaser.Scene {
@@ -27,26 +25,32 @@ export default class Test extends Phaser.Scene {
     this.load.image("alien", "assets/alien-invader.png")
     this.load.image("galaxy", "assets/galaxy-min.png")
     this.load.multiatlas("space", 'assets/space-sprite-sheet.json', 'assets');
+    this.load.image("command", 'assets/spacebase.png')
   }
   create() {
     this.bg = this.add
       .tileSprite(400, 300, 8000, 6000, "background")
       .setScrollFactor(0);
+
+    //The base starts as invisible but renders after 100000 seconds
+    this.command = this.physics.add.sprite(2000, 1500, "command")
+      .setDepth(2)
+      .setVisible(false)
+
+    this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
+
     this.lastFired = 0;
     this.angle1 = 0;
     this.galaxyAngle = 0;
     this.galaxyDistance = 0;
     this.distance1 = 750;
 
+    this.distance3 = 1000;
+    this.angle3 = 0
+
     this.galaxy = this.add.sprite(4000, 1200, "galaxy")
     this.planet = new Planet(this, 2000, 1500, "planet")
-
-    this.offbase = new Base(this, 2625, 1500, "offense-base")
-    this.defbase = new Base(this, 2000, 900, "defense-base")
-    this.offbase.setAngle(90)
-
     this.defense = new Defense(this, 1280, 720, "defense");
-    this.offense = new Offense(this, 2000, 1500, "offense");
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -54,8 +58,10 @@ export default class Test extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
+    //spawn ship
     this.ship = new Ship(this, 1200, 1200);
 
+    //spawn mothership
     this.motherships = this.physics.add.group({
       classType: MotherShip,
       scene: this,
@@ -67,10 +73,33 @@ export default class Test extends Phaser.Scene {
     this.motherships.get(4000, 0)
     this.motherships.get(0, 3000)
     this.motherships.get(4000, 3000)
-    //camera
 
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.29, 0.29);
+    //spawn bases
+    this.bases = this.physics.add.group({
+      classType: Base,
+      scene: this,
+      immovable: true,
+      runChildUpdate: true
+    })
+    this.bases.get(2625, 1500).setAngle(90)
+    this.bases.get(2000, 900)
+    this.bases.get(1400, 1500).setAngle(-90)
+    this.bases.get(2000, 2100).setAngle(-180)
+
+
+    // galaxy spin
+    this.tweens.add({
+      targets: this.galaxy,
+      angle: -360,
+      duration: 500000,
+      ease: 'Linear',
+      loop: 10
+    });
+
+
+    //camera
+    this.cameras.main.startFollow(this.ship)
+    //this.cameras.main.setZoom(0.22, 0.22);
   }
 
   update(time) {
@@ -80,16 +109,21 @@ export default class Test extends Phaser.Scene {
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
+
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+    this.gameWon = false
+
+    this.offense.setPosition(300, 300);
+    this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01)
 
 
-    //satellite base spawner. still kinda buggy. need to play with some numbers?
-    if (this.defbase && time > this.spawnDelay) {
-      this.defbase.spawnSatellites()
-      this.spawnDelay = time + 10000
+    //completing the game condition and the associated timer
+    if (time >= 100000) {
+      this.gameWon = true
+      this.command.setVisible(true)
     }
 
-    //satellite rotation
+    //defense rotation
     Phaser.Math.RotateAroundDistance(
       this.defense,
       this.planet.x,
@@ -97,6 +131,14 @@ export default class Test extends Phaser.Scene {
       this.angle1,
       this.distance1
     );
+
+    Phaser.Math.RotateAroundDistance(
+      this.offense,
+      this.planet.x,
+      this.planet.y,
+      this.angle3,
+      this.distance3
+    )
 
     //ship movement
     if (this.cursors.left.isDown) {
