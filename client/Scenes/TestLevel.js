@@ -32,7 +32,7 @@ export default class Test extends Phaser.Scene {
       .tileSprite(400, 300, 8000, 6000, "background")
         .setScrollFactor(0);
 
-    //figure out how to set a timer on update and change setVisible() to true after 10 minutes
+    //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add.sprite(2000, 1500, "command")
           .setDepth(2)
         .setVisible(false)
@@ -120,8 +120,14 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
       this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
       this.gameWon = false
+    // console.log(time)
 
-
+    //completing the game condition and the associated timer
+    if (time >= 100000) {
+          this.gameWon = true
+          this.command.setVisible(true)
+        //   console.log('game won!')
+    }
 
 
 
@@ -139,12 +145,7 @@ export default class Test extends Phaser.Scene {
           this.spawnDelay = time + 50000
     }
 
-    //completing the game condition and the associated timer
-      if (time === 100000) {
-          this.gameWon = true
-          this.command.setVisible(true)
-          console.log('game won!')
-      }
+
 
     //satellite rotation
     Phaser.Math.RotateAroundDistance(
