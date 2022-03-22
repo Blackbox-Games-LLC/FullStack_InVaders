@@ -43,7 +43,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       speedX: { min: -10 * dx, max: 10 * dx },
       accelerationY: 1000 * dy,
       accelerationx: 1000 * dx,
-      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 2000 } },
+      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 1000 } },
       alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
       rotate: { min: -180, max: 180 },
       angle: { min: 30, max: 110 },

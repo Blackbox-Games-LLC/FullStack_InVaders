@@ -37,7 +37,7 @@ export default class Test extends Phaser.Scene {
       .setDepth(2)
       .setVisible(false)
 
-    this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy")
 
     this.lastFired = 0;
     this.angle1 = 0;
@@ -98,8 +98,8 @@ export default class Test extends Phaser.Scene {
 
 
     //camera
-    this.cameras.main.startFollow(this.ship)
-    //this.cameras.main.setZoom(0.22, 0.22);
+    //this.cameras.main.startFollow(this.ship)
+    this.cameras.main.setZoom(0.22, 0.22);
   }
 
   update(time) {
@@ -112,8 +112,6 @@ export default class Test extends Phaser.Scene {
 
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.gameWon = false
-
-    this.offense.setPosition(300, 300);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01)
 
 
@@ -132,13 +130,13 @@ export default class Test extends Phaser.Scene {
       this.distance1
     );
 
-    Phaser.Math.RotateAroundDistance(
-      this.offense,
-      this.planet.x,
-      this.planet.y,
-      this.angle3,
-      this.distance3
-    )
+    // Phaser.Math.RotateAroundDistance(
+    //   this.offense,
+    //   this.planet.x,
+    //   this.planet.y,
+    //   this.angle3,
+    //   this.distance3
+    // )
 
     //ship movement
     if (this.cursors.left.isDown) {

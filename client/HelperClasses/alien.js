@@ -17,9 +17,8 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
 
     scene.physics.add.overlap(this, scene.planet, () => {
       this.body.reset(this.x, this.y)
-      this.freefire = false
-      this.rotation = Phaser.Math.Angle.BetweenPoints(this, scene.offbase)
-
+      this.playerTarget = false
+      this.rotation = Phaser.Math.Angle.BetweenPoints(this, scene.planet)
     })
 
     this.setCollideWorldBounds(true);
@@ -28,7 +27,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(1)
 
 
-    this.freefire = true
+    this.playerTarget = true
     this.health = 10;
     this.shotdelay = 2000
 
@@ -64,7 +63,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
 
   update(time) {
     //if freefire is true, fire at ship
-    if (this.freefire) {
+    if (this.playerTarget) {
       this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.ship)
     }
     if (time > this.shotdelay) {
