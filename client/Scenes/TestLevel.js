@@ -102,6 +102,8 @@ export default class Test extends Phaser.Scene {
     this.bases.get(2625, 1500).setAngle(90)
     this.bases.get(2000, 900)
     this.bases.get(1400, 1500).setAngle(-90)
+    this.bases.get(2000, 2100).setAngle(-180)
+
 
     //camera
     this.cameras.main.startFollow(this.ship)
