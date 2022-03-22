@@ -48,9 +48,7 @@ export default class Test extends Phaser.Scene {
 
 
     this.planet = new Planet(this, 2000, 1500, "planet")
-
     this.defense = new Defense(this, 1280, 720, "defense");
-    this.offense = new Offense(this, 2000, 1500, "offense");
 
     this.bullets = this.physics.add.group({
       classType: Bullet,
@@ -125,16 +123,6 @@ export default class Test extends Phaser.Scene {
           this.gameWon = true
           this.command.setVisible(true)
     }
-
-
-
-    //satellite base spawner. still kinda buggy. need to play with some numbers?
-    // if (this.defbase && time > this.spawnDelay) {
-    //       this.defbase.spawnSatellites()
-    //       this.spawnDelay = time + 50000
-    // }
-
-
 
     //satellite rotation
     Phaser.Math.RotateAroundDistance(
