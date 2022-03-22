@@ -24,12 +24,19 @@ export default class Test extends Phaser.Scene {
     this.load.image("alien", "assets/alien.png");
     this.load.image("mothership", "assets/mothership.png");
     this.load.image("galaxy", "assets/galaxy-min.png")
-    this.load.multiatlas("space", 'assets/space-sprite-sheet.json', 'assets');
+      this.load.multiatlas("space", 'assets/space-sprite-sheet.json', 'assets');
+      this.load.image("command", 'assets/spacebase.png')
   }
   create() {
     this.bg = this.add
       .tileSprite(400, 300, 8000, 6000, "background")
-      .setScrollFactor(0);
+        .setScrollFactor(0);
+
+    //figure out how to set a timer on update and change setVisible() to true after 10 minutes
+    this.command = this.physics.add.sprite(2000, 1500, "command")
+          .setDepth(2)
+          .setVisible(false)
+
 
     this.lastFired = 0;
     this.spawnDelay = 0;
@@ -42,9 +49,13 @@ export default class Test extends Phaser.Scene {
     this.planet = new Planet(this, 2000, 1500, "planet")
     this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
-      this.offbase = new Base(this, 2625, 1500, "offense-base")
+      //should probably make a satellite base group?
+      this.defbase2 = new Base(this, 2625, 1500, "defense-base")
+       this.defbase2.setAngle(90)
       this.defbase = new Base(this, 2000, 900, "defense-base")
-      this.offbase.setAngle(90)
+      this.defbase3 = new Base(this, 1400, 1500, "defense-base")
+      this.defbase3.setAngle(-90)
+
 
 
 
@@ -113,13 +124,23 @@ export default class Test extends Phaser.Scene {
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
-    this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+      this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+
+
 
 
     //satellite base spawner. still kinda buggy. need to play with some numbers?
     if (this.defbase && time > this.spawnDelay) {
           this.defbase.spawnSatellites()
-          this.spawnDelay = time + 10000
+          this.spawnDelay = time + 50000
+    }
+    if (this.defbase2 && time > this.spawnDelay) {
+          this.defbase2.spawnSatellites()
+          this.spawnDelay = time + 50000
+      }
+    if (this.defbase3 && time > this.spawnDelay) {
+          this.defbase3.spawnSatellites()
+          this.spawnDelay = time + 50000
     }
 
     //satellite rotation

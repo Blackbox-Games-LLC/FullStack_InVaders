@@ -23,7 +23,12 @@ export default class Base extends Phaser.Physics.Arcade.Sprite {
 
   }
   spawnSatellites() {
+    let random = Math.round(Math.random())
     let b = this.getTopCenter();
-    new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
+    if (random === 1) {
+      new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
+    } else if (random === 0) {
+      new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
+    }
   }
 }
