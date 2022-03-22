@@ -24,12 +24,20 @@ export default class Test extends Phaser.Scene {
     this.load.image("alien", "assets/alien.png");
     this.load.image("mothership", "assets/mothership.png");
     this.load.image("galaxy", "assets/galaxy-min.png")
-    this.load.multiatlas("space", 'assets/space-sprite-sheet.json', 'assets');
+      this.load.multiatlas("space", 'assets/space-sprite-sheet.json', 'assets');
+      this.load.image("command", 'assets/spacebase.png')
   }
   create() {
     this.bg = this.add
       .tileSprite(400, 300, 8000, 6000, "background")
-      .setScrollFactor(0);
+        .setScrollFactor(0);
+
+    //The base starts as invisible but renders after 100000 seconds
+    this.command = this.physics.add.sprite(2000, 1500, "command")
+          .setDepth(2)
+        .setVisible(false)
+
+    this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
 
     this.lastFired = 0;
     this.spawnDelay = 0;
@@ -43,16 +51,7 @@ export default class Test extends Phaser.Scene {
 
 
     this.planet = new Planet(this, 2000, 1500, "planet")
-    this.galaxy = this.physics.add.sprite(4000, 1200, "galaxy")
-
-      this.offbase = new Base(this, 2625, 1500, "offense-base")
-      this.defbase = new Base(this, 2000, 900, "defense-base")
-      this.offbase.setAngle(90)
-
-
-
     this.defense = new Defense(this, 1280, 720, "defense");
-    this.offense = new Offense(this, 2000, 1500, "offense");
 
     this.bullets = this.physics.add.group({
       classType: Bullet,
@@ -64,16 +63,9 @@ export default class Test extends Phaser.Scene {
     const particles = this.add.particles("exhaust");
     this.ship = new Ship(this, 1200, 1200);
 
-    const direction = new Phaser.Math.Vector2(1, 0);
-    direction.setToPolar(this.ship.rotation, 1);
-    const dx = -direction.x;
-    const dy = -direction.y;
+
     particles.createEmitter({
       quantity: 50,
-      speedY: { min: 20 * dy, max: 50 * dx },
-      speedX: { min: -10 * dx, max: 10 * dx },
-      accelerationY: 1000 * dy,
-      accelerationx: 1000 * dx,
       lifespan: { min: 100, max: 1000 },
       alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
       rotate: { min: -180, max: 180 },
@@ -103,6 +95,14 @@ export default class Test extends Phaser.Scene {
     this.motherships.get(2000, 0)
     this.motherships.get(0, 2000)
 
+
+    this.bases = this.physics.add.group({
+      classType: Base,
+      scene: this,
+      immovable: true,
+      runChildUpdate: true
+    })
+
     // galaxy spin
     this.tweens.add({
       targets: this.galaxy,
@@ -112,8 +112,14 @@ export default class Test extends Phaser.Scene {
       loop: 10
   });
 
-    //camera
 
+    this.bases.get(2625, 1500).setAngle(90)
+    this.bases.get(2000, 900)
+    this.bases.get(1400, 1500).setAngle(-90)
+    this.bases.get(2000, 2100).setAngle(-180)
+
+
+    //camera
     this.cameras.main.startFollow(this.ship)
     //this.cameras.main.setZoom(0.22, 0.22);
   }
@@ -125,16 +131,18 @@ export default class Test extends Phaser.Scene {
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
+
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+    this.gameWon = false
 
     this.offense.setPosition(300, 300);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01)
 
 
-    //satellite base spawner. still kinda buggy. need to play with some numbers?
-    if (this.defbase && time > this.spawnDelay) {
-          this.defbase.spawnSatellites()
-          this.spawnDelay = time + 10000
+    //completing the game condition and the associated timer
+    if (time >= 100000) {
+          this.gameWon = true
+          this.command.setVisible(true)
     }
 
     //defense rotation

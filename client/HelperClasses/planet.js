@@ -8,9 +8,7 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
 
-    let barrier = this.setCircle(1000)
-
-    //Adjust barrier around planet
+    this.setCircle(800, -180 ,-180)
 
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
