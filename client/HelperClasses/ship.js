@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import HealthBar from "../UI/HealthBar";
+
 export default class Ship extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, "ship");
