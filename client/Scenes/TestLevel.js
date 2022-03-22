@@ -37,6 +37,9 @@ export default class Test extends Phaser.Scene {
     this.galaxyAngle = 0;
     this.galaxyDistance = 0;
     this.distance1 = 750;
+    
+    this.distance3 = 1000;
+    this.angle3 = 0
 
 
     this.planet = new Planet(this, 2000, 1500, "planet")
@@ -100,6 +103,15 @@ export default class Test extends Phaser.Scene {
     this.motherships.get(2000, 0)
     this.motherships.get(0, 2000)
 
+    // galaxy spin
+    this.tweens.add({
+      targets: this.galaxy,
+      angle: -360,
+      duration: 500000,
+      ease: 'Linear',
+      loop: 10
+  });
+
     //camera
 
     this.cameras.main.startFollow(this.ship)
@@ -115,6 +127,9 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
 
+    this.offense.setPosition(300, 300);
+    this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01)
+
 
     //satellite base spawner. still kinda buggy. need to play with some numbers?
     if (this.defbase && time > this.spawnDelay) {
@@ -122,7 +137,7 @@ export default class Test extends Phaser.Scene {
           this.spawnDelay = time + 10000
     }
 
-    //satellite rotation
+    //defense rotation
     Phaser.Math.RotateAroundDistance(
       this.defense,
       this.planet.x,
@@ -130,6 +145,14 @@ export default class Test extends Phaser.Scene {
       this.angle1,
       this.distance1
     );
+
+    Phaser.Math.RotateAroundDistance(
+      this.offense,
+      this.planet.x,
+      this.planet.y,
+      this.angle3,
+      this.distance3
+    )
 
     //ship movement
     if (this.cursors.left.isDown) {
