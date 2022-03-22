@@ -72,16 +72,9 @@ export default class Test extends Phaser.Scene {
     const particles = this.add.particles("exhaust");
     this.ship = new Ship(this, 1200, 1200);
 
-    const direction = new Phaser.Math.Vector2(1, 0);
-    direction.setToPolar(this.ship.rotation, 1);
-    const dx = -direction.x;
-    const dy = -direction.y;
+
     particles.createEmitter({
       quantity: 50,
-      speedY: { min: 20 * dy, max: 50 * dx },
-      speedX: { min: -10 * dx, max: 10 * dx },
-      accelerationY: 1000 * dy,
-      accelerationx: 1000 * dx,
       lifespan: { min: 100, max: 1000 },
       alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
       rotate: { min: -180, max: 180 },
@@ -125,6 +118,8 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
       this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+      this.gameWon = false
+
 
 
 
@@ -142,6 +137,13 @@ export default class Test extends Phaser.Scene {
           this.defbase3.spawnSatellites()
           this.spawnDelay = time + 50000
     }
+
+    //completing the game condition and the associated timer
+      if (time === 100000) {
+          this.gameWon = true
+          this.command.setVisible(true)
+          console.log('game won!')
+      }
 
     //satellite rotation
     Phaser.Math.RotateAroundDistance(
