@@ -18,10 +18,9 @@ export default class Base extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
-    this.setSize(100, 100)
-    this.setCircle();
 
-    this.health = 100
+    this.health = 1000
+     this.spawnDelay = 0
 
   }
   spawnSatellites() {
@@ -31,6 +30,12 @@ export default class Base extends Phaser.Physics.Arcade.Sprite {
       new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
     } else if (random === 0) {
       new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
+    }
+  }
+  update(time) {
+    if (this && time > this.spawnDelay) {
+      this.spawnSatellites()
+      this.spawnDelay = time + 50000
     }
   }
 }

@@ -49,12 +49,6 @@ export default class Test extends Phaser.Scene {
 
     this.planet = new Planet(this, 2000, 1500, "planet")
 
-
-
-
-
-
-
     this.defense = new Defense(this, 1280, 720, "defense");
     this.offense = new Offense(this, 2000, 1500, "offense");
 
@@ -135,18 +129,10 @@ export default class Test extends Phaser.Scene {
 
 
     //satellite base spawner. still kinda buggy. need to play with some numbers?
-    if (this.defbase && time > this.spawnDelay) {
-          this.defbase.spawnSatellites()
-          this.spawnDelay = time + 50000
-    }
-    if (this.defbase2 && time > this.spawnDelay) {
-          this.defbase2.spawnSatellites()
-          this.spawnDelay = time + 50000
-      }
-    if (this.defbase3 && time > this.spawnDelay) {
-          this.defbase3.spawnSatellites()
-          this.spawnDelay = time + 50000
-    }
+    // if (this.defbase && time > this.spawnDelay) {
+    //       this.defbase.spawnSatellites()
+    //       this.spawnDelay = time + 50000
+    // }
 
 
 
