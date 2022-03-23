@@ -82,10 +82,15 @@ export default class Test extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.motherships.get();
-    this.motherships.get(4000, 0);
-    this.motherships.get(0, 3000);
-    this.motherships.get(4000, 3000);
+     this.mothershipgroup = [
+      this.motherships.get(),
+      this.motherships.get(4000, 0),
+      this.motherships.get(0, 3000),
+      this.motherships.get(4000, 3000)
+    ]
+
+
+
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -126,6 +131,7 @@ export default class Test extends Phaser.Scene {
 
   update(time) {
     //vars
+
     this.gameWon = false;
     this.defense.setPosition(640, 380);
     this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
@@ -138,14 +144,14 @@ export default class Test extends Phaser.Scene {
 
 
 
-    //win condition associated with timer
-    if (time >= 100000) {
+    //win condition associated with timer and destruction of motherships
+    //kinda wonky gotta figure this one out too.
+    if (time >= 10000 || this.mothershipgroup.length === 0) {
       this.gameWon = true;
       this.command.setVisible(true);
-
       var shape2 = new Phaser.Geom.Circle(0, 0, 800);
       var particles = this.add.particles("exhaust");
-        particles.createEmitter({
+      particles.createEmitter({
         x: 2000, y: 1500,
         speed: 0,
         lifespan: 10000,
@@ -153,12 +159,15 @@ export default class Test extends Phaser.Scene {
         scale: { start: 0.1, end: 0 },
         blendMode: 'ADD',
         emitZone: { type: 'edge', source: shape2, quantity: 48, yoyo: false }
-    });
+      });
+      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
+
     //loss condition associated with timer
     if (this.planet.health <= 0 || this.ship.health <=0) {
       this.gameWon = false
       this.planet.setVisible(false)
+        //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
     //defense rotation

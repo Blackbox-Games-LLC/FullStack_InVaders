@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Alien from "./alien";
+import HealthBar from "../UI/HealthBar";
 
 export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -8,8 +9,11 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     scene.physics.add.overlap(this, scene.playerbullets, () => {
+      //healthbar. have to figure out how to render one health bar per mothership instance.
+
       if (this.health > 0) {
         this.health -= 10;
+        this.hp.decrease(this.health)
       } else {
         this.destroy();
       }
@@ -28,6 +32,8 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
 
     this.health = 1000;
     this.spawnDelay = 0
+
+    this.hp = new HealthBar(this.scene, 50, 50, this.health);
 
     if (!scene.aliens) {
       scene.aliens = scene.physics.add.group({

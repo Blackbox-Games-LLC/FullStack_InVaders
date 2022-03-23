@@ -23,7 +23,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.setImmovable(true);
 
     this.health = 1000;
-    this.hp = new HealthBar(this.scene, 50, 50, this.health);
+    // this.hp = new HealthBar(this.scene, 50, 50, this.health);
 
     scene.playerbullets = scene.physics.add.group({
       classType: Bullet,
