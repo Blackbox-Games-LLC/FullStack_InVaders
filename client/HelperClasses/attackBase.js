@@ -27,7 +27,7 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
     let b = this.getTopCenter();
     new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
 
-      // new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
+
 
     // let offense = this.scene.offenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "offense")
     // this.scene.physics.moveToObject(offense, this.scene.motherships, 20, 1000)

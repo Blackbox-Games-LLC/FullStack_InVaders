@@ -119,6 +119,9 @@ export default class Test extends Phaser.Scene {
     //camera
     //this.cameras.main.startFollow(this.ship)
     this.cameras.main.setZoom(0.22, 0.22);
+
+
+
   }
 
   update(time) {
@@ -139,9 +142,21 @@ export default class Test extends Phaser.Scene {
     if (time >= 100000) {
       this.gameWon = true;
       this.command.setVisible(true);
+
+      var shape2 = new Phaser.Geom.Circle(0, 0, 800);
+      var particles = this.add.particles("exhaust");
+        particles.createEmitter({
+        x: 2000, y: 1500,
+        speed: 0,
+        lifespan: 10000,
+        quantity: 1,
+        scale: { start: 0.1, end: 0 },
+        blendMode: 'ADD',
+        emitZone: { type: 'edge', source: shape2, quantity: 48, yoyo: false }
+    });
     }
     //loss condition associated with timer
-    if (this.planet.health <= 0) {
+    if (this.planet.health <= 0 || this.ship.health <=0) {
       this.gameWon = false
       this.planet.setVisible(false)
     }

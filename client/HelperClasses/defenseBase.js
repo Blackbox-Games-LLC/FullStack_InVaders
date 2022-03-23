@@ -25,7 +25,7 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
   }
   spawnSatellites() {
     let b = this.getTopCenter();
-    // new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
+
 
       new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
 
