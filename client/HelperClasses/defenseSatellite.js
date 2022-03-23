@@ -5,7 +5,7 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    scene.physics.add.collider(this, scene.bullets, () => {
+    scene.physics.add.collider(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {
@@ -13,11 +13,14 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
       }
     });
 
-    this.setCircle();
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
+    this.setDepth(1);
 
     this.health = 250;
+    
+    const path = new Phaser.Math.Vector2(1,0)
+    path.getLength
   }
 
 }
