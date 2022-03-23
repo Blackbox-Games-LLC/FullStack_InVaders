@@ -22,9 +22,12 @@ export default class Test extends Phaser.Scene {
     this.load.image("exhaust", "assets/exhaust.png");
     this.load.image("alien_exhaust", "assets/alien_exhaust.png");
     this.load.image("mothership", "assets/mothership.png");
+    this.load.image("galaxy", "assets/galaxy-min.png");
+    this.load.image("sun", "assets/sun.png");
+    this.load.image("moon1", "assets/moon1.png");
+    this.load.image("moon2", "assets/moon6.png")
     this.load.image("alien", "assets/alien-invader.png")
     this.load.image("galaxy", "assets/galaxy-min.png")
-    this.load.multiatlas("space", 'assets/space-sprite-sheet.json', 'assets');
     this.load.image("command", 'assets/spacebase.png')
   }
   create() {
@@ -47,6 +50,17 @@ export default class Test extends Phaser.Scene {
 
     this.distance3 = 1000;
     this.angle3 = 0
+
+    this.planet = new Planet(this, 2000, 1500, "planet");
+    this.sun = this.physics.add.sprite(1000, -100, "sun");
+    this.moon1 = this.physics.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
+    this.moon2 = this.physics.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
+
+      this.offbase = new Base(this, 2625, 1500, "offense-base")
+      this.defbase = new Base(this, 2000, 900, "defense-base")
+      this.offbase.setAngle(90)
+
+
 
     this.galaxy = this.add.sprite(4000, 1200, "galaxy")
     this.planet = new Planet(this, 2000, 1500, "planet")
