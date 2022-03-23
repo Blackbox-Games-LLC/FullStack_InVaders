@@ -11,25 +11,24 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       if (this.health > 0) {
         this.health -= 1;
       } else {
-        console.log('destroy animation');
+        console.log("destroy animation");
       }
-    })
+    });
 
     this.setDrag(300);
     this.setAngularDrag(100);
     this.setMaxVelocity(1000);
     this.setDepth(1);
     this.setCollideWorldBounds(true);
-    this.setImmovable(true)
-
+    this.setImmovable(true);
 
     this.health = 1000;
     this.hp = new HealthBar(this.scene, 50, 50, this.health);
 
     scene.playerbullets = scene.physics.add.group({
       classType: Bullet,
-      runChildUpdate: true
-    })
+      runChildUpdate: true,
+    });
 
     const particles = scene.add.particles("exhaust");
 
@@ -43,7 +42,11 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       speedX: { min: -10 * dx, max: 10 * dx },
       accelerationY: 1000 * dy,
       accelerationx: 1000 * dx,
-      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 1000 } },
+      lifespan: {
+        onEmit: () => {
+          return Phaser.Math.Percent(this.body.speed, 0, 300) * 1000;
+        },
+      },
       alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
       rotate: { min: -180, max: 180 },
       angle: { min: 30, max: 110 },

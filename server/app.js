@@ -27,6 +27,8 @@ app.use((req, res, next) => {
     next();
   }
 });
+//router of login
+app.use("/api/login", require("./api/login"));
 // routes of user
 app.use("/api/user", require("./api/user"));
 
