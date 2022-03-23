@@ -1,7 +1,9 @@
 import Phaser from "phaser";
-import Bullet from "../HelperClasses/bullets";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
+import Planet from "../HelperClasses/planet";
+import Defense from "../HelperClasses/defenseSatellite";
+import Base from "../HelperClasses/bases";
 
 export default class Test extends Phaser.Scene {
   constructor() {
@@ -10,76 +12,131 @@ export default class Test extends Phaser.Scene {
   preload() {
     this.load.image("background", "assets/backgroundtile-min.png");
     this.load.image("planet", "assets/earth-transparent-min.png");
+    this.load.image("defense-base", "assets/defense-base.png");
+    this.load.image("offense-base", "assets/offense-base.png");
     this.load.image("ship", "assets/spaceship-sprite.png");
-    this.load.image("satellite", "assets/space-wall-defense.png");
+    this.load.image("defense", "assets/space-wall-defense.png");
+    this.load.image("offense", "assets/space-wall-offense.png");
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
-    this.load.image("space", "assets/", "assets/space.json");
+    this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("exhaust", "assets/exhaust.png");
-    this.load.image("alien", "assets/alien.png");
+    this.load.image("alien_exhaust", "assets/alien_exhaust.png");
     this.load.image("mothership", "assets/mothership.png");
+    this.load.image("galaxy", "assets/galaxy-min.png");
+    this.load.image("sun", "assets/sun.png");
+    this.load.image("moon1", "assets/moon1.png");
+    this.load.image("moon2", "assets/moon6.png");
+    this.load.image("alien", "assets/alien-invader.png");
+    this.load.image("galaxy", "assets/galaxy-min.png");
+    this.load.image("command", "assets/spacebase.png");
   }
   create() {
     this.bg = this.add
       .tileSprite(400, 300, 8000, 6000, "background")
       .setScrollFactor(0);
 
+    //The base starts as invisible but renders after 100000 seconds
+    this.command = this.physics.add
+      .sprite(2000, 1500, "command")
+      .setDepth(2)
+      .setVisible(false);
+
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
+
     this.lastFired = 0;
-    this.spawnDelay = 0;
     this.angle1 = 0;
     this.galaxyAngle = 0;
     this.galaxyDistance = 0;
     this.distance1 = 750;
 
-    //needs class
-    this.planet = this.physics.add.sprite(2000, 1500, "planet");
+    this.distance3 = 1000;
+    this.angle3 = 0;
 
-    //needs class
-    this.satellite = this.physics.add.sprite(1280, 720, "satellite");
+    this.planet = new Planet(this, 2000, 1500, "planet");
+    this.sun = this.physics.add.sprite(1000, -100, "sun");
+    this.moon1 = this.physics.add
+      .sprite(-200, 1500, "moon1")
+      .setDisplaySize(150, 150);
+    this.moon2 = this.physics.add
+      .sprite(2500, 2500, "moon2")
+      .setDisplaySize(150, 150);
 
-    this.bullets = this.physics.add.group({
-      classType: Bullet,
-      maxSize: 30,
-      runChildUpdate: true,
-    });
+    this.offbase = new Base(this, 2625, 1500, "offense-base");
+    this.defbase = new Base(this, 2000, 900, "defense-base");
+    this.offbase.setAngle(90);
 
-    const particles = this.add.particles("exhaust");
-    this.ship = new Ship(this, 500, 500);
-
-    const direction = new Phaser.Math.Vector2(1, 0);
-    direction.setToPolar(this.ship.rotation, 1);
-    const dx = -direction.x;
-    const dy = -direction.y;
-    particles.createEmitter({
-      quantity: 50,
-      speedY: { min: 20 * dy, max: 50 * dx },
-      speedX: { min: -10 * dx, max: 10 * dx },
-      accelerationY: 1000 * dy,
-      accelerationx: 1000 * dx,
-      lifespan: { min: 100, max: 1000 },
-      alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
-      rotate: { min: -180, max: 180 },
-      angle: { min: 30, max: 110 },
-      blendMode: "ADD",
-      frequency: 100,
-      scale: { start: 0.07, end: 0.07 },
-      follow: this.ship,
-      followOffset: { y: this.ship.height * 0.5 },
-    });
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
+    this.planet = new Planet(this, 2000, 1500, "planet");
+    this.defense = new Defense(this, 1280, 720, "defense");
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    this.mothership = new MotherShip(this, 0, 0, "mothership");
+    //spawn ship
+    this.ship = new Ship(this, 1200, 1200);
+
+    //spawn mothership
+    this.motherships = this.physics.add.group({
+      classType: MotherShip,
+      scene: this,
+      maxSize: 4,
+      immovable: true,
+      runChildUpdate: true,
+    });
+    this.motherships.get();
+    this.motherships.get(4000, 0);
+    this.motherships.get(0, 3000);
+    this.motherships.get(4000, 3000);
+
+    //spawn bases
+    this.bases = this.physics.add.group({
+      classType: Base,
+      scene: this,
+      immovable: true,
+      runChildUpdate: true,
+    });
+    this.bases.get(2625, 1500).setAngle(90);
+    this.bases.get(2000, 900);
+    this.bases.get(1400, 1500).setAngle(-90);
+    this.bases.get(2000, 2100).setAngle(-180);
+
+    // galaxy spin
+    this.tweens.add({
+      targets: this.galaxy,
+      angle: -360,
+      duration: 500000,
+      ease: "Linear",
+      loop: 10,
+    });
+
+    //camera
     //this.cameras.main.startFollow(this.ship)
     this.cameras.main.setZoom(0.22, 0.22);
   }
 
-  update(time, delta) {
-    this.satellite.setPosition(640, 380);
+  update(time) {
+    //vars
+    this.defense.setPosition(640, 380);
+    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
+    this.ship.body.velocity.x = 0;
+    this.ship.body.velocity.y = 0;
+
+    this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+    this.gameWon = false;
+    this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
+
+    //completing the game condition and the associated timer
+    if (time >= 100000) {
+      this.gameWon = true;
+      this.command.setVisible(true);
+    }
+
+    //defense rotation
     Phaser.Math.RotateAroundDistance(
-      this.satellite,
+      this.defense,
       this.planet.x,
       this.planet.y,
       this.angle1,
@@ -90,6 +147,15 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
 
+    // Phaser.Math.RotateAroundDistance(
+    //   this.offense,
+    //   this.planet.x,
+    //   this.planet.y,
+    //   this.angle3,
+    //   this.distance3
+    // )
+
+    //ship movement
     if (this.cursors.left.isDown) {
       this.ship.setAngularVelocity(-150);
     } else if (this.cursors.right.isDown) {
@@ -100,40 +166,24 @@ export default class Test extends Phaser.Scene {
     if (this.cursors.up.isDown) {
       this.physics.velocityFromRotation(
         this.ship.rotation,
-        100000,
+        50000,
         this.ship.body.acceleration
       );
     } else {
-      this.ship.setAcceleration(2);
+      this.ship.setAcceleration(0);
     }
 
+    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
+
+    //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
-      this.bullet = this.bullets.get();
+      let bullet = this.playerbullets.get(0, 0, "laser_bullet");
 
-      if (this.fire.isDown && time > this.lastFired) {
-        this.bullet = this.bullets.get();
-
-        if (this.bullet) {
-          this.bullet.fire(this.ship);
-          this.bullet.setCollideWorldBounds(true);
-          this.lastFired = time + 100;
-          this.bullet.update(time, delta); // this is logic for when bullet hits something
-        }
-
-        this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-        this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
-
-        if (this.bullet) {
-          this.bullet.fire(this.ship);
-          //this.bullet.setCollideWorldBounds(true)
-          this.lastFired = time + 100;
-          this.bullet.update(time, delta); // this is logic for when bullet hits something
-        }
-
-        if (this.mothership && time > this.spawnDelay) {
-          this.mothership.spawnAliens();
-          this.spawnDelay = time + 2000;
-        }
+      if (bullet) {
+        bullet.fire(this.ship);
+        //this.bullet.setCollideWorldBounds(true)
+        this.lastFired = time + 100;
       }
     }
   }
