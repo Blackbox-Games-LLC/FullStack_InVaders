@@ -25,7 +25,7 @@ export default class CountdownController {
    * @param {()=>void} callback
    * @param {number} duration
    */
-  start(callback, duration = 60000) {
+  start(callback, duration = 6000000) {
     this.stop();
 
     this.finishedCallback = callback;
@@ -57,8 +57,9 @@ export default class CountdownController {
     const elapsed = this.timerEvent.getElapsed();
     // console.log(elapsed);
     const remaining = this.duration + elapsed;
-    // console.log(remaining);
     const seconds = remaining / 1000;
-    this.label.text = `Time:${seconds.toFixed(1)}`;
+    const mins = seconds / 60;
+    // console.log(seconds);
+    this.label.text = `${mins.toFixed(0)}:${seconds.toFixed(1)}`;
   }
 }
