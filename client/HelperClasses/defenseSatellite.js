@@ -15,8 +15,9 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
 
     this.setCircle();
     this.setCollideWorldBounds(true);
+    this.setImmovable(true);
 
     this.health = 250;
   }
-  
+
 }

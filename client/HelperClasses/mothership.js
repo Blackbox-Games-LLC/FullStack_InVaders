@@ -7,7 +7,7 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    scene.physics.add.collider(this, scene.bullets, () => {
+    scene.physics.add.overlap(this, scene.playerbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {
@@ -15,6 +15,10 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
       }
       console.log(this.health)
     });
+    scene.physics.add.overlap(this, scene.ship, () => {
+      scene.ship.health -= 1
+      console.log(scene.ship.health)
+    })
 
     this.setSize(400, 550);
 
@@ -29,13 +33,15 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
       scene.aliens = scene.physics.add.group({
         classType: Alien,
         scene: scene,
-        runChildUpdate: true
+        runChildUpdate: true,
+        immovable: true
       })
     }
   }
   spawnAliens() {
     let b = this.getCenter();
-    this.scene.aliens.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100, 100), 'alien')
+    let alien = this.scene.aliens.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100, 100), 'alien')
+    this.scene.physics.moveToObject(alien, this.scene.planet, 20, 10000)
   }
   update(time) {
     this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.planet)
