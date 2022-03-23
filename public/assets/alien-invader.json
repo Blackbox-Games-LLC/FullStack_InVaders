@@ -1,0 +1,692 @@
+{
+	"textures": [
+		{
+			"image": "alien-invader.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 225,
+				"h": 715
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "alien-invader.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (0).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (1).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (2).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 65,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (3).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 65,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (4).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 65,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (5).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 130,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (6).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 130,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (7).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 130,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (8).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 195,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (9).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 195,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (10).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 195,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (11).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 260,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (12).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 260,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (13).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 260,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (14).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 325,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (15).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 325,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (16).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 325,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (17).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 390,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (18).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 390,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (19).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 390,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (20).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 455,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (21).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 455,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (22).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 455,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (23).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 520,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (24).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 520,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (25).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 520,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (26).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 585,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (27).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 585,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (28).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 150,
+						"y": 585,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (29).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 0,
+						"y": 650,
+						"w": 75,
+						"h": 65
+					}
+				},
+				{
+					"filename": "ezgif.com-gif-maker (30).png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 75,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 75,
+						"h": 65
+					},
+					"frame": {
+						"x": 75,
+						"y": 650,
+						"w": 75,
+						"h": 65
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:8c81c56a0fbd584680a8a967a55a29d1:913720df522364b98935995c2984dcc2:a9be2908954fae3314d8280d130a9497$"
+	}
+}
