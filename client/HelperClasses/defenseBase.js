@@ -1,9 +1,8 @@
 import Phaser from "phaser";
 import defenseSatellite from "./defenseSatellite";
-import offenseSatellite from "./offenseSatellite";
 import HealthBar from "../UI/HealthBar";
 
-export default class Base extends Phaser.Physics.Arcade.Sprite {
+export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'defense-base');
     this.scene = scene;
@@ -25,13 +24,11 @@ export default class Base extends Phaser.Physics.Arcade.Sprite {
 
   }
   spawnSatellites() {
-    let random = Math.round(Math.random())
     let b = this.getTopCenter();
-    if (random === 1) {
-      new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
-    } else if (random === 0) {
+    // new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
+
       new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
-    }
+
     // let offense = this.scene.offenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "offense")
     // this.scene.physics.moveToObject(offense, this.scene.motherships, 20, 1000)
   }
