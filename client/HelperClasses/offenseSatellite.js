@@ -42,7 +42,6 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     path.setToPolar(this.rotation, 1);
     const px = -path.x;
     const py = -path.y;
-
     const particles = scene.add.particles("offense-exhaust");
 
     particles.createEmitter({
