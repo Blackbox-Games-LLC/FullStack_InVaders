@@ -3,10 +3,14 @@ import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet";
 import Defense from "../HelperClasses/defenseSatellite";
+import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
 
 export default class Test extends Phaser.Scene {
+  /** @type {CountdownController} */
+  countdown;
+
   constructor() {
     super("Test_Level");
   }
@@ -28,12 +32,15 @@ export default class Test extends Phaser.Scene {
     this.load.image("sun", "assets/sun.png");
     this.load.image("moon1", "assets/moon1.png");
     this.load.image("moon2", "assets/moon6.png");
-    this.load.spritesheet("alien", "assets/alien-invader.png", { frameWidth: 75, frameHeight: 65 });
+    this.load.spritesheet("alien", "assets/alien-invader.png", {
+      frameWidth: 75,
+      frameHeight: 65,
+    });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
-    this.load.audio("alien-blowup", "assets/alien-blowup.mp3")
-    this.load.audio("playerShot", "assets/playerbullet.mp3")
-    this.load.audio("alienShot", "assets/alienshot.mp3")
+    this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
+    this.load.audio("playerShot", "assets/playerbullet.mp3");
+    this.load.audio("alienShot", "assets/alienshot.mp3");
   }
 
   create() {
@@ -73,9 +80,10 @@ export default class Test extends Phaser.Scene {
 
     // this.cursors = this.input.keyboard.createCursorKeys();
     this.cursors = this.input.keyboard.addKeys({
-      "forward": Phaser.Input.Keyboard.KeyCodes.W,
-      "right": Phaser.Input.Keyboard.KeyCodes.D,
-      "left": Phaser.Input.Keyboard.KeyCodes.A})
+      forward: Phaser.Input.Keyboard.KeyCodes.W,
+      right: Phaser.Input.Keyboard.KeyCodes.D,
+      left: Phaser.Input.Keyboard.KeyCodes.A,
+    });
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -112,8 +120,8 @@ export default class Test extends Phaser.Scene {
       classType: DefenseBase,
       scene: this,
       immovable: true,
-      runChildUpdate: true
-    })
+      runChildUpdate: true,
+    });
     this.defenseBases.get(1400, 1500).setAngle(-90);
     this.defenseBases.get(2000, 2100).setAngle(-180);
 
@@ -130,10 +138,21 @@ export default class Test extends Phaser.Scene {
     //this.cameras.main.startFollow(this.ship)
     this.cameras.main.setZoom(0.22, 0.22);
 
-
-
+    // countDownController
+    const timerLabel = this.add.text(1500, -400, "1000", {
+      fontSize: 150,
+      fontStyle: "bold",
+      color: "#32a852",
+    });
+    this.countdown = new CountdownController(this, timerLabel);
+    this.countdown.start(this.handleCountDownFinished.bind(this));
   }
-
+  // for countDownController(when the player Loose)
+  handleCountDownFinished() {
+    //this.player.active=false
+    //const {width,height}=this.scale
+    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+  }
   update(time) {
     //vars
 
@@ -147,8 +166,6 @@ export default class Test extends Phaser.Scene {
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-
-
     //win condition associated with timer and destruction of motherships
     //kinda wonky gotta figure this one out too.
     if (time >= 200000) {
@@ -157,22 +174,23 @@ export default class Test extends Phaser.Scene {
       var shape2 = new Phaser.Geom.Circle(0, 0, 800);
       var particles = this.add.particles("exhaust");
       particles.createEmitter({
-        x: 2000, y: 1500,
+        x: 2000,
+        y: 1500,
         speed: 0,
         lifespan: 10000,
         quantity: 1,
         scale: { start: 0.1, end: 0 },
-        blendMode: 'ADD',
-        emitZone: { type: 'edge', source: shape2, quantity: 48, yoyo: false }
+        blendMode: "ADD",
+        emitZone: { type: "edge", source: shape2, quantity: 48, yoyo: false },
       });
       //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
     //loss condition associated with timer
-    if (this.planet.health <= 0 || this.ship.health <=0) {
-      this.gameWon = false
-      this.planet.setVisible(false)
-        //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
+    if (this.planet.health <= 0 || this.ship.health <= 0) {
+      this.gameWon = false;
+      this.planet.setVisible(false);
+      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
     //defense rotation
@@ -222,11 +240,13 @@ export default class Test extends Phaser.Scene {
       let bullet = this.playerbullets.get(0, 0, "laser_bullet");
 
       if (bullet) {
-        this.ship.shoot.play()
+        this.ship.shoot.play();
         bullet.fire(this.ship);
         //this.bullet.setCollideWorldBounds(true)
         this.lastFired = time + 100;
       }
     }
+    //counter
+    this.countdown.update();
   }
 }
