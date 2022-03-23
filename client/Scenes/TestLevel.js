@@ -17,6 +17,7 @@ export default class Test extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
+    this.load.image("offense-exhaust", "assets/offense-satellite-exhaust.png")
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("exhaust", "assets/exhaust.png");
@@ -112,8 +113,8 @@ export default class Test extends Phaser.Scene {
     });
 
     //camera
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.22, 0.22);
+    this.cameras.main.startFollow(this.ship)
+    // this.cameras.main.setZoom(0.22, 0.22);
   }
 
   update(time) {
