@@ -18,6 +18,7 @@ export default class Test extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
+    this.load.image("offense-exhaust", "assets/offense-satellite-exhaust.png")
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("exhaust", "assets/exhaust.png");
@@ -74,7 +75,11 @@ export default class Test extends Phaser.Scene {
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.defense = new Defense(this, 1280, 720, "defense");
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    // this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.addKeys({
+      "forward": Phaser.Input.Keyboard.KeyCodes.W,
+      "right": Phaser.Input.Keyboard.KeyCodes.D,
+      "left": Phaser.Input.Keyboard.KeyCodes.A})
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -117,12 +122,13 @@ export default class Test extends Phaser.Scene {
     });
 
     //camera
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.22, 0.22);
+    this.cameras.main.startFollow(this.ship)
+    // this.cameras.main.setZoom(0.22, 0.22);
   }
 
   update(time) {
     //vars
+    this.gameWon = false;
     this.defense.setPosition(640, 380);
     this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
@@ -130,13 +136,19 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
 
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
-    this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    //completing the game condition and the associated timer
+
+
+    //win condition associated with timer
     if (time >= 100000) {
       this.gameWon = true;
       this.command.setVisible(true);
+    }
+    //loss condition associated with timer
+    if (this.planet.health <= 0) {
+      this.gameWon = false
+      this.planet.setVisible(false)
     }
 
     //defense rotation
@@ -168,7 +180,7 @@ export default class Test extends Phaser.Scene {
     } else {
       this.ship.setAngularVelocity(0);
     }
-    if (this.cursors.up.isDown) {
+    if (this.cursors.forward.isDown) {
       this.physics.velocityFromRotation(
         this.ship.rotation,
         50000,

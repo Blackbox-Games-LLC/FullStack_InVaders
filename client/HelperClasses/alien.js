@@ -44,7 +44,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
 
     this.playerTarget = true
     this.health = 10;
-    this.shotdelay = 2000
+    // this.shotdelay = 2000
 
     scene.alienbullets = scene.physics.add.group({
       classType: Bullet,
