@@ -8,7 +8,8 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
 
-    this.setCircle(800, -180 ,-180)
+    this.setCircle(1000, -390, -390);
+
 
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
