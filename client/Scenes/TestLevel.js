@@ -112,8 +112,8 @@ export default class Test extends Phaser.Scene {
 
 
     //camera
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.22, 0.22);
+    this.cameras.main.startFollow(this.ship)
+    // this.cameras.main.setZoom(0.22, 0.22);
   }
 
   update(time) {
