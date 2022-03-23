@@ -6,19 +6,34 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
+    this.shoot = scene.sound.add('alienShot', { volume: 0.3 })
+    this.anims.create({
+      key: "blowup",
+      frameRate: 25,
+      frames: this.anims.generateFrameNumbers("alien", { start: 2, end: 31 })
+    })
     scene.physics.add.overlap(this, scene.playerbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {
-        this.destroy();
-        particles.destroy()
+        this.playerTarget = false
+        blowup.play()
+        this.body.stop()
+        this.body.destroy()
+        this.play("blowup")
+        this.once("animationcomplete", () => {
+          this.destroy();
+          particles.destroy()
+        })
       }
     });
-
+    let angle1 = 0
     scene.physics.add.overlap(this, scene.planet, () => {
-      this.body.reset(this.x, this.y)
+      this.setPosition(x, y)
       this.playerTarget = false
-      this.rotation = Phaser.Math.Angle.BetweenPoints(this, scene.planet)
+      angle1 = Phaser.Math.Angle.Wrap(angle1 + 0.005)
+      Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, angle1, 990)
     })
 
     this.setCollideWorldBounds(true);
@@ -48,7 +63,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       speedX: { min: -10 * dx, max: 10 * dx },
       accelerationY: 1000 * dy,
       accelerationx: 1000 * dx,
-      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 2000 } },
+      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 500 } },
       alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
       rotate: { min: -180, max: 180 },
       angle: { min: 30, max: 110 },
@@ -65,11 +80,14 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
     //if freefire is true, fire at ship
     if (this.playerTarget) {
       this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.ship)
+    } else {
+      this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.planet)
     }
     if (time > this.shotdelay) {
+      this.shoot.play()
       let bullet = this.scene.alienbullets.get(0, 0, 'alien_bullet')
       bullet.fire(this)
-      this.shotdelay = time + (1000);
+      this.shotdelay = time + Phaser.Math.Between(1000, 4000);
     }
   }
 }

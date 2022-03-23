@@ -10,6 +10,7 @@ export default class Test extends Phaser.Scene {
   constructor() {
     super("Test_Level");
   }
+
   preload() {
     this.load.image("background", "assets/backgroundtile-min.png");
     this.load.image("planet", "assets/earth-transparent-min.png");
@@ -27,10 +28,14 @@ export default class Test extends Phaser.Scene {
     this.load.image("sun", "assets/sun.png");
     this.load.image("moon1", "assets/moon1.png");
     this.load.image("moon2", "assets/moon6.png");
-    this.load.image("alien", "assets/alien-invader.png");
+    this.load.spritesheet("alien", "assets/alien-invader.png", { frameWidth: 75, frameHeight: 65 });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
+    this.load.audio("alien-blowup", "assets/alien-blowup.mp3")
+    this.load.audio("playerShot", "assets/playerbullet.mp3")
+    this.load.audio("alienShot", "assets/alienshot.mp3")
   }
+
   create() {
     this.bg = this.add
       .tileSprite(400, 300, 8000, 6000, "background")
@@ -54,7 +59,7 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
 
     this.planet = new Planet(this, 2000, 1500, "planet");
-    this.sun = this.physics.add.sprite(1000, -100, "sun");
+    this.sun = this.add.sprite(1000, -100, "sun");
     this.moon1 = this.physics.add
       .sprite(-200, 1500, "moon1")
       .setDisplaySize(150, 150);
@@ -66,7 +71,11 @@ export default class Test extends Phaser.Scene {
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.defense = new Defense(this, 1280, 720, "defense");
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    // this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.addKeys({
+      "forward": Phaser.Input.Keyboard.KeyCodes.W,
+      "right": Phaser.Input.Keyboard.KeyCodes.D,
+      "left": Phaser.Input.Keyboard.KeyCodes.A})
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -82,15 +91,11 @@ export default class Test extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-     this.mothershipgroup = [
-      this.motherships.get(),
-      this.motherships.get(4000, 0),
-      this.motherships.get(0, 3000),
-      this.motherships.get(4000, 3000)
-    ]
 
-
-
+    this.mothership1 = this.motherships.get();
+    this.mothership2 = this.motherships.get(4000, 0);
+    this.mothership3 = this.motherships.get(0, 3000);
+    this.mothership4 = this.motherships.get(4000, 3000);
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -199,7 +204,7 @@ export default class Test extends Phaser.Scene {
     } else {
       this.ship.setAngularVelocity(0);
     }
-    if (this.cursors.up.isDown) {
+    if (this.cursors.forward.isDown) {
       this.physics.velocityFromRotation(
         this.ship.rotation,
         50000,
@@ -217,6 +222,7 @@ export default class Test extends Phaser.Scene {
       let bullet = this.playerbullets.get(0, 0, "laser_bullet");
 
       if (bullet) {
+        this.ship.shoot.play()
         bullet.fire(this.ship);
         //this.bullet.setCollideWorldBounds(true)
         this.lastFired = time + 100;
