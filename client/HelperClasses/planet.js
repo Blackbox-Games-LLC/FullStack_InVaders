@@ -20,13 +20,10 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
       console.log(this.health)
     })
 
-
-
     this.setCircle(1000, -390, -390);
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
     this.health = 20000;
-
   }
 }
 
