@@ -3,8 +3,9 @@ import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet";
 import Defense from "../HelperClasses/defenseSatellite";
-import Base from "../HelperClasses/bases";
 import CountdownController from "../UI/CountdownController";
+import AttackBase from "../HelperClasses/attackBase";
+import DefenseBase from "../HelperClasses/defenseBase";
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -13,6 +14,7 @@ export default class Test extends Phaser.Scene {
   constructor() {
     super("Test_Level");
   }
+
   preload() {
     this.load.image("background", "assets/backgroundtile-min.png");
     this.load.image("planet", "assets/earth-transparent-min.png");
@@ -30,10 +32,17 @@ export default class Test extends Phaser.Scene {
     this.load.image("sun", "assets/sun.png");
     this.load.image("moon1", "assets/moon1.png");
     this.load.image("moon2", "assets/moon6.png");
-    this.load.image("alien", "assets/alien-invader.png");
+    this.load.spritesheet("alien", "assets/alien-invader.png", {
+      frameWidth: 75,
+      frameHeight: 65,
+    });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
+    this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
+    this.load.audio("playerShot", "assets/playerbullet.mp3");
+    this.load.audio("alienShot", "assets/alienshot.mp3");
   }
+
   create() {
     this.bg = this.add
       .tileSprite(400, 300, 8000, 6000, "background")
@@ -57,7 +66,7 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
 
     this.planet = new Planet(this, 2000, 1500, "planet");
-    this.sun = this.physics.add.sprite(1000, -100, "sun");
+    this.sun = this.add.sprite(1000, -100, "sun");
     this.moon1 = this.physics.add
       .sprite(-200, 1500, "moon1")
       .setDisplaySize(150, 150);
@@ -65,15 +74,16 @@ export default class Test extends Phaser.Scene {
       .sprite(2500, 2500, "moon2")
       .setDisplaySize(150, 150);
 
-    this.offbase = new Base(this, 2625, 1500, "offense-base");
-    this.defbase = new Base(this, 2000, 900, "defense-base");
-    this.offbase.setAngle(90);
-
     this.galaxy = this.add.sprite(4000, 1200, "galaxy");
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.defense = new Defense(this, 1280, 720, "defense");
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    // this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.addKeys({
+      forward: Phaser.Input.Keyboard.KeyCodes.W,
+      right: Phaser.Input.Keyboard.KeyCodes.D,
+      left: Phaser.Input.Keyboard.KeyCodes.A,
+    });
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -89,22 +99,31 @@ export default class Test extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.motherships.get();
-    this.motherships.get(4000, 0);
-    this.motherships.get(0, 3000);
-    this.motherships.get(4000, 3000);
 
-    //spawn bases
-    this.bases = this.physics.add.group({
-      classType: Base,
+    this.mothership1 = this.motherships.get();
+    this.mothership2 = this.motherships.get(4000, 0);
+    this.mothership3 = this.motherships.get(0, 3000);
+    this.mothership4 = this.motherships.get(4000, 3000);
+
+    //spawn attackBases
+    this.attackBases = this.physics.add.group({
+      classType: AttackBase,
       scene: this,
       immovable: true,
       runChildUpdate: true,
     });
-    this.bases.get(2625, 1500).setAngle(90);
-    this.bases.get(2000, 900);
-    this.bases.get(1400, 1500).setAngle(-90);
-    this.bases.get(2000, 2100).setAngle(-180);
+    this.attackBases.get(2625, 1500).setAngle(90);
+    this.attackBases.get(2000, 900);
+
+    //spawn defenseBases
+    this.defenseBases = this.physics.add.group({
+      classType: DefenseBase,
+      scene: this,
+      immovable: true,
+      runChildUpdate: true,
+    });
+    this.defenseBases.get(1400, 1500).setAngle(-90);
+    this.defenseBases.get(2000, 2100).setAngle(-180);
 
     // galaxy spin
     this.tweens.add({
@@ -136,6 +155,8 @@ export default class Test extends Phaser.Scene {
   }
   update(time) {
     //vars
+
+    this.gameWon = false;
     this.defense.setPosition(640, 380);
     this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
@@ -143,13 +164,33 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
 
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
-    this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    //completing the game condition and the associated timer
-    if (time >= 100000) {
+    //win condition associated with timer and destruction of motherships
+    //kinda wonky gotta figure this one out too.
+    if (time >= 200000) {
       this.gameWon = true;
       this.command.setVisible(true);
+      var shape2 = new Phaser.Geom.Circle(0, 0, 800);
+      var particles = this.add.particles("exhaust");
+      particles.createEmitter({
+        x: 2000,
+        y: 1500,
+        speed: 0,
+        lifespan: 10000,
+        quantity: 1,
+        scale: { start: 0.1, end: 0 },
+        blendMode: "ADD",
+        emitZone: { type: "edge", source: shape2, quantity: 48, yoyo: false },
+      });
+      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
+    }
+
+    //loss condition associated with timer
+    if (this.planet.health <= 0 || this.ship.health <= 0) {
+      this.gameWon = false;
+      this.planet.setVisible(false);
+      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
     //defense rotation
@@ -181,7 +222,7 @@ export default class Test extends Phaser.Scene {
     } else {
       this.ship.setAngularVelocity(0);
     }
-    if (this.cursors.up.isDown) {
+    if (this.cursors.forward.isDown) {
       this.physics.velocityFromRotation(
         this.ship.rotation,
         50000,
@@ -199,6 +240,7 @@ export default class Test extends Phaser.Scene {
       let bullet = this.playerbullets.get(0, 0, "laser_bullet");
 
       if (bullet) {
+        this.ship.shoot.play();
         bullet.fire(this.ship);
         //this.bullet.setCollideWorldBounds(true)
         this.lastFired = time + 100;
