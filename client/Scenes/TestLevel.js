@@ -70,7 +70,11 @@ export default class Test extends Phaser.Scene {
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.defense = new Defense(this, 1280, 720, "defense");
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    // this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.addKeys({
+      "forward": Phaser.Input.Keyboard.KeyCodes.W,
+      "right": Phaser.Input.Keyboard.KeyCodes.D,
+      "left": Phaser.Input.Keyboard.KeyCodes.A})
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -171,7 +175,7 @@ export default class Test extends Phaser.Scene {
     } else {
       this.ship.setAngularVelocity(0);
     }
-    if (this.cursors.up.isDown) {
+    if (this.cursors.forward.isDown) {
       this.physics.velocityFromRotation(
         this.ship.rotation,
         50000,
