@@ -151,7 +151,7 @@ export default class Test extends Phaser.Scene {
 
     //win condition associated with timer and destruction of motherships
     //kinda wonky gotta figure this one out too.
-    if (time >= 10000 || this.mothershipgroup.length === 0) {
+    if (time >= 200000) {
       this.gameWon = true;
       this.command.setVisible(true);
       var shape2 = new Phaser.Geom.Circle(0, 0, 800);
