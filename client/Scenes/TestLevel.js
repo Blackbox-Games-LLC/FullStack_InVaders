@@ -119,6 +119,7 @@ export default class Test extends Phaser.Scene {
 
   update(time) {
     //vars
+    this.gameWon = false;
     this.defense.setPosition(640, 380);
     this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
@@ -126,13 +127,19 @@ export default class Test extends Phaser.Scene {
     this.ship.body.velocity.y = 0;
 
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
-    this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    //completing the game condition and the associated timer
+
+
+    //win condition associated with timer
     if (time >= 100000) {
       this.gameWon = true;
       this.command.setVisible(true);
+    }
+    //loss condition associated with timer
+    if (this.planet.health <= 0) {
+      this.gameWon = false
+      this.planet.setVisible(false)
     }
 
     //defense rotation

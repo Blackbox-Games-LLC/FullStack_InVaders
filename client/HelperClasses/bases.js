@@ -9,7 +9,7 @@ export default class Base extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
    scene.add.existing(this);
     scene.physics.add.existing(this);
-    scene.physics.add.collider(this, scene.bullets, () => {
+    scene.physics.add.collider(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {

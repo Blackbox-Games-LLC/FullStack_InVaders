@@ -17,10 +17,6 @@ var config = {
       debug: true,
       gravity: { scale: 0 },
     },
-    // matter: {
-    //     debug: true,
-    //     gravity: { scale: 0 }
-    // }
   },
 };
 
