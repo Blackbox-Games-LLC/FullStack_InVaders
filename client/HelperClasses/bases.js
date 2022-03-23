@@ -21,7 +21,7 @@ export default class Base extends Phaser.Physics.Arcade.Sprite {
     this.setImmovable(true)
 
     this.health = 1000
-     this.spawnDelay = 0
+    this.spawnDelay = 0
 
   }
   spawnSatellites() {
