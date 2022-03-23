@@ -4,8 +4,12 @@ import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet";
 import Defense from "../HelperClasses/defenseSatellite";
 import Base from "../HelperClasses/bases";
+import CountdownController from "../UI/CountdownController";
 
 export default class Test extends Phaser.Scene {
+  /** @type {CountdownController} */
+  countdown;
+
   constructor() {
     super("Test_Level");
   }
@@ -114,8 +118,22 @@ export default class Test extends Phaser.Scene {
     //camera
     //this.cameras.main.startFollow(this.ship)
     this.cameras.main.setZoom(0.22, 0.22);
-  }
 
+    // countDownController
+    const timerLabel = this.add.text(1500, -400, "1000", {
+      fontSize: 150,
+      fontStyle: "bold",
+      color: "#32a852",
+    });
+    this.countdown = new CountdownController(this, timerLabel);
+    this.countdown.start(this.handleCountDownFinished.bind(this));
+  }
+  // for countDownController(when the player Loose)
+  handleCountDownFinished() {
+    //this.player.active=false
+    //const {width,height}=this.scale
+    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+  }
   update(time) {
     //vars
     this.defense.setPosition(640, 380);
@@ -186,5 +204,7 @@ export default class Test extends Phaser.Scene {
         this.lastFired = time + 100;
       }
     }
+    //counter
+    this.countdown.update();
   }
 }
