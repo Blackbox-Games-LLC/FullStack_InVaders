@@ -137,11 +137,7 @@ export default class Test extends Phaser.Scene {
 
     //camera
     this.cameras.main.startFollow(this.ship)
-<<<<<<< HEAD
     // this.cameras.main.setZoom(0.5, 0.5);
-=======
-    // this.cameras.main.setZoom(0.22, 0.22);
->>>>>>> origin/main
 
     // countDownController
     const timerLabel = this.add.text(1500, -400, "1000", {
