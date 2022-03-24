@@ -22,21 +22,28 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
     this.health = 1000
     this.spawnDelay = 0
 
+    if(!scene.defenseSatellite) {
+      scene.defenseSatellite = scene.physics.add.group({
+        classType: defenseSatellite,
+        scene: scene,
+        runChildUpdate: true,
+        immovable: true
+      })
+    }
+
   }
   spawnSatellites() {
-    let b = this.getTopCenter();
+    let b = this.getCenter();
+      // new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
 
-
-      new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
-
-    // let offense = this.scene.offenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "offense")
-    // this.scene.physics.moveToObject(offense, this.scene.motherships, 20, 1000)
+    let defense = this.scene.defenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "defense")
+    this.scene.physics.moveToObject(defense, this.scene.planet, 10, 750)
   }
   update(time) {
-    if (this && time > this.spawnDelay) {
+    if (time > this.spawnDelay) {
       this.spawnSatellites()
-      this.spawnDelay = time + 50000
+      // let numDefense = this.scene.defenseBases.getlength()
+      this.spawnDelay = time + (2 * 750) + Phaser.Math.Between(0, 300)
     }
-    // this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.motherships)
   }
 }

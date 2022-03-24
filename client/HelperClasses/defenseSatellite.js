@@ -12,6 +12,20 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
         this.destroy();
       }
     });
+    scene.physics.add.overlap(this, scene.alienbulletes, () => {
+      if (this.health > 0) {
+        this.health -= 10;
+      } else {
+        this.body.destroy();
+      }
+    });
+
+    let defenseAngle = 0;
+    scene.physics.add.overlap(this, scene.planet, () => {
+      this.setPosition(x, y);
+      defenseAngle = Phaser.Math.Angle.Wrap(defenseAngle - 0.001)
+      Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, defenseAngle, 750)
+    })
 
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
@@ -19,8 +33,6 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
 
     this.health = 250;
     
-    const path = new Phaser.Math.Vector2(1,0)
-    path.getLength
   }
 
 }
