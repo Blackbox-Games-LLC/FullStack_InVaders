@@ -6,6 +6,7 @@ import Defense from "../HelperClasses/defenseSatellite";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
+import gameOver from "../HelperClasses/gameCondition"
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -55,6 +56,9 @@ export default class Test extends Phaser.Scene {
       .setVisible(false);
 
     this.galaxy = this.add.sprite(4000, 1200, "galaxy");
+
+    //gonna use this to reset game. this is the rectangle. NO TOUCHY!
+    // this.gameOver = new gameOver(this, 2000, 1500)
 
     this.lastFired = 0;
     this.angle1 = 0;
@@ -167,7 +171,9 @@ export default class Test extends Phaser.Scene {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
     //win condition
-    if (time >= 200000 || this.motherships.getLength() === 0) {
+    if (time >= 10000 || this.motherships.getLength() === 0) {
+      // this.physics.pause()
+      //use this to pause the game if winner wins.
       this.gameWon = true;
       this.command.setVisible(true);
       var shape2 = new Phaser.Geom.Circle(0, 0, 800);
@@ -176,7 +182,7 @@ export default class Test extends Phaser.Scene {
         x: 2000,
         y: 1500,
         speed: 0,
-        lifespan: 10000,
+        lifespan: 5,
         quantity: 1,
         scale: { start: 0.1, end: 0 },
         blendMode: "ADD",
@@ -187,6 +193,7 @@ export default class Test extends Phaser.Scene {
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
+      // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
       //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
