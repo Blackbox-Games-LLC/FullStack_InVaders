@@ -67,10 +67,10 @@ export default class Test extends Phaser.Scene {
 
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.sun = this.add.sprite(1000, -100, "sun");
-    this.moon1 = this.physics.add
+    this.moon1 = this.add
       .sprite(-200, 1500, "moon1")
       .setDisplaySize(150, 150);
-    this.moon2 = this.physics.add
+    this.moon2 = this.add
       .sprite(2500, 2500, "moon2")
       .setDisplaySize(150, 150);
 
@@ -135,8 +135,8 @@ export default class Test extends Phaser.Scene {
     });
 
     //camera
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.22, 0.22);
+    this.cameras.main.startFollow(this.ship)
+    // this.cameras.main.setZoom(0.5, 0.5);
 
     // countDownController
     const timerLabel = this.add.text(1500, -400, "1000", {

@@ -5,11 +5,11 @@ import Bullet from "./bullets";
 // import MotherShip from "./mothership";
 
 export default class Offense extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, spritekey, alien, mothership) {
+  constructor(scene, x, y, spritekey) {
     super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    scene.physics.add.collider(this, scene.alienbullets, () => {
+    scene.physics.add.overlap(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {
@@ -17,11 +17,12 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
         particles.destroy()
       }
     });
-
+    let offenseAngle = 0;
     scene.physics.add.overlap(this, scene.mothership, () => {
-      this.body.reset(this.x, this.y);
+      this.setposition(x, y);
       this.alienTarget = false;
-      this.rotation = Phaser.Math.Angle.BetweenPoints(this, scene.mothership)
+      offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
+      Phaser.Math.RotateAroundDistance(this, scene.mothership1.x, scene.mothership1.y, offenseAngle, -250)
     })
 
     this.setCollideWorldBounds(true);
@@ -66,7 +67,9 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
 
   update(time) {
     if (this.alienTarget) {
-      this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.mothership)
+      this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.mothership1)
+    } else {
+      this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.mothership2)
     }
     if (time > this.shotdelay) {
       let bullet = this.scene.offensebullets.get(0, 0, "offense-bulllet");
