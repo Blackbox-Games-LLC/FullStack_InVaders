@@ -166,9 +166,8 @@ export default class Test extends Phaser.Scene {
     this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    //win condition associated with timer and destruction of motherships
-    //kinda wonky gotta figure this one out too.
-    if (time >= 200000) {
+    //win condition
+    if (time >= 200000 || this.motherships.getLength() === 0) {
       this.gameWon = true;
       this.command.setVisible(true);
       var shape2 = new Phaser.Geom.Circle(0, 0, 800);
@@ -186,7 +185,7 @@ export default class Test extends Phaser.Scene {
       //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
-    //loss condition associated with timer
+    //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
       this.gameWon = false;
       this.planet.setVisible(false);

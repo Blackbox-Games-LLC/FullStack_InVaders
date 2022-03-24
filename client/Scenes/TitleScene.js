@@ -100,7 +100,7 @@ export default class TitleScene extends Phaser.Scene {
       name.value = "";
     });
   }
-  clickButton() {
-    this.scene.switch("Test_Level");
-  }
+  // clickButton() {
+  //   this.scene.switch("Test_Level");
+  // }
 }

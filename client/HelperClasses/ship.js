@@ -13,6 +13,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
         this.health -= 1;
       } else {
         console.log("destroy animation");
+        this.destroy() // destroy ship in event of no health
       }
     });
 
