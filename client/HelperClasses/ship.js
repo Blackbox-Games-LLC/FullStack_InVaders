@@ -7,6 +7,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, "ship");
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.shoot = scene.sound.add('playerShot', { volume: 0.3 })
     scene.physics.add.overlap(this, scene.motherships, () => {
       if (this.health > 0) {
         this.health -= 1;
@@ -23,7 +24,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.setImmovable(true);
 
     this.health = 1000;
-    this.hp = new HealthBar(this.scene, 50, 50, this.health);
+    // this.hp = new HealthBar(this.scene, 50, 50, this.health);
 
     scene.playerbullets = scene.physics.add.group({
       classType: Bullet,

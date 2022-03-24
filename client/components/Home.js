@@ -17,10 +17,6 @@ var config = {
       debug: true,
       gravity: { scale: 0 },
     },
-    // matter: {
-    //     debug: true,
-    //     gravity: { scale: 0 }
-    // }
   },
 };
 
@@ -28,8 +24,8 @@ const game = new Phaser.Game(config);
 
 game.scene.add("Title_Scene", TitleScene);
 game.scene.add("Test_Level", Test);
-game.scene.start("Title_Scene");
-//game.scene.start("Test_Level");
+// game.scene.start("Title_Scene");
+game.scene.start("Test_Level");
 
 const Home = () => {
   return <div id="game"></div>;
