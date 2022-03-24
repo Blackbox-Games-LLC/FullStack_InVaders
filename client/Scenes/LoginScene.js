@@ -29,18 +29,24 @@ export default class LoginScene extends Phaser.Scene {
         let loginResult = await axios.post("/api/login", {
           username: name.value,
         });
+        let getScores = await axios.get(`/api/score/${loginResult.data.id}`);
+        console.log("getscore", getScores);
         console.log("loginResult", loginResult);
+        //console.log("username", username);
+        let lastScore = 0;
+        if (getScores && getScores.data.length > 0) {
+          lastScore = getScores.data[0].score;
+        }
+        localStorage.setItem("username", name.value);
+        localStorage.setItem("score", lastScore);
+        //localStorage.getItem("lastscore");
         if (loginResult.data.username === name.value) {
-          // localStorage.setItem("username", name.value);
-          // localStorage.setItem("score", loginResult.data.score);
-          // localStorage.getItem("score");
           this.scene.switch("Test_Level");
         }
       }
       if (event.target.name === "registerButton") {
         let registerResult = await axios.post("/api/register", {
           username: name.value,
-          score: 0,
         });
         console.log("register", registerResult);
         if (registerResult.data.hasOwnProperty("error")) {

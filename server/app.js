@@ -33,6 +33,8 @@ app.use("/api/register", require("./api/register"));
 app.use("/api/login", require("./api/login"));
 // routes of user
 app.use("/api/user", require("./api/user"));
+// router of scores
+app.use("/api/score", require("./api/score"));
 
 // sends index.html
 app.use("*", (req, res) => {

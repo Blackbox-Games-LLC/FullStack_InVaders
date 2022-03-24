@@ -3,14 +3,11 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
 
-const User = db.define("user", {
-  username: {
-    type: Sequelize.STRING,
+const Score = db.define("score", {
+  score: {
+    type: Sequelize.INTEGER,
     allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
 });
 
-module.exports = User;
+module.exports = Score;
