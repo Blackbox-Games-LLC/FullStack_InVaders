@@ -27,6 +27,8 @@ app.use((req, res, next) => {
     next();
   }
 });
+// router of register
+app.use("/api/register", require("./api/register"));
 //router of login
 app.use("/api/login", require("./api/login"));
 // routes of user

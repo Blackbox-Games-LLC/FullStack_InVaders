@@ -47,7 +47,10 @@ export default class Test extends Phaser.Scene {
     this.bg = this.add
       .tileSprite(400, 300, 8000, 6000, "background")
       .setScrollFactor(0);
-
+    // this.add.text(1000, -500, localStorage.getItem("score"), {
+    //   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+    //   fontSize: "200px",
+    // });
     //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add
       .sprite(2000, 1500, "command")
