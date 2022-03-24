@@ -76,7 +76,7 @@ export default class Test extends Phaser.Scene {
 
     this.galaxy = this.add.sprite(4000, 1200, "galaxy");
     this.planet = new Planet(this, 2000, 1500, "planet");
-    this.defense = new Defense(this, 1280, 720, "defense");
+    // this.defense = new Defense(this, 1280, 720, "defense");
 
     // this.cursors = this.input.keyboard.createCursorKeys();
     this.cursors = this.input.keyboard.addKeys({
@@ -119,6 +119,7 @@ export default class Test extends Phaser.Scene {
     this.defenseBases = this.physics.add.group({
       classType: DefenseBase,
       scene: this,
+      maxSize: 2,
       immovable: true,
       runChildUpdate: true,
     });
@@ -135,8 +136,8 @@ export default class Test extends Phaser.Scene {
     });
 
     //camera
-    //this.cameras.main.startFollow(this.ship)
-    this.cameras.main.setZoom(0.22, 0.22);
+    this.cameras.main.startFollow(this.ship)
+    // this.cameras.main.setZoom(0.22, 0.22);
 
     // countDownController
     const timerLabel = this.add.text(1500, -400, "1000", {
@@ -157,13 +158,13 @@ export default class Test extends Phaser.Scene {
     //vars
 
     this.gameWon = false;
-    this.defense.setPosition(640, 380);
+    // this.defense.setPosition(640, 380);
     this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
     this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
 
-    this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+    // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
     //win condition associated with timer and destruction of motherships
@@ -193,15 +194,15 @@ export default class Test extends Phaser.Scene {
       //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
-    //defense rotation
-    Phaser.Math.RotateAroundDistance(
-      this.defense,
-      this.planet.x,
-      this.planet.y,
-      this.angle1,
-      this.distance1
-    );
-    this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
+    // //defense rotation
+    // Phaser.Math.RotateAroundDistance(
+    //   this.defense,
+    //   this.planet.x,
+    //   this.planet.y,
+    //   this.angle1,
+    //   this.distance1
+    // );
+    // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
 
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
