@@ -17,7 +17,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
         particles.destroy()
       }
     });
-    
+
 
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
@@ -34,29 +34,29 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       runChildUpdate: true
     })
 
-    const path = new Phaser.Math.Vector2(1,0);
+    const path = new Phaser.Math.Vector2(1, 0);
     path.setToPolar(this.rotation, 1);
     const px = -path.x;
     const py = -path.y;
     const particles = scene.add.particles("offense-exhaust");
 
-    particles.createEmitter({
-      quantity: 10,
-      speedY: { min: 20 * py, max: 50 * px },
-      speedX: { min: -10 * px, max: 10 * px },
-      accelerationY: 1000 * py,
-      accelerationx: 1000 * px,
-      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 2000 } },
-      alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
-      rotate: { min: -180, max: 180 },
-      angle: { min: 30, max: 110 },
-      blendMode: "ADD",
-      frequency: 75,
-      scale: { start: 0.02, end: 0.02 },
-      follow: this,
-      followOffset: { y: this.height - 60 },
-    });
-    particles.setDepth(0);
+    // particles.createEmitter({
+    //   quantity: 10,
+    //   speedY: { min: 20 * py, max: 50 * px },
+    //   speedX: { min: -10 * px, max: 10 * px },
+    //   accelerationY: 1000 * py,
+    //   accelerationx: 1000 * px,
+    //   lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 2000 } },
+    //   alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
+    //   rotate: { min: -180, max: 180 },
+    //   angle: { min: 30, max: 110 },
+    //   blendMode: "ADD",
+    //   frequency: 75,
+    //   scale: { start: 0.02, end: 0.02 },
+    //   follow: this,
+    //   followOffset: { y: this.height - 60 },
+    // });
+    // particles.setDepth(0);
 
   }
 
@@ -64,9 +64,9 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     let offenseAngle = 0;
     let alienEnemy = this.scene.aliens.getChildren()
     this.scene.physics.add.overlap(this, alienEnemy, () => {
-    this.setposition(x, y);
-    offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
-    Phaser.Math.RotateAroundDistance(this, alienEnemy[0].x, alienEnemy[0].y, offenseAngle, -250)
+      this.setposition(x, y);
+      offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
+      Phaser.Math.RotateAroundDistance(this, alienEnemy[0].x, alienEnemy[0].y, offenseAngle, -250)
     })
     this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[0])
     this.scene.physics.moveToObject(this, alienEnemy[0])
@@ -94,7 +94,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       bullet.setDisplaySize(20, 10).fire(this)
       this.shotdelay = time + (1000);
     }
-  }
+  } aww
 
   // seekAndDestroy() {
   //   new BaseOffenseAI(scene, x, y, offense, alien, mothership)
