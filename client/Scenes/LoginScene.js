@@ -40,13 +40,15 @@ export default class LoginScene extends Phaser.Scene {
         console.log("getscore", getScores);
         console.log("loginResult", loginResult);
         //console.log("username", username);
-        let lastScore = 0;
-        if (getScores && getScores.data.length > 0) {
-          lastScore = getScores.data[0].score;
-        }
-        localStorage.setItem("username", name.value);
+        // let lastScore = 0;
+        // if (getScores && getScores.data.length > 0) {
+        //   lastScore = getScores.data[0].score;
+        // }
+        //localStorage.setItem("id", loginResult.data.id)
 
-        localStorage.setItem("score", lastScore);
+        this.User = this.sys.game.globals.User
+        this.User.id = loginResult.data.id
+        this.User.name = name.value
 
         if (loginResult.data.username === name.value) {
           this.scene.switch("Test_Level");
@@ -67,7 +69,7 @@ export default class LoginScene extends Phaser.Scene {
       name.value = "";
     });
   }
-  update() {}
+  update() { }
   clickButton() {
     this.scene.switch("Test_Level");
   }

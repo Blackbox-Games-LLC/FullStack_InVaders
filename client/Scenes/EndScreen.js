@@ -1,32 +1,28 @@
 import Phaser from "phaser";
 import axios from "axios";
+import CurrentUser from "../HelperClasses/currentUser";
+import Score from "../HelperClasses/Score"
+
 
 export default class EndScreen extends Phaser.Scene {
-  constructor() {
-    super("End_Screen");
-  }
-  init(data) {}
+    constructor() {
+        super("End_Screen");
+    }
+    init(data) { }
 
-  preload() {
-    this.load.rexAwait(async (successCallback, failureCallback) => {
-      this.name = await axios.get("/api/user/1");
-      console.log(this.name.data.username);
+    preload() {
+        this.User = this.sys.game.globals.User
+        this.load.rexAwait(async (successCallback, failureCallback) => {
+            if (this.User.id) {
+                this.scores = await axios.get(`/api/score/${this.User.id}`);
+                successCallback();
+            }
+        });
+    }
+    create() {
+        this.scores.map(current => {
+            new Score()
+        })
 
-      successCallback();
-    });
-    // const asyncLoader = (loaderPlugin) =>
-    //   new Promise((resolve, reject) => {
-    //     loaderPlugin.on("filecomplete", resolve).on("loaderror", reject);
-    //     loaderPlugin.start();
-    //   });
-    // const doStuff = async () => {
-    //   asyncLoader(await axios.get("/api/user/1"));
-    // };
-    // console.log("hello", doStuff());
-  }
-  create() {
-    this.add.text(2000, 1500, this.name.data.username, {
-      fontSize: 100,
-    });
-  }
+    }
 }

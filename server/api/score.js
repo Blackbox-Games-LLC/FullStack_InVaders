@@ -17,7 +17,7 @@ router.get("/:userId", async (req, res, next) => {
       where: {
         userId: userId,
       },
-      order: [["id", "DESC"]], // order by from last score
+      order: [["score", "DESC"]], // order by from last score
     });
     res.send(singleUserAllScore);
   } catch (err) {
