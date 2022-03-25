@@ -2,24 +2,28 @@ const { db } = require("./server/db");
 const { green, red } = require("chalk");
 
 const User = require("./server/db/user");
+const Score = require("./server/db/score");
 
 const users = [
   {
     username: "David",
-    score: 0,
   },
   {
     username: "Rich",
-    score: 0,
   },
   {
     username: "Ryan",
-    score: 0,
   },
   {
     username: "Veysel",
-    score: 0,
   },
+];
+const scores = [
+  { userId: 1, score: 3 },
+  { userId: 2, score: 3 },
+  { userId: 2, score: 5 },
+  { userId: 1, score: 2 },
+  { userId: 1, score: 7 },
 ];
 const seed = async () => {
   try {
@@ -28,6 +32,11 @@ const seed = async () => {
     await Promise.all(
       users.map((user) => {
         return User.create(user);
+      })
+    );
+    await Promise.all(
+      scores.map((score) => {
+        return Score.create(score);
       })
     );
 
