@@ -48,9 +48,9 @@ export default class Test extends Phaser.Scene {
   }
 
   create() {
-    // this.bg = this.add
-    //   .tileSprite(1024, 1024, 16392, 12288, "background")
-    //   .setScrollFactor(0.8);
+    this.bg = this.add
+      .tileSprite(1024, 1024, 16392, 12288, "background")
+      .setScrollFactor(0.8);
 
     // this.add.text(1000, -500, localStorage.getItem("score"), {
     //   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
