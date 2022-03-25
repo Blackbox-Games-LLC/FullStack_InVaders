@@ -7,7 +7,7 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   preload() {
-    //   this.load.image('background','assets/title.png')
+    //  this.load.image('background','assets/title.png')
     this.load.html("form", "/assets/text/form.html");
   }
 
@@ -55,49 +55,36 @@ export default class TitleScene extends Phaser.Scene {
       fontStyle: "bold",
       backgroundColor: "#7B9D1E",
     });
-    this.message = this.add.text(700, 600, "Move Down .... S ", {
+    this.message = this.add.text(700, 600, "Move Right .... D ", {
       color: "#FFFFFF",
       fontSize: 50,
       fontStyle: "bold",
       backgroundColor: "#7B9D1E",
     });
-    this.message = this.add.text(700, 700, "Move Right .... D ", {
-      color: "#FFFFFF",
-      fontSize: 50,
-      fontStyle: "bold",
-      backgroundColor: "#7B9D1E",
-    });
-    this.message = this.add.text(700, 800, "Fire Attack .... SPACE ", {
+    this.message = this.add.text(700, 700, "Fire Attack .... SPACE ", {
       color: "#FFFFFF",
       fontSize: 50,
       fontStyle: "bold",
       backgroundColor: "#D0021B",
     });
     this.message = this.add
-      .text(2000, 1000, "Hello Please Login", {
+      .text(2000, 1000, "Hello", {
         color: "#FFFFFF",
         fontSize: 60,
         fontStyle: "bold",
       })
       .setOrigin(0.5);
-    this.returnKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.ENTER
-    );
-    // console.log("return key", this.returnKey);
 
-    this.returnKey.on("down", async (event) => {
-      let name = this.nameInput.getChildByName("name");
-      // console.log("name", name);
-      let loginResult = await axios.post("/api/login", {
-        username: name.value,
-      });
-      console.log("loginResult", loginResult);
-      if (loginResult.data.username === name.value) {
-        this.scene.switch("Test_Level");
-      } else {
-        this.message.setText("Wrong User Name");
+    this.returnKey = this.nameInput.addListener("click");
+
+    this.returnKey.on("click", async (event) => {
+      if (event.target.name === "loginButton") {
+        this.scene.switch("Login_Scene");
       }
-      name.value = "";
+
+      if (event.target.name === "playButton") {
+        this.scene.switch("Test_Level");
+      }
     });
   }
   clickButton() {

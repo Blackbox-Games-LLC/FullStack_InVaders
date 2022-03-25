@@ -11,10 +11,6 @@ const User = db.define("user", {
       notEmpty: true,
     },
   },
-  score: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
 });
 
 module.exports = User;

@@ -2,6 +2,7 @@ import React from "react";
 import Phaser from "phaser";
 import Test from "../Scenes/TestLevel";
 import TitleScene from "../Scenes/TitleScene";
+import LoginScene from "../Scenes/LoginScene";
 
 var config = {
   type: Phaser.AUTO,
@@ -23,9 +24,11 @@ var config = {
 const game = new Phaser.Game(config);
 
 game.scene.add("Title_Scene", TitleScene);
+game.scene.add("Login_Scene", LoginScene);
 game.scene.add("Test_Level", Test);
-// game.scene.start("Title_Scene");
-game.scene.start("Test_Level");
+game.scene.start("Title_Scene");
+//game.scene.start("Login_Scene");
+//game.scene.start("Test_Level");
 
 const Home = () => {
   return <div id="game"></div>;

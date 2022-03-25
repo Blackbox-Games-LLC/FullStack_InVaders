@@ -26,8 +26,9 @@ export default class Test extends Phaser.Scene {
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("exhaust", "assets/exhaust.png");
-    this.load.image("alien_exhaust", "assets/alien_exhaust.png");
+    this.load.image("alien_exhaust", "assets/alien_exhaust.png")
     this.load.image("mothership", "assets/mothership.png");
+    this.load.spritesheet("mExplode", "assets/mExplode.png", { frameWidth: 482, frameHeight: 482 })
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("sun", "assets/sun.png");
     this.load.image("moon1", "assets/moon1.png");
@@ -41,12 +42,17 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
+    this.load.audio("motherboom", "assets/motherboom.mp3")
   }
 
   create() {
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
+    
+    // this.add.text(1000, -500, localStorage.getItem("score"), {
+    //   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+    //   fontSize: "200px",
 
     //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add
