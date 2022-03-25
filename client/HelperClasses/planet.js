@@ -24,7 +24,7 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
     //alien kamakazi Damage
     scene.physics.add.overlap(this, scene.aliens, () => {
       scene.planet.health -= 100
-      console.log(this.health)
+      console.log(scene.planet.health)
     })
 
     //planet stats

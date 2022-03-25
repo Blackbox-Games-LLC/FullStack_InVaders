@@ -178,7 +178,6 @@ export default class Test extends Phaser.Scene {
     //win condition
     if (time >= 10000 || this.motherships.getLength() === 0) {
       // this.physics.pause()
-      //use this to pause the game if winner wins.
       this.gameWon = true;
       this.command.setVisible(true);
 
@@ -188,14 +187,12 @@ export default class Test extends Phaser.Scene {
       //   x: 2000,
       //   y: 1500,
       //   speed: 0,
-      //   lifespan: 1,
+      //   lifespan: 1000,
       //   quantity: 1,
-      //   scale: { start: 0.1, end: 0 },
+      //   scale: { start: 0.4, end: 0 },
       //   blendMode: "ADD",
       //   emitZone: { type: "edge", source: shape2, quantity: 48, yoyo: false },
       // });
-
-      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
     //loss condition
@@ -203,7 +200,6 @@ export default class Test extends Phaser.Scene {
       // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
-      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
 
