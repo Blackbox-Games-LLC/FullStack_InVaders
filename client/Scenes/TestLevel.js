@@ -59,7 +59,7 @@ export default class Test extends Phaser.Scene {
     this.command = this.physics.add
       .sprite(2000, 1500, "command")
       .setDepth(2)
-      .setVisible(false);
+      .setVisible(false)
 
     this.galaxy = this.add.sprite(4000, 1200, "galaxy");
 

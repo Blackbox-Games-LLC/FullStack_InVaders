@@ -11,7 +11,7 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
 
     this.health = 1000;
     this.spawnDelay = 0
-    this.hp = new HealthBar(this.scene, this.x, this.y, this.health)
+    this.hp = new HealthBar(this.scene, this.x, this.y, this.health, 300, 40)
 
 
 

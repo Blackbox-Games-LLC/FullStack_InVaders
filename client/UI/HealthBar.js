@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 
 export default class HealthBar extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, health) {
-    super(scene, x, y, health)
+  constructor(scene, x, y, health, width, height) {
+    super(scene, x, y, health, width, height)
     this.bar = new Phaser.GameObjects.Graphics(scene);
     this.bar.setDepth(2)
 
@@ -11,8 +11,8 @@ export default class HealthBar extends Phaser.Physics.Arcade.Sprite {
     this.y = y;
     this.value = health;
     this.size = {
-      width: 400,
-      height: 40,
+      width,
+      height,
     };
 
     this.pixelPerHealth = this.size.width / this.value;
@@ -40,7 +40,7 @@ export default class HealthBar extends Phaser.Physics.Arcade.Sprite {
 
     const margin = 2;
 
-    this.bar.fillStyle(0x00a200);
+    this.bar.fillStyle(0x0000ff);
     this.bar.fillRect(x, y, width + margin, height + margin);
 
     this.bar.fillStyle(0xffffff);
@@ -48,7 +48,7 @@ export default class HealthBar extends Phaser.Physics.Arcade.Sprite {
 
     const healthWidth = Math.floor(this.value * this.pixelPerHealth);
 
-    this.bar.fillStyle(0x0000ff);
+    this.bar.fillStyle(0x00a200);
     this.bar.fillRect(
       x + margin,
       y + margin,

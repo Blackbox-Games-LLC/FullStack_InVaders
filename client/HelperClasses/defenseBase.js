@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 import defenseSatellite from "./defenseSatellite";
-import HealthBar from "../UI/HealthBar";
 
 export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
