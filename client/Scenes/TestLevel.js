@@ -26,6 +26,7 @@ export default class Test extends Phaser.Scene {
     this.load.image("offense", "assets/space-wall-offense.png");
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
+    this.load.image("offense-bullet", "assets/offense-bullets.png");
     this.load.image("exhaust", "assets/exhaust.png");
     this.load.image("alien_exhaust", "assets/alien_exhaust.png")
     this.load.image("mothership", "assets/mothership.png");
@@ -84,7 +85,7 @@ export default class Test extends Phaser.Scene {
       .sprite(2500, 2500, "moon2")
       .setDisplaySize(150, 150);
 
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy").setDisplaySize(3000, 3000);
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy").setDisplaySize(3000, 3000)
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.core = this.physics.add.sprite(2000, 1500, "defense")
     this.core.setDepth(-1).setCircle(750, -700, -700)
@@ -135,7 +136,6 @@ export default class Test extends Phaser.Scene {
     });
     this.defenseBases.get(1400, 1500).setAngle(-90);
     this.defenseBases.get(2625, 1500).setAngle(90);
-
 
     // galaxy spin
     this.tweens.add({

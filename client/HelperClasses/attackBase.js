@@ -6,7 +6,7 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'offense-base');
     this.scene = scene;
-   scene.add.existing(this);
+    scene.add.existing(this);
     scene.physics.add.existing(this);
     scene.physics.add.collider(this, scene.alienbullets, () => {
       if (this.health > 0) {
@@ -22,21 +22,31 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
     this.health = 1000
     this.spawnDelay = 0
 
+    if (!scene.offenseSatellites) {
+      scene.offenseSatellites = scene.physics.add.group({
+        classType: offenseSatellite,
+        scene: scene,
+        runChildUpdate: true,
+        immovable: true
+      })
+    }
+
   }
   spawnSatellites() {
     let b = this.getTopCenter();
-    new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
+    // new offenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "offense")
 
 
 
-    // let offense = this.scene.offenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "offense")
-    // this.scene.physics.moveToObject(offense, this.scene.motherships, 20, 1000)
+    let offense = this.scene.offenseSatellites.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "offense")
+    this.scene.physics.moveToObject(offense, this.scene.mothership1, 20, 10000)
   }
   update(time) {
-    if (this && time > this.spawnDelay) {
+    if (time > this.spawnDelay) {
       this.spawnSatellites()
-      this.spawnDelay = time + 50000
+      let numOffense = this.scene.attackBases.getLength();
+      this.spawnDelay = time * 3
     }
-    // this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.motherships)
+    
   }
 }
