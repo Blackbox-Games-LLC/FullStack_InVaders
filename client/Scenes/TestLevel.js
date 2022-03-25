@@ -26,8 +26,9 @@ export default class Test extends Phaser.Scene {
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("exhaust", "assets/exhaust.png");
-    this.load.image("alien_exhaust", "assets/alien_exhaust.png");
+    this.load.image("alien_exhaust", "assets/alien_exhaust.png")
     this.load.image("mothership", "assets/mothership.png");
+    this.load.spritesheet("mExplode", "assets/mExplode.png", { frameWidth: 482, frameHeight: 482 })
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("sun", "assets/sun.png");
     this.load.image("moon1", "assets/moon1.png");
@@ -41,6 +42,7 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
+    this.load.audio("motherboom", "assets/motherboom.mp3")
   }
 
   create() {
