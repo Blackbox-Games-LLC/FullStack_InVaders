@@ -49,7 +49,6 @@ export default class Test extends Phaser.Scene {
       .tileSprite(400, 300, 8000, 6000, "background")
       .setScrollFactor(0);
 
-    //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add
       .sprite(2000, 1500, "command")
       .setDepth(2)

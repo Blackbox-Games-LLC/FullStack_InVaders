@@ -5,13 +5,14 @@ export default class HealthBar {
     this.bar = new Phaser.GameObjects.Graphics(scene);
 
     this.bar.setScrollFactor(0, 0);
+    this.bar.setDepth(2)
     this.x = x;
     this.y = y;
     this.value = health;
 
     this.size = {
-      width: 200,
-      height: 20,
+      width: 400,
+      height: 40,
     };
 
     this.pixelPerHealth = this.size.width / this.value;
