@@ -23,6 +23,7 @@ const scores = [
   { userId: 2, score: 3 },
   { userId: 2, score: 5 },
   { userId: 1, score: 2 },
+  { userId: 1, score: 7 },
 ];
 const seed = async () => {
   try {
