@@ -21,10 +21,10 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
     });
 
     let defenseAngle = 0;
-    scene.physics.add.overlap(this, scene.planet, () => {
+    scene.physics.add.overlap(this, scene.core, () => {
       this.setPosition(x, y);
-      defenseAngle = Phaser.Math.Angle.Wrap(defenseAngle - 0.001)
-      Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, defenseAngle, 750)
+      defenseAngle = Phaser.Math.Angle.Wrap(defenseAngle - 0.0025)
+      Phaser.Math.RotateAroundDistance(this, scene.core.x, scene.core.y, defenseAngle, 750)
     })
 
     this.setCollideWorldBounds(true);
