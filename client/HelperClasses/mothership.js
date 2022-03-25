@@ -72,7 +72,7 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     if (time > this.spawnDelay) {
       this.spawnAliens();
       let num = this.scene.motherships.getLength()
-      this.spawnDelay = time + (num * 1000);
+      this.spawnDelay = time + (num * 3000);
     }
   }
 }
