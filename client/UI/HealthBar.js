@@ -30,6 +30,10 @@ export default class HealthBar extends Phaser.Physics.Arcade.Sprite {
     this.bar.destroy()
   }
 
+  followCamera() {
+    this.bar.setScrollFactor(0,0)
+  }
+
   draw(x, y) {
     this.bar.clear();
     const { width, height } = this.size;
