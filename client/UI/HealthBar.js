@@ -1,10 +1,12 @@
 import Phaser from "phaser";
 
-export default class HealthBar {
+export default class HealthBar extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, health) {
+    super(scene, x, y, health)
     this.bar = new Phaser.GameObjects.Graphics(scene);
-    this.bar.setScrollFactor(0, 0);
     this.bar.setDepth(2)
+
+
     this.x = x;
     this.y = y;
     this.value = health;
@@ -22,6 +24,10 @@ export default class HealthBar {
   decrease(amount) {
     this.value = amount;
     this.draw(this.x, this.y);
+  }
+
+  delete() {
+    this.bar.destroy()
   }
 
   draw(x, y) {

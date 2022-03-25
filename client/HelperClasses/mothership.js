@@ -11,7 +11,9 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
 
     this.health = 1000;
     this.spawnDelay = 0
-    this.hp = new HealthBar(this.scene, this.x, this.y, this.health);
+    this.hp = new HealthBar(this.scene, this.x, this.y, this.health)
+
+
 
 
     this.setSize(400, 550);
@@ -27,10 +29,12 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
         this.hp.decrease(this.health)
       } else {
         mblowup.play()
+        this.hp.delete()
         this.body.destroy()
         this.play("blowup")
         this.once("animationcomplete", () => {
           this.destroy();
+          this.hp.setVisible(false)
         })
       }
       console.log(this.health)
