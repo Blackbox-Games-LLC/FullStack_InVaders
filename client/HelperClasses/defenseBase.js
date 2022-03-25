@@ -6,7 +6,7 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'defense-base');
     this.scene = scene;
-   scene.add.existing(this);
+    scene.add.existing(this);
     scene.physics.add.existing(this);
     scene.physics.add.collider(this, scene.alienbullets, () => {
       if (this.health > 0) {
@@ -27,7 +27,8 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
         classType: defenseSatellite,
         scene: scene,
         runChildUpdate: true,
-        immovable: true
+        immovable: true,
+        maxSize: 200
       })
     }
 
@@ -37,13 +38,13 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
       // new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
 
     let defense = this.scene.defenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "defense")
-    this.scene.physics.moveToObject(defense, this.scene.planet, 10, 750)
+    this.scene.physics.moveToObject(defense, this.scene.core, -20)
   }
   update(time) {
+    // this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.core)
     if (time > this.spawnDelay) {
       this.spawnSatellites()
-      // let numDefense = this.scene.defenseBases.getlength()
-      this.spawnDelay = time + (2 * 750) + Phaser.Math.Between(0, 300)
+      this.spawnDelay = time * 1.5
     }
   }
 }

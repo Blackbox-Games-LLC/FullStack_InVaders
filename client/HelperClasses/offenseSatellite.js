@@ -24,7 +24,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       this.rotation = Phaser.Math.Angle.BetweenPoints(this, scene.mothership)
     })
 
-    this.setCollideWorldBounds(true);
+    this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
     this.setSize(50, 50);
     this.setDepth(1);

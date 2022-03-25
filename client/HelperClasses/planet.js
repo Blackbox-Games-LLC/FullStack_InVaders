@@ -28,7 +28,7 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
     //planet stats
     this.health = 20000;
 
-    scene.zone = scene.physics.add.image(this.x, this.y).setCircle(this.width, -(this.width), -(this.height - 20))
+    scene.zone = scene.physics.add.image(this.x, this.y).setCircle(this.width, -(this.width - 20), -(this.height - 20))
   }
 }
 
