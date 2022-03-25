@@ -3,6 +3,8 @@ import Phaser from "phaser";
 import Test from "../Scenes/TestLevel";
 import TitleScene from "../Scenes/TitleScene";
 import LoginScene from "../Scenes/LoginScene";
+import EndScreen from "../Scenes/EndScreen";
+import AwaitLoaderPlugin from "phaser3-rex-plugins/plugins/awaitloader-plugin.js";
 
 var config = {
   type: Phaser.AUTO,
@@ -19,14 +21,24 @@ var config = {
       gravity: { scale: 0 },
     },
   },
+  plugins: {
+    global: [
+      {
+        key: "rexAwaitLoader",
+        plugin: AwaitLoaderPlugin,
+        start: true,
+      },
+    ],
+  },
 };
 
 const game = new Phaser.Game(config);
-
+game.scene.add("End_Screen", EndScreen);
 game.scene.add("Title_Scene", TitleScene);
 game.scene.add("Login_Scene", LoginScene);
 game.scene.add("Test_Level", Test);
-game.scene.start("Title_Scene");
+//game.scene.start("Title_Scene");
+game.scene.start("End_Screen");
 //game.scene.start("Login_Scene");
 //game.scene.start("Test_Level");
 
