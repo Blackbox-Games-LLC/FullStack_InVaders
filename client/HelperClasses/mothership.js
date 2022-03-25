@@ -13,6 +13,11 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(2)
     this.setImmovable(true);
 
+    //mothership stats
+    this.health = 1000;
+    this.spawnDelay = 0
+    // this.hp = new HealthBar(this.wascene, this.x, this.y, this.health);
+
     //sounds
     const mblowup = scene.sound.add('motherboom', { volume: 0.8 })
 
@@ -27,7 +32,7 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.overlap(this, scene.playerbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
-        this.hp.decrease(this.health)
+        // this.hp.decrease(this.health)
       } else {
         mblowup.play()
         this.body.destroy()
@@ -42,19 +47,10 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     //player collision damage
     scene.physics.add.overlap(this, scene.ship, () => {
       scene.ship.health -= 1
+      scene.ship.hp.decrease(scene.ship.health)
       console.log(scene.ship.health)
     })
 
-    //mothership stats
-    this.health = 1000;
-    this.spawnDelay = 0
-
-<<<<<<< HEAD
-    this.hp = new HealthBar(this.scene, this.x, this.y, this.health);
-=======
-    //healthbar. have to figure out how to render one health bar per mothership instance.
-    this.hp = new HealthBar(this.scene, 50, 50, this.health);
->>>>>>> origin/main
 
     if (!scene.aliens) {
       scene.aliens = scene.physics.add.group({
