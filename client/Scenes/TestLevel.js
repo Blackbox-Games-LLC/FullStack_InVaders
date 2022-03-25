@@ -158,6 +158,7 @@ export default class Test extends Phaser.Scene {
     });
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
+    timerLabel.setScrollFactor(0,0)
   }
   // for countDownController(when the player Loose)
   handleCountDownFinished() {
