@@ -6,6 +6,11 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
     scene.add.existing(this)
     scene.physics.add.existing(this);
+    this.setCircle(this.width / 2);
+    this.setCollideWorldBounds(true)
+    this.setImmovable(true)
+
+    //alien Bullet Damage
     scene.physics.add.collider(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
@@ -14,16 +19,16 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
       }
     });
 
-    //what happens when an alien kamakazes into earth
-    scene.physics.add.overlap(this, scene.alien, () => {
+    //alien kamakazi Damage
+    scene.physics.add.overlap(this, scene.aliens, () => {
       scene.planet.health -= 100
       console.log(this.health)
     })
 
-    this.setCircle(1000, -390, -390);
-    this.setCollideWorldBounds(true)
-    this.setImmovable(true)
+    //planet stats
     this.health = 20000;
+
+    scene.zone = scene.physics.add.image(this.x, this.y).setCircle(this.width, -(this.width), -(this.height - 20))
   }
 }
 

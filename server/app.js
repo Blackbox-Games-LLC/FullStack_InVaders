@@ -27,10 +27,14 @@ app.use((req, res, next) => {
     next();
   }
 });
+// router of register
+app.use("/api/register", require("./api/register"));
 //router of login
 app.use("/api/login", require("./api/login"));
 // routes of user
 app.use("/api/user", require("./api/user"));
+// router of scores
+app.use("/api/score", require("./api/score"));
 
 // sends index.html
 app.use("*", (req, res) => {

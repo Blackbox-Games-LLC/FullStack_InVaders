@@ -4,17 +4,39 @@
       #input-form {
         padding: 15px;
         background-color: #931c22;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       #input-form input {
         padding: 10px;
-        font-size: 20px;
+        font-size: 40px;
         width: 400px;
+      }
+      .btn-ply {
+        color: #931c22;
+        font-size: 50px;
+        font-stretch: expanded;
+      }
+      .btn-lgn {
+        color: #931c22;
+        font-size: 50px;
+        font-stretch: expanded;
       }
     </style>
   </head>
   <body>
     <div id="input-form">
-      <input type="text" name="name" placeholder="User Name" />
+      <!-- <input type="text" name="name" placeholder="User Name" />
+      <input type="text" name="password" placeholder="Password" />
+
+      <br />
+      <br /><br /> -->
+
+      <input type="submit" value="Log in" class="btn-lgn" name="loginButton" />
+      <br />
+      <br />
+      <input type="submit" value="Play" class="btn-ply" name="playButton" />
     </div>
   </body>
 </html>
