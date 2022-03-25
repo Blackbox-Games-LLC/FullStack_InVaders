@@ -66,6 +66,8 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     let b = this.getCenter();
     let alien = this.scene.aliens.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100, 100), 'alien')
     this.scene.physics.moveToObject(alien, this.scene.planet, 20, 10000)
+    console.log("Spawn:", alien)
+    return alien
   }
   update(time) {
     this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.planet)

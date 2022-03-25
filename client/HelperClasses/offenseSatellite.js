@@ -1,12 +1,12 @@
 import Phaser from "phaser";
 import BaseOffenseAI from "./AI";
+import Alien from "./alien";
 import Bullet from "./bullets";
-// import Alien from "./alien";
 // import MotherShip from "./mothership";
 
 export default class Offense extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, spritekey) {
-    super(scene, x, y, spritekey);
+  constructor(scene, x, y, spritekey, aliens) {
+    super(scene, x, y, spritekey, aliens);
     scene.add.existing(this);
     scene.physics.add.existing(this);
     scene.physics.add.overlap(this, scene.alienbullets, () => {
@@ -17,20 +17,15 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
         particles.destroy()
       }
     });
-    let offenseAngle = 0;
-    scene.physics.add.overlap(this, scene.mothership, () => {
-      this.setposition(x, y);
-      this.alienTarget = false;
-      offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
-      Phaser.Math.RotateAroundDistance(this, scene.mothership1.x, scene.mothership1.y, offenseAngle, -250)
-    })
+    
 
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
     this.setSize(50, 50);
     this.setDepth(1);
 
-    this.alienTarget = true;
+    // this.alien = Alien;
+    console.log(this.scene.alien)
     this.health = 50;
     this.shotdelay = 2000
 
@@ -66,14 +61,37 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time) {
-    if (this.alienTarget) {
-      this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.mothership1)
-    } else {
-      this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.mothership2)
-    }
+    let offenseAngle = 0;
+    let alienEnemy = this.scene.aliens.getChildren()
+    this.scene.physics.add.overlap(this, alienEnemy, () => {
+    this.setposition(x, y);
+    offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
+    Phaser.Math.RotateAroundDistance(this, alienEnemy[0].x, alienEnemy[0].y, offenseAngle, -250)
+    })
+    this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[0])
+    this.scene.physics.moveToObject(this, alienEnemy[0])
+    // if (this.scene.physics.closest(this.aliens)) {
+    //   this.scene.physics.moveToObject(this, this.aliens)
+    // } else if (this.scene.physics.closest(this.scene.mothership4)) {
+    //   let offenseAngle = 0;
+    //   this.scene.physics.add.overlap(this, this.scene.mothership4, () => {
+    //   this.setposition(x, y);
+    //   offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
+    //   Phaser.Math.RotateAroundDistance(this, this.scene.mothership4.x, this.scene.mothership4.y, offenseAngle, -250)
+    //   })
+    //   this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.mothership4)
+    //   this.scene.physics.moveToObject(this, this.scene.mothership4)
+    // } else if (this.scene.physics.closest(this.scene.mothership2)) {
+    //   this.scene.physics.moveToObject(this, this.scene.mothership2)
+    // } else if (this.scene.physics.closest(this.scene.mothership3)) {
+    //   this.scene.physics.moveToObject(this, this.scene.mothership3)
+    // } else {
+    //   this.scene.physics.moveToObject(this, this.scene.mothership4)
+    // }
+
     if (time > this.shotdelay) {
       let bullet = this.scene.offensebullets.get(0, 0, "offense-bulllet");
-      bullet.fire(this)
+      bullet.setDisplaySize(20, 10).fire(this)
       this.shotdelay = time + (1000);
     }
   }
