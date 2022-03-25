@@ -5,8 +5,8 @@ import TitleScene from "../Scenes/TitleScene";
 
 var config = {
   type: Phaser.AUTO,
-  width: 4000,
-  height: 3000,
+  width: 4098,
+  height: 3072,
   parent: "game",
   dom: {
     createContainer: true,

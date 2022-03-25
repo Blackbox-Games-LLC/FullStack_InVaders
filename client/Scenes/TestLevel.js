@@ -16,7 +16,7 @@ export default class Test extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "assets/backgroundtile-min.png");
+    this.load.image("background", "assets/starry-background.jpeg");
     this.load.image("planet", "assets/earth-transparent-min.png");
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
@@ -45,16 +45,14 @@ export default class Test extends Phaser.Scene {
 
   create() {
     this.bg = this.add
-      .tileSprite(400, 300, 8000, 6000, "background")
-      .setScrollFactor(0);
+      .tileSprite(1024, 1024, 16392, 12288, "background")
+      .setScrollFactor(0.8);
 
     //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add
       .sprite(2000, 1500, "command")
       .setDepth(2)
       .setVisible(false);
-
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
 
     this.lastFired = 0;
     this.angle1 = 0;
@@ -65,20 +63,18 @@ export default class Test extends Phaser.Scene {
     this.distance3 = 1000;
     this.angle3 = 0;
 
-    this.planet = new Planet(this, 2000, 1500, "planet");
-    this.sun = this.add.sprite(1000, -100, "sun");
-    this.moon1 = this.physics.add
+    this.sun = this.add
+      .sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
+    this.moon1 = this.add
       .sprite(-200, 1500, "moon1")
       .setDisplaySize(150, 150);
-    this.moon2 = this.physics.add
+    this.moon2 = this.add
       .sprite(2500, 2500, "moon2")
       .setDisplaySize(150, 150);
 
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy").setDisplaySize(3000, 3000);
     this.planet = new Planet(this, 2000, 1500, "planet");
-    // this.defense = new Defense(this, 1280, 720, "defense");
 
-    // this.cursors = this.input.keyboard.createCursorKeys();
     this.cursors = this.input.keyboard.addKeys({
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
@@ -112,7 +108,7 @@ export default class Test extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.attackBases.get(2625, 1500).setAngle(90);
+    this.attackBases.get(2000, 2100).setAngle(-180);
     this.attackBases.get(2000, 900);
 
     //spawn defenseBases
@@ -124,7 +120,8 @@ export default class Test extends Phaser.Scene {
       runChildUpdate: true,
     });
     this.defenseBases.get(1400, 1500).setAngle(-90);
-    this.defenseBases.get(2000, 2100).setAngle(-180);
+    this.defenseBases.get(2625, 1500).setAngle(90);
+    
 
     // galaxy spin
     this.tweens.add({
@@ -136,10 +133,8 @@ export default class Test extends Phaser.Scene {
     });
 
     //camera
-    this.cameras.main.startFollow(this.ship)
+    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
     // this.cameras.main.setZoom(0.22, 0.22);
-<<<<<<< HEAD
-=======
 
     // countDownController
     const timerLabel = this.add.text(1500, -400, "1000", {
@@ -155,17 +150,12 @@ export default class Test extends Phaser.Scene {
     //this.player.active=false
     //const {width,height}=this.scale
     //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
->>>>>>> origin
   }
   update(time) {
     //vars
 
     this.gameWon = false;
-    // this.defense.setPosition(640, 380);
-    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
-    this.ship.body.velocity.x = 0;
-    this.ship.body.velocity.y = 0;
+
 
     // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
@@ -197,26 +187,7 @@ export default class Test extends Phaser.Scene {
       //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
-    // //defense rotation
-    // Phaser.Math.RotateAroundDistance(
-    //   this.defense,
-    //   this.planet.x,
-    //   this.planet.y,
-    //   this.angle1,
-    //   this.distance1
-    // );
-    // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
 
-    this.ship.body.velocity.x = 0;
-    this.ship.body.velocity.y = 0;
-
-    // Phaser.Math.RotateAroundDistance(
-    //   this.offense,
-    //   this.planet.x,
-    //   this.planet.y,
-    //   this.angle3,
-    //   this.distance3
-    // )
 
     //ship movement
     if (this.cursors.left.isDown) {
@@ -236,8 +207,11 @@ export default class Test extends Phaser.Scene {
       this.ship.setAcceleration(0);
     }
 
-    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
+    this.ship.body.velocity.x = 0;
+    this.ship.body.velocity.y = 0;
+
+    // this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    // this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
 
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
