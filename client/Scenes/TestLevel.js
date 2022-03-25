@@ -46,9 +46,9 @@ export default class Test extends Phaser.Scene {
   }
 
   create() {
-    this.bg = this.add
-      .tileSprite(1024, 1024, 16392, 12288, "background")
-      .setScrollFactor(0.8);
+    // this.bg = this.add
+    //   .tileSprite(1024, 1024, 16392, 12288, "background")
+    //   .setScrollFactor(0.8);
     
     // this.add.text(1000, -500, localStorage.getItem("score"), {
     //   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
@@ -80,6 +80,8 @@ export default class Test extends Phaser.Scene {
 
     this.galaxy = this.add.sprite(4000, 1200, "galaxy").setDisplaySize(3000, 3000);
     this.planet = new Planet(this, 2000, 1500, "planet");
+    this.core = this.physics.add.sprite(2000, 1500, "defense")
+    this.core.setDepth(-1).setCircle(750, -700, -700)
 
     this.cursors = this.input.keyboard.addKeys({
       forward: Phaser.Input.Keyboard.KeyCodes.W,
