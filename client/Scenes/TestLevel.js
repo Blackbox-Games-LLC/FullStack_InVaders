@@ -136,12 +136,6 @@ export default class Test extends Phaser.Scene {
     });
     this.defenseBases.get(1400, 1500).setAngle(-90);
     this.defenseBases.get(2625, 1500).setAngle(90);
-<<<<<<< HEAD
-    
-    console.log("aliens:", this.aliens.getChildren())
-=======
-
->>>>>>> origin/main
 
     // galaxy spin
     this.tweens.add({
