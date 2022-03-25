@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import axios from "axios";
-import CurrentUser from "../HelperClasses/currentUser";
-import Score from "../HelperClasses/Score"
+
 
 
 export default class EndScreen extends Phaser.Scene {
@@ -21,7 +20,7 @@ export default class EndScreen extends Phaser.Scene {
     }
     create() {
         this.scores.map(current => {
-            new Score()
+            //new Score()
         })
 
     }
