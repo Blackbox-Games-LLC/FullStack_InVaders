@@ -6,6 +6,7 @@ import Defense from "../HelperClasses/defenseSatellite";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
+import gameOver from "../HelperClasses/gameCondition"
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -50,7 +51,7 @@ export default class Test extends Phaser.Scene {
     // this.bg = this.add
     //   .tileSprite(1024, 1024, 16392, 12288, "background")
     //   .setScrollFactor(0.8);
-    
+
     // this.add.text(1000, -500, localStorage.getItem("score"), {
     //   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
     //   fontSize: "200px",
@@ -59,7 +60,12 @@ export default class Test extends Phaser.Scene {
     this.command = this.physics.add
       .sprite(2000, 1500, "command")
       .setDepth(2)
-      .setVisible(false);
+      .setVisible(false)
+
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
+
+    //gonna use this to reset game. this is the rectangle. NO TOUCHY!
+    // this.gameOver = new gameOver(this, 2000, 1500)
 
     this.lastFired = 0;
     this.angle1 = 0;
@@ -130,8 +136,6 @@ export default class Test extends Phaser.Scene {
     });
     this.defenseBases.get(1400, 1500).setAngle(-90);
     this.defenseBases.get(2625, 1500).setAngle(90);
-    
-    console.log("aliens:", this.aliens.getChildren())
 
     // galaxy spin
     this.tweens.add({
@@ -154,6 +158,7 @@ export default class Test extends Phaser.Scene {
     });
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
+    timerLabel.setScrollFactor(0,0)
   }
   // for countDownController(when the player Loose)
   handleCountDownFinished() {
@@ -170,31 +175,31 @@ export default class Test extends Phaser.Scene {
     // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    //win condition associated with timer and destruction of motherships
-    //kinda wonky gotta figure this one out too.
-    if (time >= 200000) {
+    //win condition
+    if (time >= 10000 || this.motherships.getLength() === 0) {
+      // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
-      var shape2 = new Phaser.Geom.Circle(0, 0, 800);
-      var particles = this.add.particles("exhaust");
-      particles.createEmitter({
-        x: 2000,
-        y: 1500,
-        speed: 0,
-        lifespan: 10000,
-        quantity: 1,
-        scale: { start: 0.1, end: 0 },
-        blendMode: "ADD",
-        emitZone: { type: "edge", source: shape2, quantity: 48, yoyo: false },
-      });
-      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
+
+      // var shape2 = new Phaser.Geom.Circle(0, 0, 800);
+      // var particles = this.add.particles("exhaust");
+      // particles.createEmitter({
+      //   x: 2000,
+      //   y: 1500,
+      //   speed: 0,
+      //   lifespan: 1000,
+      //   quantity: 1,
+      //   scale: { start: 0.4, end: 0 },
+      //   blendMode: "ADD",
+      //   emitZone: { type: "edge", source: shape2, quantity: 48, yoyo: false },
+      // });
     }
 
-    //loss condition associated with timer
+    //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
+      // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
-      //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
 
