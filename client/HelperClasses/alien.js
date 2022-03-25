@@ -40,18 +40,35 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       }
     });
 
+    //alien planet collision
+    scene.physics.add.collider(this, scene.planet, () => {
+      this.playerTarget = false
+      blowup.play()
+      this.body.stop()
+      this.body.destroy()
+      this.play("blowup")
+      this.once("animationcomplete", () => {
+        this.destroy();
+        particles.destroy()
+      })
+    });
+
     //alien AI switch
     let angle1 = 0
     scene.physics.add.overlap(this, scene.zone, () => {
-      this.setPosition(x, y)
-      this.playerTarget = false
-      angle1 = Phaser.Math.Angle.Wrap(angle1 + 0.005)
-      Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, angle1, scene.planet.width)
+      if (this.health >= 30) {
+        this.setPosition(x, y)
+        this.playerTarget = false
+        angle1 = Phaser.Math.Angle.Wrap(angle1 + 0.005)
+        Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, angle1, scene.planet.width)
+      } else {
+        this.scene.physics.moveToObject(this, this.scene.planet, 20, 10000)
+      }
     })
 
     //stats
     this.playerTarget = true
-    this.health = 20;
+    this.health = 50;
     // this.shotdelay = 2000
 
     //alienbullets group
