@@ -4,6 +4,11 @@ const User = require("../db/user");
 
 router.post("", async (req, res, next) => {
   try {
+    if (!req.body.username) {
+      return res.send({
+        error: "Username can not be empty",
+      });
+    }
     const findUser = await User.findOne({
       where: {
         username: req.body.username,

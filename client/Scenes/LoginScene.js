@@ -29,6 +29,13 @@ export default class LoginScene extends Phaser.Scene {
         let loginResult = await axios.post("/api/login", {
           username: name.value,
         });
+        if (!loginResult.data.hasOwnProperty("username")) {
+          console.log("login error", loginResult.data.error);
+          this.message.setText("User is not found");
+          return false;
+        }
+        this.message.setText("Register Successful Please Login to Play");
+
         let getScores = await axios.get(`/api/score/${loginResult.data.id}`);
         console.log("getscore", getScores);
         console.log("loginResult", loginResult);
@@ -38,8 +45,9 @@ export default class LoginScene extends Phaser.Scene {
           lastScore = getScores.data[0].score;
         }
         localStorage.setItem("username", name.value);
+
         localStorage.setItem("score", lastScore);
-        //localStorage.getItem("lastscore");
+
         if (loginResult.data.username === name.value) {
           this.scene.switch("Test_Level");
         }
@@ -50,7 +58,7 @@ export default class LoginScene extends Phaser.Scene {
         });
         console.log("register", registerResult);
         if (registerResult.data.hasOwnProperty("error")) {
-          console.log(registerResult.data.error);
+          console.log("register error", registerResult.data.error);
           this.message.setText(registerResult.data.error);
         } else {
           this.message.setText("Register Successful Please Login to Play");
