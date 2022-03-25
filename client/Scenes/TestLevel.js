@@ -16,7 +16,7 @@ export default class Test extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "assets/backgroundtile-min.png");
+    this.load.image("background", "assets/starry-background.jpeg");
     this.load.image("planet", "assets/earth-transparent-min.png");
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
@@ -26,8 +26,9 @@ export default class Test extends Phaser.Scene {
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("exhaust", "assets/exhaust.png");
-    this.load.image("alien_exhaust", "assets/alien_exhaust.png");
+    this.load.image("alien_exhaust", "assets/alien_exhaust.png")
     this.load.image("mothership", "assets/mothership.png");
+    this.load.spritesheet("mExplode", "assets/mExplode.png", { frameWidth: 482, frameHeight: 482 })
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("sun", "assets/sun.png");
     this.load.image("moon1", "assets/moon1.png");
@@ -41,20 +42,23 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
+    this.load.audio("motherboom", "assets/motherboom.mp3")
   }
 
   create() {
     this.bg = this.add
-      .tileSprite(400, 300, 8000, 6000, "background")
-      .setScrollFactor(0);
+      .tileSprite(1024, 1024, 16392, 12288, "background")
+      .setScrollFactor(0.8);
+    
+    // this.add.text(1000, -500, localStorage.getItem("score"), {
+    //   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+    //   fontSize: "200px",
 
     //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add
       .sprite(2000, 1500, "command")
       .setDepth(2)
       .setVisible(false);
-
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
 
     this.lastFired = 0;
     this.angle1 = 0;
@@ -65,8 +69,13 @@ export default class Test extends Phaser.Scene {
     this.distance3 = 1000;
     this.angle3 = 0;
 
+<<<<<<< HEAD
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.sun = this.add.sprite(1000, -100, "sun");
+=======
+    this.sun = this.add
+      .sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
+>>>>>>> origin/main
     this.moon1 = this.add
       .sprite(-200, 1500, "moon1")
       .setDisplaySize(150, 150);
@@ -74,11 +83,9 @@ export default class Test extends Phaser.Scene {
       .sprite(2500, 2500, "moon2")
       .setDisplaySize(150, 150);
 
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy").setDisplaySize(3000, 3000);
     this.planet = new Planet(this, 2000, 1500, "planet");
-    // this.defense = new Defense(this, 1280, 720, "defense");
 
-    // this.cursors = this.input.keyboard.createCursorKeys();
     this.cursors = this.input.keyboard.addKeys({
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
@@ -112,7 +119,7 @@ export default class Test extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.attackBases.get(2625, 1500).setAngle(90);
+    this.attackBases.get(2000, 2100).setAngle(-180);
     this.attackBases.get(2000, 900);
 
     //spawn defenseBases
@@ -124,7 +131,8 @@ export default class Test extends Phaser.Scene {
       runChildUpdate: true,
     });
     this.defenseBases.get(1400, 1500).setAngle(-90);
-    this.defenseBases.get(2000, 2100).setAngle(-180);
+    this.defenseBases.get(2625, 1500).setAngle(90);
+    
 
     // galaxy spin
     this.tweens.add({
@@ -136,8 +144,13 @@ export default class Test extends Phaser.Scene {
     });
 
     //camera
+<<<<<<< HEAD
     this.cameras.main.startFollow(this.ship)
     // this.cameras.main.setZoom(0.5, 0.5);
+=======
+    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
+    // this.cameras.main.setZoom(0.22, 0.22);
+>>>>>>> origin/main
 
     // countDownController
     const timerLabel = this.add.text(1500, -400, "1000", {
@@ -158,11 +171,7 @@ export default class Test extends Phaser.Scene {
     //vars
 
     this.gameWon = false;
-    // this.defense.setPosition(640, 380);
-    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
-    this.ship.body.velocity.x = 0;
-    this.ship.body.velocity.y = 0;
+
 
     // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
@@ -194,26 +203,7 @@ export default class Test extends Phaser.Scene {
       //have something conditionally render here and maybe freeze game scene and a button to restart game scene?
     }
 
-    // //defense rotation
-    // Phaser.Math.RotateAroundDistance(
-    //   this.defense,
-    //   this.planet.x,
-    //   this.planet.y,
-    //   this.angle1,
-    //   this.distance1
-    // );
-    // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
 
-    this.ship.body.velocity.x = 0;
-    this.ship.body.velocity.y = 0;
-
-    // Phaser.Math.RotateAroundDistance(
-    //   this.offense,
-    //   this.planet.x,
-    //   this.planet.y,
-    //   this.angle3,
-    //   this.distance3
-    // )
 
     //ship movement
     if (this.cursors.left.isDown) {
@@ -233,8 +223,11 @@ export default class Test extends Phaser.Scene {
       this.ship.setAcceleration(0);
     }
 
-    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
+    this.ship.body.velocity.x = 0;
+    this.ship.body.velocity.y = 0;
+
+    // this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    // this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
 
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {

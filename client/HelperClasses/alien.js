@@ -6,13 +6,24 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.setCollideWorldBounds(true);
+    this.setImmovable(true);
+    this.setSize(50, 50)
+    this.setDepth(1)
+
+    //sounds
     const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
     this.shoot = scene.sound.add('alienShot', { volume: 0.3 })
+
+    //animations
     this.anims.create({
       key: "blowup",
       frameRate: 25,
-      frames: this.anims.generateFrameNumbers("alien", { start: 2, end: 31 })
+      frames: this.anims.generateFrameNumbers("alien", { start: 2, end: 31 }),
     })
+
+
+    //alien bullet Damage
     scene.physics.add.overlap(this, scene.playerbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
@@ -28,31 +39,29 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
         })
       }
     });
+
+    //alien AI switch
     let angle1 = 0
-    scene.physics.add.overlap(this, scene.planet, () => {
+    scene.physics.add.overlap(this, scene.zone, () => {
       this.setPosition(x, y)
       this.playerTarget = false
       angle1 = Phaser.Math.Angle.Wrap(angle1 + 0.005)
-      Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, angle1, 990)
+      Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, angle1, scene.planet.width)
     })
 
-    this.setCollideWorldBounds(true);
-    this.setImmovable(true);
-    this.setSize(50, 50)
-    this.setDepth(1)
-
-
+    //stats
     this.playerTarget = true
-    this.health = 10;
+    this.health = 20;
     // this.shotdelay = 2000
 
+    //alienbullets group
     scene.alienbullets = scene.physics.add.group({
       classType: Bullet,
       runChildUpdate: true
     })
 
+    //particles
     const particles = scene.add.particles("alien_exhaust");
-
     const direction = new Phaser.Math.Vector2(1, 0);
     direction.setToPolar(this.rotation, 1);
     const dx = -direction.x;
@@ -77,12 +86,15 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time) {
+
     //if freefire is true, fire at ship
     if (this.playerTarget) {
       this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.ship)
     } else {
       this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.planet)
     }
+
+    //fireDelay
     if (time > this.shotdelay) {
       this.shoot.play()
       let bullet = this.scene.alienbullets.get(0, 0, 'alien_bullet')
