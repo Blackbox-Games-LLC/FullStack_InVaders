@@ -1,14 +1,18 @@
 import Phaser from "phaser";
-import BaseOffenseAI from "./AI";
-import Alien from "./alien";
 import Bullet from "./bullets";
-// import MotherShip from "./mothership";
 
 export default class Offense extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, spritekey, aliens) {
-    super(scene, x, y, spritekey, aliens);
+  constructor(scene, x, y, spritekey) {
+    super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.setCollideWorldBounds(false, true);
+    this.setImmovable(true);
+    this.setSize(50, 50);
+    this.setDepth(2);
+
+
+    // damage from aliens blasters
     scene.physics.add.overlap(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
@@ -19,13 +23,6 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     });
     
 
-    this.setCollideWorldBounds(false, true);
-    this.setImmovable(true);
-    this.setSize(50, 50);
-    this.setDepth(1);
-
-    // this.alien = Alien;
-    console.log(this.scene.alien)
     this.health = 50;
     this.shotdelay = 2000
 
@@ -56,20 +53,26 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       follow: this,
       followOffset: { y: this.height - 60 },
     });
-    particles.setDepth(0);
+    particles.setDepth(2);
 
   }
 
   update(time) {
     let offenseAngle = 0;
-    let alienEnemy = this.scene.aliens.getChildren()
-    this.scene.physics.add.overlap(this, alienEnemy, () => {
-    this.setposition(x, y);
-    offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
-    Phaser.Math.RotateAroundDistance(this, alienEnemy[0].x, alienEnemy[0].y, offenseAngle, -250)
-    })
-    this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[0])
-    this.scene.physics.moveToObject(this, alienEnemy[0])
+    let alienEnemy = this.scene.aliens.getChildren();
+    let enemyNumber = 0;
+    if (alienEnemy[enemyNumber]) {
+      this.scene.physics.add.overlap(this, alienEnemy, () => {
+      this.setPosition(x, y);
+      offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
+      Phaser.Math.RotateAroundDistance(this, alienEnemy[enemyNumber].x, alienEnemy[enemyNumber].y, offenseAngle, -250)
+      })
+      this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[enemyNumber])
+      this.scene.physics.moveToObject(this, alienEnemy[enemyNumber])
+    } else {
+      enemyNumber += 1;
+    }
+    
     // if (this.scene.physics.closest(this.aliens)) {
     //   this.scene.physics.moveToObject(this, this.aliens)
     // } else if (this.scene.physics.closest(this.scene.mothership4)) {

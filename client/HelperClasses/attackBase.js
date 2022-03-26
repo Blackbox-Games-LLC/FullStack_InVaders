@@ -45,7 +45,7 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
     if (time > this.spawnDelay) {
       this.spawnSatellites()
       let numOffense = this.scene.attackBases.getLength();
-      this.spawnDelay = time * 3
+      this.spawnDelay = time * 5
     }
     
   }
