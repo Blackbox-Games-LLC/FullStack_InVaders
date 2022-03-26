@@ -47,9 +47,6 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
       console.log(scene.ship.health)
     })
 
-    //mothership stats
-
-
     //sounds
     const mblowup = scene.sound.add('motherboom', { volume: 0.8 })
 
@@ -59,9 +56,6 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
       frameRate: 35,
       frames: this.anims.generateFrameNumbers("mExplode", { start: 0, end: 47 })
     })
-
-
-
 
     if (!scene.aliens) {
       scene.aliens = scene.physics.add.group({

@@ -29,17 +29,27 @@ export default class LoginScene extends Phaser.Scene {
         let loginResult = await axios.post("/api/login", {
           username: name.value,
         });
+        if (!loginResult.data.hasOwnProperty("username")) {
+          console.log("login error", loginResult.data.error);
+          this.message.setText("User is not found");
+          return false;
+        }
+        this.message.setText("Register Successful Please Login to Play");
+
         let getScores = await axios.get(`/api/score/${loginResult.data.id}`);
         console.log("getscore", getScores);
         console.log("loginResult", loginResult);
         //console.log("username", username);
-        let lastScore = 0;
-        if (getScores && getScores.data.length > 0) {
-          lastScore = getScores.data[0].score;
-        }
-        localStorage.setItem("username", name.value);
-        localStorage.setItem("score", lastScore);
-        //localStorage.getItem("lastscore");
+        // let lastScore = 0;
+        // if (getScores && getScores.data.length > 0) {
+        //   lastScore = getScores.data[0].score;
+        // }
+        //localStorage.setItem("id", loginResult.data.id)
+
+        this.User = this.sys.game.globals.User
+        this.User.id = loginResult.data.id
+        this.User.name = name.value
+
         if (loginResult.data.username === name.value) {
           this.scene.switch("Test_Level");
         }
@@ -50,7 +60,7 @@ export default class LoginScene extends Phaser.Scene {
         });
         console.log("register", registerResult);
         if (registerResult.data.hasOwnProperty("error")) {
-          console.log(registerResult.data.error);
+          console.log("register error", registerResult.data.error);
           this.message.setText(registerResult.data.error);
         } else {
           this.message.setText("Register Successful Please Login to Play");
@@ -59,7 +69,7 @@ export default class LoginScene extends Phaser.Scene {
       name.value = "";
     });
   }
-  update() {}
+  update() { }
   clickButton() {
     this.scene.switch("Test_Level");
   }

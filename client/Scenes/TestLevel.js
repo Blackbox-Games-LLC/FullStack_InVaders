@@ -7,6 +7,7 @@ import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
 import gameOver from "../HelperClasses/gameCondition"
+import ColliderHelper from "../HelperClasses/ColliderHelper";
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -158,7 +159,8 @@ export default class Test extends Phaser.Scene {
     });
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
-    timerLabel.setScrollFactor(0,0)
+    timerLabel.setScrollFactor(0, 0)
+    this.ColliderHelper = new ColliderHelper(this)
   }
   // for countDownController(when the player Loose)
   handleCountDownFinished() {

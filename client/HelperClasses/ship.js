@@ -22,10 +22,6 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.hp = new HealthBar(this.scene, 1500, -200, this.health, 600, 60)
     this.hp.followCamera()
 
-
-
-
-
     //player bullets group
     scene.playerbullets = scene.physics.add.group({
       classType: Bullet,

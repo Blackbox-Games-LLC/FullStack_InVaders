@@ -11,22 +11,6 @@ export default class Planet extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
 
-    //alien Bullet Damage
-    scene.physics.add.collider(this, scene.alienbullets, () => {
-      if (this.health > 0) {
-        this.health -= 10;
-      } else {
-        this.hp.delete()
-        this.destroy();
-      }
-    });
-
-    //alien kamakazi Damage
-    scene.physics.add.overlap(this, scene.aliens, () => {
-      scene.planet.health -= 100
-      console.log(scene.planet.health)
-    })
-
     //planet stats
     this.health = 20000;
     this.hp = new HealthBar(this.scene, 1600, 1700, this.health, 800, 80)
