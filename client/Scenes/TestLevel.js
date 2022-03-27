@@ -49,56 +49,33 @@ export default class Test extends Phaser.Scene {
   }
 
   create() {
-    this.bg = this.add
-      .tileSprite(1024, 1024, 16392, 12288, "background")
-      .setScrollFactor(0.8);
-
-    // this.add.text(1000, -500, localStorage.getItem("score"), {
-    //   fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-    //   fontSize: "200px",
-
-    //The base starts as invisible but renders after 100000 seconds
-    this.command = this.physics.add
-      .sprite(2000, 1500, "command")
-      .setDepth(2)
-      .setVisible(false)
-
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
-
-    //gonna use this to reset game. this is the rectangle. NO TOUCHY!
-    // this.gameOver = new gameOver(this, 2000, 1500)
-
     this.lastFired = 0;
     this.angle1 = 0;
     this.galaxyAngle = 0;
     this.galaxyDistance = 0;
     this.distance1 = 750;
-
     this.distance3 = 1000;
     this.angle3 = 0;
 
-    this.sun = this.add
-      .sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
-    this.moon1 = this.add
-      .sprite(-200, 1500, "moon1")
-      .setDisplaySize(150, 150);
-    this.moon2 = this.add
-      .sprite(2500, 2500, "moon2")
-      .setDisplaySize(150, 150);
-
+    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
+    this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
+    this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
+    this.bg = this.add.tileSprite(1024, 1024, 16392, 12288, "background").setScrollFactor(0.8);
     this.galaxy = this.add.sprite(4000, 1200, "galaxy").setDisplaySize(3000, 3000)
+    // galaxy spin
+    this.tweens.add({
+      targets: this.galaxy,
+      angle: -360,
+      duration: 500000,
+      ease: "Linear",
+      loop: 10,
+    });
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.core = this.physics.add.sprite(2000, 1500, "defense")
     this.core.setDepth(-1).setCircle(750, -700, -700)
 
-    this.cursors = this.input.keyboard.addKeys({
-      forward: Phaser.Input.Keyboard.KeyCodes.W,
-      right: Phaser.Input.Keyboard.KeyCodes.D,
-      left: Phaser.Input.Keyboard.KeyCodes.A,
-    });
-    this.fire = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+    //The base starts as invisible but renders after 100000 seconds
+    this.command = this.physics.add.sprite(2000, 1500, "command").setDepth(2).setVisible(false)
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
@@ -111,7 +88,6 @@ export default class Test extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-
     this.mothership1 = this.motherships.get();
     this.mothership2 = this.motherships.get(4000, 0);
     this.mothership3 = this.motherships.get(0, 3000);
@@ -138,14 +114,14 @@ export default class Test extends Phaser.Scene {
     this.defenseBases.get(1400, 1500).setAngle(-90);
     this.defenseBases.get(2625, 1500).setAngle(90);
 
-    // galaxy spin
-    this.tweens.add({
-      targets: this.galaxy,
-      angle: -360,
-      duration: 500000,
-      ease: "Linear",
-      loop: 10,
+
+    //controlls
+    this.cursors = this.input.keyboard.addKeys({
+      forward: Phaser.Input.Keyboard.KeyCodes.W,
+      right: Phaser.Input.Keyboard.KeyCodes.D,
+      left: Phaser.Input.Keyboard.KeyCodes.A,
     });
+    this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     //camera
     this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
@@ -156,25 +132,21 @@ export default class Test extends Phaser.Scene {
       fontSize: 150,
       fontStyle: "bold",
       color: "#32a852",
-    });
+    }).setScrollFactor(0, 0)
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
-    timerLabel.setScrollFactor(0, 0)
+
+    //keep at end
     this.ColliderHelper = new ColliderHelper(this)
   }
-  // for countDownController(when the player Loose)
+
   handleCountDownFinished() {
     //this.player.active=false
     //const {width,height}=this.scale
     //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
   }
   update(time) {
-    //vars
-
     this.gameWon = false;
-
-
-    // this.angle1 = Phaser.Math.Angle.Wrap(this.angle1 + 0.005);
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
     //win condition
@@ -182,19 +154,6 @@ export default class Test extends Phaser.Scene {
       // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
-
-      // var shape2 = new Phaser.Geom.Circle(0, 0, 800);
-      // var particles = this.add.particles("exhaust");
-      // particles.createEmitter({
-      //   x: 2000,
-      //   y: 1500,
-      //   speed: 0,
-      //   lifespan: 1000,
-      //   quantity: 1,
-      //   scale: { start: 0.4, end: 0 },
-      //   blendMode: "ADD",
-      //   emitZone: { type: "edge", source: shape2, quantity: 48, yoyo: false },
-      // });
     }
 
     //loss condition
@@ -203,8 +162,6 @@ export default class Test extends Phaser.Scene {
       this.gameWon = false;
       this.planet.setVisible(false);
     }
-
-
 
     //ship movement
     if (this.cursors.left.isDown) {
@@ -233,14 +190,13 @@ export default class Test extends Phaser.Scene {
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
       let bullet = this.playerbullets.get(0, 0, "laser_bullet");
-
       if (bullet) {
         this.ship.shoot.play();
         bullet.fire(this.ship);
-        //this.bullet.setCollideWorldBounds(true)
         this.lastFired = time + 100;
       }
     }
+
     //counter
     this.countdown.update();
   }
