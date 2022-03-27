@@ -1,14 +1,18 @@
 import Phaser from "phaser";
-import BaseOffenseAI from "./AI";
-import Alien from "./alien";
 import Bullet from "./bullets";
-// import MotherShip from "./mothership";
 
 export default class Offense extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, spritekey, aliens) {
-    super(scene, x, y, spritekey, aliens);
+  constructor(scene, x, y, spritekey) {
+    super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.setCollideWorldBounds(false, true);
+    this.setImmovable(true);
+    this.setSize(50, 50);
+    this.setDepth(2);
+
+
+    // damage from aliens blasters
     scene.physics.add.overlap(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
@@ -19,13 +23,6 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     });
 
 
-    this.setCollideWorldBounds(false, true);
-    this.setImmovable(true);
-    this.setSize(50, 50);
-    this.setDepth(1);
-
-    // this.alien = Alien;
-    console.log(this.scene.alien)
     this.health = 50;
     this.shotdelay = 2000
 
@@ -40,6 +37,25 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     const py = -path.y;
     const particles = scene.add.particles("offense-exhaust");
 
+<<<<<<< HEAD
+    particles.createEmitter({
+      quantity: 10,
+      speedY: { min: 20 * py, max: 50 * px },
+      speedX: { min: -10 * px, max: 10 * px },
+      accelerationY: 1000 * py,
+      accelerationx: 1000 * px,
+      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 2000 } },
+      alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
+      rotate: { min: -180, max: 180 },
+      angle: { min: 30, max: 110 },
+      blendMode: "ADD",
+      frequency: 75,
+      scale: { start: 0.02, end: 0.02 },
+      follow: this,
+      followOffset: { y: this.height - 60 },
+    });
+    particles.setDepth(2);
+=======
     // particles.createEmitter({
     //   quantity: 10,
     //   speedY: { min: 20 * py, max: 50 * px },
@@ -57,11 +73,28 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     //   followOffset: { y: this.height - 60 },
     // });
     // particles.setDepth(0);
+>>>>>>> origin/main
 
   }
 
   update(time) {
     let offenseAngle = 0;
+<<<<<<< HEAD
+    let alienEnemy = this.scene.aliens.getChildren();
+    let enemyNumber = 0;
+    if (alienEnemy[enemyNumber]) {
+      this.scene.physics.add.overlap(this, alienEnemy, () => {
+      this.setPosition(x, y);
+      offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
+      Phaser.Math.RotateAroundDistance(this, alienEnemy[enemyNumber].x, alienEnemy[enemyNumber].y, offenseAngle, -250)
+      })
+      this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[enemyNumber])
+      this.scene.physics.moveToObject(this, alienEnemy[enemyNumber])
+    } else {
+      enemyNumber += 1;
+    }
+    
+=======
     let alienEnemy = this.scene.aliens.getChildren()
     this.scene.physics.add.overlap(this, alienEnemy, () => {
       this.setposition(x, y);
@@ -70,6 +103,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     })
     this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[0])
     this.scene.physics.moveToObject(this, alienEnemy[0])
+>>>>>>> origin/main
     // if (this.scene.physics.closest(this.aliens)) {
     //   this.scene.physics.moveToObject(this, this.aliens)
     // } else if (this.scene.physics.closest(this.scene.mothership4)) {
