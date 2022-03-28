@@ -14,6 +14,17 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
 
+    // damage from aliens blasters
+    scene.physics.add.overlap(this, scene.alienbullets, () => {
+      if (this.health > 0) {
+        this.health -= 10;
+      } else {
+        this.body.stop();
+        this.body.destroy();
+        // particles.destroy()
+      }
+    });
+
     //sounds
     this.shoot = scene.sound.add('playerShot', { volume: 0.3 })
 

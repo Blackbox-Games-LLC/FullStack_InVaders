@@ -16,6 +16,7 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
       if (this.health > 0) {
         this.health -= 10;
       } else {
+        this.body.stop();
         this.body.destroy();
       }
     });

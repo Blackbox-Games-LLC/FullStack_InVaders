@@ -27,6 +27,7 @@ export default class Test extends Phaser.Scene {
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
+    this.load.image("offense-exhaust", "assets/offense-satellite-exhaust.png");
     this.load.image("exhaust", "assets/exhaust.png");
     this.load.image("alien_exhaust", "assets/alien_exhaust.png")
     this.load.image("mothership", "assets/mothership.png");

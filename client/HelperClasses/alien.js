@@ -116,7 +116,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       this.shoot.play()
       let bullet = this.scene.alienbullets.get(0, 0, 'alien_bullet')
       bullet.fire(this)
-      this.shotdelay = time + Phaser.Math.Between(1000, 4000);
+      this.shotdelay = time + 1000
     }
   }
 }
