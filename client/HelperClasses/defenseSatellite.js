@@ -5,13 +5,14 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    scene.physics.add.collider(this, scene.alienbullets, () => {
+    scene.physics.add.overlap(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {
         this.destroy();
       }
     });
+    
     scene.physics.add.overlap(this, scene.alienbulletes, () => {
       if (this.health > 0) {
         this.health -= 10;
@@ -33,7 +34,7 @@ export default class Defense extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(1);
 
     this.health = 250;
-    
+
   }
 
 }

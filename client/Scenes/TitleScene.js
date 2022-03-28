@@ -9,9 +9,11 @@ export default class TitleScene extends Phaser.Scene {
   preload() {
     //  this.load.image('background','assets/title.png')
     this.load.html("form", "/assets/text/form.html");
+    this.load.image("title", "/assets/titlescreen.png");
   }
 
   create() {
+    this.add.image(2000, 2000, "title").setDisplaySize(3800, 3800);
     this.nameInput = this.add.dom(2000, 1500).createFromCache("form");
     this.nameInput.width = 400;
     this.nameInput.displayWidth = 400;
@@ -21,7 +23,7 @@ export default class TitleScene extends Phaser.Scene {
     //console.log("inputname", this.nameInput);
 
     this.message = this.add.text(
-      600,
+      1000,
       50,
       "Created By:David Ruiz, Rich Rife, Ryan Heaux, Veysel Basbaydar ",
       {
@@ -33,47 +35,47 @@ export default class TitleScene extends Phaser.Scene {
         padding: { left: 10, right: 10, top: 10, bottom: 10 },
       }
     );
-    this.message = this.add.text(700, 200, "Instructions", {
+    this.message = this.add.text(700, 200, "Controls", {
       color: "#FFFFFF",
-      fontSize: 50,
+      fontSize: 75,
       fontStyle: "bold",
     });
     this.message = this.add.text(700, 300, "Press Key for movement : ", {
       backgroundColor: "#2372C0",
-      fontSize: 50,
+      fontSize: 80,
       fontFamily: "Ultra",
     });
     this.message = this.add.text(700, 400, "Move Forward .... W ", {
       color: "#FFFFFF",
-      fontSize: 50,
+      fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#7B9D1E",
     });
     this.message = this.add.text(700, 500, "Move Left .... A ", {
       color: "#FFFFFF",
-      fontSize: 50,
+      fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#7B9D1E",
     });
     this.message = this.add.text(700, 600, "Move Right .... D ", {
       color: "#FFFFFF",
-      fontSize: 50,
+      fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#7B9D1E",
     });
     this.message = this.add.text(700, 700, "Fire Attack .... SPACE ", {
       color: "#FFFFFF",
-      fontSize: 50,
+      fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#D0021B",
     });
-    this.message = this.add
-      .text(2000, 1000, "Hello", {
-        color: "#FFFFFF",
-        fontSize: 60,
-        fontStyle: "bold",
-      })
-      .setOrigin(0.5);
+    // this.message = this.add
+    //   .text(2000, 1000, "Hello", {
+    //     color: "#FFFFFF",
+    //     fontSize: 60,
+    //     fontStyle: "bold",
+    //   })
+    //   .setOrigin(0.5);
 
     this.returnKey = this.nameInput.addListener("click");
 

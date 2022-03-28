@@ -10,7 +10,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.setDrag(300);
     this.setAngularDrag(100);
     this.setMaxVelocity(1000);
-    this.setDepth(1);
+    this.setDepth(2);
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
 
@@ -40,7 +40,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     });
 
     //particles
-    const particles = scene.add.particles("exhaust");
+    const particles = scene.add.particles("exhaust").setDepth(1);
     const direction = new Phaser.Math.Vector2(1, 0);
     direction.setToPolar(this.rotation, 1);
     const dx = -direction.x;
