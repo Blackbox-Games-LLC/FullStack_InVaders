@@ -21,7 +21,7 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
     this.setDepth(2)
 
     this.health = 1000
-    this.spawnDelay = 0
+    this.spawnDelay = 10000
 
     if (!scene.offenseSatellites) {
       scene.offenseSatellites = scene.physics.add.group({
