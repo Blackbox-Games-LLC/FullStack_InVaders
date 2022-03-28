@@ -6,6 +6,7 @@ import LoginScene from "../Scenes/LoginScene";
 import EndScreen from "../Scenes/EndScreen";
 import AwaitLoaderPlugin from "phaser3-rex-plugins/plugins/awaitloader-plugin.js";
 import CurrentUser from "../HelperClasses/currentUser";
+import Music from "../HelperClasses/MusicHandler";
 
 var config = {
   type: Phaser.AUTO,
@@ -34,8 +35,10 @@ var config = {
 };
 
 const game = new Phaser.Game(config);
-const User = new CurrentUser();
-game.globals = { User };
+const User = new CurrentUser
+const music = new Music
+game.globals = { User, music }
+
 game.scene.add("End_Screen", EndScreen);
 game.scene.add("Title_Scene", TitleScene);
 game.scene.add("Login_Scene", LoginScene);
