@@ -31,7 +31,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       runChildUpdate: true
     })
 
-    
+
     const path = new Phaser.Math.Vector2(1, 0);
     path.setToPolar(this.rotation, 1);
     const px = -path.x;
@@ -57,16 +57,16 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     particles.setDepth(2);
 
   }
-  
+
   update(time) {
     let offenseAngle = 0;
     let alienEnemy = this.scene.aliens.getChildren();
     let enemyNumber = 0;
     if (alienEnemy[enemyNumber]) {
       this.scene.physics.add.overlap(this, alienEnemy, () => {
-      this.setPosition(x, y);
-      offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
-      Phaser.Math.RotateAroundDistance(this, alienEnemy[enemyNumber].x, alienEnemy[enemyNumber].y, offenseAngle, -250)
+        this.setPosition(x, y);
+        offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
+        Phaser.Math.RotateAroundDistance(this, alienEnemy[enemyNumber].x, alienEnemy[enemyNumber].y, offenseAngle, -250)
       })
       this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[enemyNumber])
       this.scene.physics.moveToObject(this, alienEnemy[enemyNumber])
