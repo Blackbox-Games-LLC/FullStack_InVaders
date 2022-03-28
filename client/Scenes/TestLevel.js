@@ -7,6 +7,7 @@ import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
 import gameOver from "../HelperClasses/gameCondition"
 import ColliderHelper from "../HelperClasses/ColliderHelper";
+import Music from "../HelperClasses/MusicHandler"
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -47,9 +48,19 @@ export default class Test extends Phaser.Scene {
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
     this.load.audio("motherboom", "assets/motherboom.mp3")
+    this.load.audio("bg", "assets/bg.mp3")
   }
 
   create() {
+    this.Music = this.sys.game.globals.music
+    if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
+      this.bg = this.sound.add('bg')
+      this.bg.play({
+        loop: true
+      })
+      this.Music.bgMusicPlaying = true;
+    }
+
     this.lastFired = 0;
     this.angle1 = 0;
     this.galaxyAngle = 0;

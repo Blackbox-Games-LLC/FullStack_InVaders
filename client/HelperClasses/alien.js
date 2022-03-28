@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import Bullet from "./bullets";
 
 export default class Alien extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, spritekey) {
