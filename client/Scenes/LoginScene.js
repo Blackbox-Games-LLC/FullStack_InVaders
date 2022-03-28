@@ -8,9 +8,11 @@ export default class LoginScene extends Phaser.Scene {
 
   preload() {
     this.load.html("login", "/assets/text/login.html");
+    this.load.image("loginscreen", "/assets/loginscreen.png");
   }
 
   create() {
+    this.add.image(1800, 1800, "loginscreen").setDisplaySize(1000, 1000);
     this.message = this.add
       .text(2000, 1000, "Login or Register ", {
         color: "#FFFFFF",
@@ -18,7 +20,7 @@ export default class LoginScene extends Phaser.Scene {
         fontStyle: "bold",
       })
       .setOrigin(0.5);
-    this.nameInput = this.add.dom(2000, 1500).createFromCache("login");
+    this.nameInput = this.add.dom(2000, 1300).createFromCache("login");
 
     this.returnKey = this.nameInput.addListener("click");
 
@@ -46,9 +48,9 @@ export default class LoginScene extends Phaser.Scene {
         // }
         //localStorage.setItem("id", loginResult.data.id)
 
-        this.User = this.sys.game.globals.User
-        this.User.id = loginResult.data.id
-        this.User.name = name.value
+        this.User = this.sys.game.globals.User;
+        this.User.id = loginResult.data.id;
+        this.User.name = name.value;
 
         if (loginResult.data.username === name.value) {
           this.scene.switch("Test_Level");
@@ -69,7 +71,7 @@ export default class LoginScene extends Phaser.Scene {
       name.value = "";
     });
   }
-  update() { }
+  update() {}
   clickButton() {
     this.scene.switch("Test_Level");
   }
