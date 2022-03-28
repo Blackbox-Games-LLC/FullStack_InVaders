@@ -13,14 +13,10 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     this.spawnDelay = 0
     this.hp = new HealthBar(this.scene, this.x, this.y, this.health, 300, 40)
 
-
-
-
     this.setSize(400, 550);
     this.setCollideWorldBounds(true);
     this.setDepth(2)
     this.setImmovable(true);
-
 
     //player bullet damage
     scene.physics.add.overlap(this, scene.playerbullets, () => {
