@@ -11,6 +11,15 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     this.setSize(50, 50);
     this.setDepth(1);
 
+    scene.physics.add.overlap(this, scene.alienbullets, () => {
+      if (this.health > 0) {
+        this.health -= 10;
+      } else {
+        this.body.stop();
+        this.body.destroy();
+      }
+    });
+
     this.scene = scene
     this.target = null
     this.health = 50;
