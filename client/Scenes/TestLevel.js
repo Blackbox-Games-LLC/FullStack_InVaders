@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet";
-import Defense from "../HelperClasses/defenseSatellite";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
@@ -63,7 +62,6 @@ export default class Test extends Phaser.Scene {
       .setDepth(2)
       .setVisible(false)
 
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy");
 
     //gonna use this to reset game. this is the rectangle. NO TOUCHY!
     // this.gameOver = new gameOver(this, 2000, 1500)
@@ -86,7 +84,7 @@ export default class Test extends Phaser.Scene {
       .sprite(2500, 2500, "moon2")
       .setDisplaySize(150, 150);
 
-    this.galaxy = this.add.sprite(4000, 1200, "galaxy").setDisplaySize(3000, 3000)
+    this.galaxy = this.add.sprite(4000, 1200, "galaxy")
     this.planet = new Planet(this, 2000, 1500, "planet");
     this.core = this.physics.add.sprite(2000, 1500, "defense")
     this.core.setDepth(-1).setCircle(750, -700, -700)
@@ -149,7 +147,6 @@ export default class Test extends Phaser.Scene {
 
     //camera
     this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
-    // this.cameras.main.setZoom(0.22, 0.22);
 
     // countDownController
     const timerLabel = this.add.text(1500, -400, "1000", {
@@ -182,19 +179,6 @@ export default class Test extends Phaser.Scene {
       // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
-
-      // var shape2 = new Phaser.Geom.Circle(0, 0, 800);
-      // var particles = this.add.particles("exhaust");
-      // particles.createEmitter({
-      //   x: 2000,
-      //   y: 1500,
-      //   speed: 0,
-      //   lifespan: 1000,
-      //   quantity: 1,
-      //   scale: { start: 0.4, end: 0 },
-      //   blendMode: "ADD",
-      //   emitZone: { type: "edge", source: shape2, quantity: 48, yoyo: false },
-      // });
     }
 
     //loss condition
@@ -226,9 +210,6 @@ export default class Test extends Phaser.Scene {
 
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
-
-    // this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-    // this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
 
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
