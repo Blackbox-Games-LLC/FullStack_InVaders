@@ -31,6 +31,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       runChildUpdate: true
     })
 
+    
     const path = new Phaser.Math.Vector2(1, 0);
     path.setToPolar(this.rotation, 1);
     const px = -path.x;
@@ -56,7 +57,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     particles.setDepth(2);
 
   }
-
+  
   update(time) {
     let offenseAngle = 0;
     let alienEnemy = this.scene.aliens.getChildren();
@@ -72,63 +73,12 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     } else {
       enemyNumber += 1;
     }
-    
-    // if (this.scene.physics.closest(this.aliens)) {
-    //   this.scene.physics.moveToObject(this, this.aliens)
-    // } else if (this.scene.physics.closest(this.scene.mothership4)) {
-    //   let offenseAngle = 0;
-    //   this.scene.physics.add.overlap(this, this.scene.mothership4, () => {
-    //   this.setposition(x, y);
-    //   offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
-    //   Phaser.Math.RotateAroundDistance(this, this.scene.mothership4.x, this.scene.mothership4.y, offenseAngle, -250)
-    //   })
-    //   this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.mothership4)
-    //   this.scene.physics.moveToObject(this, this.scene.mothership4)
-    // } else if (this.scene.physics.closest(this.scene.mothership2)) {
-    //   this.scene.physics.moveToObject(this, this.scene.mothership2)
-    // } else if (this.scene.physics.closest(this.scene.mothership3)) {
-    //   this.scene.physics.moveToObject(this, this.scene.mothership3)
-    // } else {
-    //   this.scene.physics.moveToObject(this, this.scene.mothership4)
-    // }
+
 
     if (time > this.shotdelay) {
       let bullet = this.scene.offensebullets.get(0, 0, "offense-bulllet");
       bullet.setDisplaySize(20, 10).fire(this)
       this.shotdelay = time + (1000);
     }
-  } aww
-
-  // seekAndDestroy() {
-  //   new BaseOffenseAI(scene, x, y, offense, alien, mothership)
-  // }
-
-
-  // seek() {
-  //   //  Pick a random target point
-  //   var entry = Phaser.Utils.Array.GetRandom(this.scene.points);
-
-  //   this.target = entry;
-
-  //   this.isSeeking = false;
-
-  //   this.scene.tweens.add({
-  //     targets: this.body.velocity,
-  //     x: 0,
-  //     y: 0,
-  //     ease: "Linear",
-  //     duration: 500,
-  //     onComplete: function (tween, targets, alien) {
-  //       ship.isSeeking = true;
-  //       ship.scene.tweens.add({
-  //         targets: alien,
-  //         speed: 150,
-  //         delay: 500,
-  //         ease: "Sine.easeOut",
-  //         duration: 1000,
-  //       });
-  //     },
-  //     onCompleteParams: [this],
-  //   });
-  // }
+  }
 }
