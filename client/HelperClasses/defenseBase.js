@@ -17,11 +17,12 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
+    this.setDepth(2)
 
     this.health = 1000
     this.spawnDelay = 0
 
-    if(!scene.defenseSatellite) {
+    if (!scene.defenseSatellite) {
       scene.defenseSatellite = scene.physics.add.group({
         classType: defenseSatellite,
         scene: scene,
@@ -34,9 +35,9 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
   }
   spawnSatellites() {
     let b = this.getCenter();
-      // new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
+    // new defenseSatellite(this.scene, b.x + Phaser.Math.Between(-100,100), b.y, "defense")
 
-    let defense = this.scene.defenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "defense")
+    let defense = this.scene.defenseSatellite.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100, 100), "defense")
     this.scene.physics.moveToObject(defense, this.scene.core, -20)
   }
   update(time) {

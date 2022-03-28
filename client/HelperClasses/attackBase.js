@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import offenseSatellite from "./offenseSatellite";
-import HealthBar from "../UI/HealthBar";
+import Bullet from "./bullets";
 
 export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -18,6 +18,7 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true)
     this.setImmovable(true)
+    this.setDepth(2)
 
     this.health = 1000
     this.spawnDelay = 0
@@ -30,20 +31,19 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
         immovable: true
       })
     }
-
+    scene.offensebullets = scene.physics.add.group({
+      classType: Bullet,
+      runChildUpdate: true
+    })
   }
   spawnSatellites() {
     let b = this.getTopCenter();
-
-    let offense = this.scene.offenseSatellites.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100,100), "offense")
-    this.scene.physics.moveToObject(offense, this.scene.mothership1, 20, 10000)
+    this.scene.offenseSatellites.get((b.x) + Phaser.Math.Between(-100, 100), (b.y) + Phaser.Math.Between(-100, 100), "offense")
   }
   update(time) {
     if (time > this.spawnDelay) {
       this.spawnSatellites()
-      let numOffense = this.scene.attackBases.getLength();
       this.spawnDelay = time * 5
     }
-    
   }
 }
