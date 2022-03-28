@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Alien from "./alien";
 import HealthBar from "../UI/HealthBar";
+import Bullet from "./bullets";
 
 export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
@@ -59,7 +60,13 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
         scene: scene,
         runChildUpdate: true,
         immovable: true,
-        maxSize: 200
+      })
+    }
+    //alienbullets group
+    if (!scene.alienbullets) {
+      scene.alienbullets = scene.physics.add.group({
+        classType: Bullet,
+        runChildUpdate: true
       })
     }
   }
@@ -74,7 +81,7 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     if (time > this.spawnDelay) {
       this.spawnAliens();
       let num = this.scene.motherships.getLength()
-      this.spawnDelay = time + (num * 3000);
+      this.spawnDelay = time + (num * 800);
     }
   }
 }

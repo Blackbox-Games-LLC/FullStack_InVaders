@@ -16,11 +16,6 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     this.health = 50;
     this.shotdelay = 2000
 
-    scene.offensebullets = scene.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true
-    })
-
     const path = new Phaser.Math.Vector2(1, 0);
     path.setToPolar(this.rotation, 1);
     const px = -path.x;
