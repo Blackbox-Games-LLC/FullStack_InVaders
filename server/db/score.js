@@ -3,12 +3,31 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
 
-const Score = db.define("score", {
-  score: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
+const Score = db.define(
+  "score",
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    time: {
+      type: Sequelize.TIME,
+      allowNull: false,
+      // defaultValue: Sequelize.NOW,
+    },
+    aliens: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
+    },
+    motherships: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
+    },
   },
-});
+  {
+    timestamps: false,
+  }
+);
 
 module.exports = Score;
