@@ -31,9 +31,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.overlap(this, scene.offensebullets, () => {
       if (this.health > 0) {
         this.health -= 10;
-        console.log("hit")
       } else {
-        console.log("kill")
         this.playerTarget = false
         blowup.play()
         this.body.stop()
@@ -76,6 +74,18 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       })
     });
 
+    //alien planet collision
+    scene.physics.add.collider(this, scene.defenseSatellite, () => {
+      blowup.play()
+      this.body.stop()
+      this.body.destroy()
+      this.play("blowup")
+      this.once("animationcomplete", () => {
+        this.destroy();
+        particles.destroy()
+      })
+    });
+
     //alien AI switch
     let angle1 = 0
     scene.physics.add.overlap(this, scene.zone, () => {
@@ -88,15 +98,6 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.moveToObject(this, this.scene.planet, 20, 10000)
       }
     })
-
-
-    //alienbullets group
-    if (!scene.alienbullets) {
-      scene.alienbullets = scene.physics.add.group({
-        classType: Bullet,
-        runChildUpdate: true
-      })
-    }
 
     //particles
     const particles = scene.add.particles("alien_exhaust");

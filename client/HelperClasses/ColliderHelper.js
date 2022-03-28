@@ -7,10 +7,13 @@ export default class ColliderHelper {
         })
 
         //alien Bullet Damage
-        scene.physics.add.collider(scene.planet, scene.alienbullets, () => {
+        scene.physics.add.overlap(scene.planet, scene.alienbullets, () => {
             if (scene.planet.health > 0) {
                 scene.planet.health -= 10;
+                scene.planet.hp.decrease(scene.planet.health)
             } else {
+                scene.defenseBases.destroy(true)
+                scene.attackBases.destroy(true)
                 scene.planet.hp.delete()
                 scene.planet.destroy();
             }

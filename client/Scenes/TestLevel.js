@@ -20,6 +20,7 @@ export default class Test extends Phaser.Scene {
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
     this.load.image("planet", "assets/earth-transparent-min.png");
+    this.load.image("boomplanet", "assets/destroyedEarth.png")
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
     this.load.image("ship", "assets/spaceship-sprite.png");
@@ -70,7 +71,8 @@ export default class Test extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet");
+    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1);
+    this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0)
     this.core = this.physics.add.sprite(2000, 1500, "defense")
     this.core.setDepth(-1).setCircle(750, -700, -700)
 
@@ -90,6 +92,18 @@ export default class Test extends Phaser.Scene {
     this.attackBases.get(2000, 2100).setAngle(-180);
     this.attackBases.get(2000, 900);
 
+    //spawn defenseBases
+    this.defenseBases = this.physics.add.group({
+      classType: DefenseBase,
+      scene: this,
+      maxSize: 2,
+      immovable: true,
+      runChildUpdate: true,
+    });
+    this.defenseBases.get(1400, 1500).setAngle(-90);
+    this.defenseBases.get(2625, 1500).setAngle(90);
+
+
     //spawn mothership
     this.motherships = this.physics.add.group({
       classType: MotherShip,
@@ -102,19 +116,6 @@ export default class Test extends Phaser.Scene {
     this.mothership2 = this.motherships.get(4000, 0);
     this.mothership3 = this.motherships.get(0, 3000);
     this.mothership4 = this.motherships.get(4000, 3000);
-
-
-    //spawn defenseBases
-    this.defenseBases = this.physics.add.group({
-      classType: DefenseBase,
-      scene: this,
-      maxSize: 2,
-      immovable: true,
-      runChildUpdate: true,
-    });
-    this.defenseBases.get(1400, 1500).setAngle(-90);
-    this.defenseBases.get(2625, 1500).setAngle(90);
-
 
     //controlls
     this.cursors = this.input.keyboard.addKeys({
