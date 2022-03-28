@@ -11,9 +11,14 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
     this.setSize(50, 50)
     this.setDepth(1)
 
+    //stats
+    this.playerTarget = true
+    this.health = 50;
+    this.shotdelay = 2000
+
     //sounds
     const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
-    this.shoot = scene.sound.add('alienShot', { volume: 0.3 })
+    this.shoot = scene.sound.add('alienShot', { volume: 0.2 })
 
     //animations
     this.anims.create({
@@ -22,6 +27,24 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       frames: this.anims.generateFrameNumbers("alien", { start: 2, end: 31 }),
     })
 
+    // damage from aliens blasters
+    scene.physics.add.overlap(this, scene.offensebullets, () => {
+      if (this.health > 0) {
+        this.health -= 10;
+        console.log("hit")
+      } else {
+        console.log("kill")
+        this.playerTarget = false
+        blowup.play()
+        this.body.stop()
+        this.body.destroy()
+        this.play("blowup")
+        this.once("animationcomplete", () => {
+          this.destroy();
+          particles.destroy()
+        })
+      }
+    });
 
     //alien bullet Damage
     scene.physics.add.overlap(this, scene.playerbullets, () => {
@@ -59,23 +82,21 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       if (this.health >= 30) {
         this.setPosition(x, y)
         this.playerTarget = false
-        angle1 = Phaser.Math.Angle.Wrap(angle1 + 0.005)
+        angle1 = Phaser.Math.Angle.Wrap(angle1 + 0.001)
         Phaser.Math.RotateAroundDistance(this, scene.planet.x, scene.planet.y, angle1, scene.planet.width)
       } else {
         this.scene.physics.moveToObject(this, this.scene.planet, 20, 10000)
       }
     })
 
-    //stats
-    this.playerTarget = true
-    this.health = 50;
-    // this.shotdelay = 2000
 
     //alienbullets group
-    scene.alienbullets = scene.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true
-    })
+    if (!scene.alienbullets) {
+      scene.alienbullets = scene.physics.add.group({
+        classType: Bullet,
+        runChildUpdate: true
+      })
+    }
 
     //particles
     const particles = scene.add.particles("alien_exhaust");

@@ -11,18 +11,8 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     this.setSize(50, 50);
     this.setDepth(2);
 
-
-    // damage from aliens blasters
-    scene.physics.add.overlap(this, scene.alienbullets, () => {
-      if (this.health > 0) {
-        this.health -= 10;
-      } else {
-        this.destroy();
-        particles.destroy()
-      }
-    });
-
-
+    this.scene = scene
+    this.target = null
     this.health = 50;
     this.shotdelay = 2000
 
@@ -30,7 +20,6 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       classType: Bullet,
       runChildUpdate: true
     })
-
 
     const path = new Phaser.Math.Vector2(1, 0);
     path.setToPolar(this.rotation, 1);
@@ -56,27 +45,25 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     });
     particles.setDepth(2);
 
+    this.target = 0
+    this.targets = []
   }
 
   update(time) {
-    let offenseAngle = 0;
-    let alienEnemy = this.scene.aliens.getChildren();
-    let enemyNumber = 0;
-    if (alienEnemy[enemyNumber]) {
-      this.scene.physics.add.overlap(this, alienEnemy, () => {
-        this.setPosition(x, y);
-        offenseAngle = Phaser.Math.Angle.Wrap(offenseAngle, 0.01)
-        Phaser.Math.RotateAroundDistance(this, alienEnemy[enemyNumber].x, alienEnemy[enemyNumber].y, offenseAngle, -250)
-      })
-      this.rotation = Phaser.Math.Angle.BetweenPoints(this, alienEnemy[enemyNumber])
-      this.scene.physics.moveToObject(this, alienEnemy[enemyNumber])
-    } else {
-      enemyNumber += 1;
+    if (this.targets.length < 2) {
+      this.targets = this.scene.aliens.getChildren();
+      this.target = 0
     }
+    if (this.targets[this.target]) {
+
+      this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.targets[this.target])
+      this.scene.physics.moveToObject(this, this.targets[this.target])
+
+    } else this.target++
 
 
     if (time > this.shotdelay) {
-      let bullet = this.scene.offensebullets.get(0, 0, "offense-bulllet");
+      let bullet = this.scene.offensebullets.get(0, 0, "offense-bullet");
       bullet.setDisplaySize(20, 10).fire(this)
       this.shotdelay = time + (1000);
     }
