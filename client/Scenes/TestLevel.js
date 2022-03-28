@@ -80,6 +80,16 @@ export default class Test extends Phaser.Scene {
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
 
+    //spawn attackBases
+    this.attackBases = this.physics.add.group({
+      classType: AttackBase,
+      scene: this,
+      immovable: true,
+      runChildUpdate: true,
+    });
+    this.attackBases.get(2000, 2100).setAngle(-180);
+    this.attackBases.get(2000, 900);
+
     //spawn mothership
     this.motherships = this.physics.add.group({
       classType: MotherShip,
@@ -93,15 +103,6 @@ export default class Test extends Phaser.Scene {
     this.mothership3 = this.motherships.get(0, 3000);
     this.mothership4 = this.motherships.get(4000, 3000);
 
-    //spawn attackBases
-    this.attackBases = this.physics.add.group({
-      classType: AttackBase,
-      scene: this,
-      immovable: true,
-      runChildUpdate: true,
-    });
-    this.attackBases.get(2000, 2100).setAngle(-180);
-    this.attackBases.get(2000, 900);
 
     //spawn defenseBases
     this.defenseBases = this.physics.add.group({
