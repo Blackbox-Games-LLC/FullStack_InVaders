@@ -166,7 +166,7 @@ export default class Test extends Phaser.Scene {
       // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", {win: this.gameWon});
+      this.scene.start("End_Screen", { win: this.gameWon });
     }
 
     //loss condition
@@ -174,7 +174,7 @@ export default class Test extends Phaser.Scene {
       // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", {loss: this.gameWon});
+      this.scene.start("End_Screen", { loss: this.gameWon });
     }
 
     //ship movement
