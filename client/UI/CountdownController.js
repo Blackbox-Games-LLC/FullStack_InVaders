@@ -57,7 +57,7 @@ export default class CountdownController {
     const elapsed = this.timerEvent.getElapsed();
     // console.log(elapsed);
     let remaining = this.duration - elapsed;
-    console.log(remaining);
+    // console.log(remaining);
     let seconds = remaining / 1000;
     //console.log("seconds", seconds);
     let mins = Math.floor(seconds / 60);

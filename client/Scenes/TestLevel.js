@@ -154,12 +154,8 @@ export default class Test extends Phaser.Scene {
     );
 
     //camera
-<<<<<<< HEAD
     this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5);
     // this.cameras.main.setZoom(0.22, 0.22);
-=======
-    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
->>>>>>> origin/main
 
     // countDownController
     const timerLabel = this.add
@@ -170,7 +166,7 @@ export default class Test extends Phaser.Scene {
       })
       .setScrollFactor(0, 0);
     this.countdown = new CountdownController(this, timerLabel);
-    //this.countdown.start(this.handleCountDownFinished.bind(this));
+    this.countdown.start(this.handleCountDownFinished.bind(this));
 
   
     //This manages game time within the scene.
