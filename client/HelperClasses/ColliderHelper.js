@@ -18,5 +18,7 @@ export default class ColliderHelper {
                 scene.planet.destroy();
             }
         });
+
+
     }
 }

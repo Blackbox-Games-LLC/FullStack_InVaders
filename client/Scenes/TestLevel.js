@@ -54,7 +54,7 @@ export default class Test extends Phaser.Scene {
   create() {
     this.Music = this.sys.game.globals.music
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add('bg')
+      this.bg = this.sound.add('bg', { volume: 0.5 })
       this.bg.play({
         loop: true
       })
