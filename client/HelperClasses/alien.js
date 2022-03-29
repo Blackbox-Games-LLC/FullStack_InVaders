@@ -17,7 +17,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
 
     //sounds
     const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
-    this.shoot = scene.sound.add('alienShot', { volume: 0.2 })
+    this.shoot = scene.sound.add('alienShot', { volume: 0.1 })
 
     //animations
     this.anims.create({
