@@ -160,7 +160,7 @@ export default class Test extends Phaser.Scene {
       })
       .setScrollFactor(0, 0);
     this.countdown = new CountdownController(this, timerLabel);
-    this.countdown.start(this.handleCountDownFinished.bind(this));
+    //this.countdown.start(this.handleCountDownFinished.bind(this));
 
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
