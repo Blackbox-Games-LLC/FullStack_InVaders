@@ -23,14 +23,14 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
     this.health = 1000
     this.spawnDelay = 10000
 
-    if (!scene.offenseSatellites) {
-      scene.offenseSatellites = scene.physics.add.group({
-        classType: offenseSatellite,
-        scene: scene,
-        runChildUpdate: true,
-        immovable: true
-      })
-    }
+
+    scene.offenseSatellites = scene.physics.add.group({
+      classType: offenseSatellite,
+      scene: scene,
+      runChildUpdate: true,
+      immovable: true
+    })
+
     scene.offensebullets = scene.physics.add.group({
       classType: Bullet,
       runChildUpdate: true
