@@ -9,6 +9,7 @@ import gameOver from "../HelperClasses/gameCondition"
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler"
 
+
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
   countdown;
@@ -69,6 +70,7 @@ export default class Test extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
+    this.gameWon = false;
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
@@ -93,6 +95,9 @@ export default class Test extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
+
+    
+
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -149,9 +154,18 @@ export default class Test extends Phaser.Scene {
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
+  
+    //This manages game time within the scene.
+    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
+    function changeWin(){
+      this.gameWon = true
+    }
+
     //keep at end
     this.ColliderHelper = new ColliderHelper(this)
   }
+
+  
 
   handleCountDownFinished() {
     //this.player.active=false
@@ -159,10 +173,9 @@ export default class Test extends Phaser.Scene {
     //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
   }
   update(time) {
-    this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    if (time >= 10000 || this.motherships.getLength() === 0) {
+    if (this.gameWon === true || this.motherships.getLength() === 0) {
       // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
