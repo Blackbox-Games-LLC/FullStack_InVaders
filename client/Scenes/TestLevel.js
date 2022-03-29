@@ -106,8 +106,6 @@ export default class Test extends Phaser.Scene {
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
 
-    
-
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -154,13 +152,8 @@ export default class Test extends Phaser.Scene {
     );
 
     //camera
-<<<<<<< HEAD
-    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5);
-    // this.cameras.main.setZoom(0.22, 0.22);
-=======
-    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
->>>>>>> origin/main
 
+    this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
     // countDownController
     const timerLabel = this.add
       .text(1500, -400, "CountDown", {
@@ -169,12 +162,12 @@ export default class Test extends Phaser.Scene {
         color: "#32a852",
       })
       .setScrollFactor(0, 0);
+
     this.countdown = new CountdownController(this, timerLabel);
     //this.countdown.start(this.handleCountDownFinished.bind(this));
 
-  
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
+    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
     function changeWin(){
       this.gameWon = true
     }
@@ -239,6 +232,9 @@ export default class Test extends Phaser.Scene {
         this.lastFired = time + 100;
       }
     }
+
+    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
 
     //counter
     this.countdown.update();
