@@ -26,34 +26,34 @@ export default class EndScreen extends Phaser.Scene {
         //     //new Score()
         // })
 
-        if(this.loss){
+        if (this.loss) {
             this.message = this.add.text(
                 900, 900, "Lol you suck", {
-                    color: "#FFFFFF",
-                    fontSize: 50,
-                    fontStyle: "bold",
-                }
+                color: "#FFFFFF",
+                fontSize: 50,
+                fontStyle: "bold",
+            }
             )
-        } else if(this.win){
+        } else if (this.win) {
             this.message = this.add.text(
                 900, 900, "you successfully defended planet fullstack!", {
-                    color: "#FFFFFF",
-                    fontSize: 50,
-                    fontStyle: "bold",
-                }
+                color: "#FFFFFF",
+                fontSize: 50,
+                fontStyle: "bold",
+            }
             )
         }
-        
+
         var playAgain = this.add.text(
-            1000, 1000, "Click Here to play again", 
+            1000, 1000, "Click Here to play again",
             {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",
             }
         )
-        playAgain.setInteractive({useHandCursor: true})
-        playAgain.on('pointerdown', ()=>this.clickButton())    
+        playAgain.setInteractive({ useHandCursor: true })
+        playAgain.on('pointerdown', () => this.clickButton())
     }
 
     clickButton() {
