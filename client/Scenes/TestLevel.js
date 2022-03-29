@@ -152,11 +152,8 @@ export default class Test extends Phaser.Scene {
     );
 
     //camera
-<<<<<<< HEAD
     this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5);
     // this.cameras.main.setZoom(0.22, 0.22);
-=======
->>>>>>> origin/main
 
     this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
     // countDownController
