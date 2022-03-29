@@ -12,7 +12,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
 
     //stats
     this.playerTarget = true
-    this.health = 50;
+    this.health = 60;
     this.shotdelay = 2000
 
     //sounds
@@ -26,7 +26,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       frames: this.anims.generateFrameNumbers("alien", { start: 2, end: 31 }),
     })
 
-    // damage from aliens blasters
+    // damage from offense satellite blasters
     scene.physics.add.overlap(this, scene.offensebullets, () => {
       if (this.health > 0) {
         this.health -= 10;
@@ -43,10 +43,10 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       }
     });
 
-    //alien bullet Damage
+    //damage from player ship blasters
     scene.physics.add.overlap(this, scene.playerbullets, () => {
       if (this.health > 0) {
-        this.health -= 10;
+        this.health -= 20;
       } else {
         this.playerTarget = false
         blowup.play()
@@ -73,7 +73,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       })
     });
 
-    //alien planet collision
+    //alien satellite collision
     scene.physics.add.collider(this, scene.defenseSatellite, () => {
       blowup.play()
       this.body.stop()
@@ -137,7 +137,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       this.shoot.play()
       let bullet = this.scene.alienbullets.get(0, 0, 'alien_bullet')
       bullet.fire(this)
-      this.shotdelay = time + Phaser.Math.Between(1000, 4000);
+      this.shotdelay = time + 1000
     }
   }
 }
