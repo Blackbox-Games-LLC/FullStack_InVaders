@@ -162,11 +162,11 @@ export default class Test extends Phaser.Scene {
     this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    //win condition
     if (time >= 10000 || this.motherships.getLength() === 0) {
       // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
+      this.scene.start("End_Screen", {win: this.gameWon});
     }
 
     //loss condition
@@ -174,6 +174,7 @@ export default class Test extends Phaser.Scene {
       // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
+      this.scene.start("End_Screen", {loss: this.gameWon});
     }
 
     //ship movement
