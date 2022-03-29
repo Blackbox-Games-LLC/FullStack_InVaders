@@ -106,9 +106,6 @@ export default class Test extends Phaser.Scene {
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
 
-
-
-
     //spawn attackBases
     this.attackBases = this.physics.add.group({
       classType: AttackBase,
@@ -165,7 +162,7 @@ export default class Test extends Phaser.Scene {
       })
       .setScrollFactor(0, 0);
     this.countdown = new CountdownController(this, timerLabel);
-    //this.countdown.start(this.handleCountDownFinished.bind(this));
+    this.countdown.start(this.handleCountDownFinished.bind(this));
 
 
     //This manages game time within the scene.
