@@ -25,15 +25,14 @@ export default class CountdownController {
    * @param {()=>void} callback
    * @param {number} duration
    */
-  start(callback, duration = 6000000) {
+  start(callback, duration = 300000) {
     this.stop();
 
     this.finishedCallback = callback;
-    this.duration = 10;
+    this.duration = duration;
 
     this.timerEvent = this.scene.time.addEvent({
       delay: duration,
-      // repeat: duration,
       callback: () => {
         // this.label.text = "0";
         this.stop();
@@ -41,6 +40,7 @@ export default class CountdownController {
           callback();
         }
       },
+      //  loop: true,
     });
   }
   stop() {
@@ -56,10 +56,13 @@ export default class CountdownController {
     }
     const elapsed = this.timerEvent.getElapsed();
     // console.log(elapsed);
-    const remaining = this.duration + elapsed;
-    const seconds = remaining / 1000;
-    const mins = seconds / 60;
-    // console.log(seconds);
-    this.label.text = `${mins.toFixed(0)}:${seconds.toFixed(1)}`;
+    let remaining = this.duration - elapsed;
+    console.log(remaining);
+    let seconds = remaining / 1000;
+    //console.log("seconds", seconds);
+    let mins = Math.floor(seconds / 60);
+    let currentSeconds = seconds - mins * 60;
+    // console.log("mins", mins);
+    this.label.text = `${mins.toFixed(0)}:${currentSeconds.toFixed(1)}`;
   }
 }
