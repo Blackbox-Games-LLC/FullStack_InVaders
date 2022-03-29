@@ -54,21 +54,21 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
       frames: this.anims.generateFrameNumbers("mExplode", { start: 0, end: 47 })
     })
 
-    if (!scene.aliens) {
-      scene.aliens = scene.physics.add.group({
-        classType: Alien,
-        scene: scene,
-        runChildUpdate: true,
-        immovable: true,
-      })
-    }
+
+    scene.aliens = scene.physics.add.group({
+      classType: Alien,
+      scene: scene,
+      runChildUpdate: true,
+      immovable: true,
+    })
+
     //alienbullets group
-    if (!scene.alienbullets) {
-      scene.alienbullets = scene.physics.add.group({
-        classType: Bullet,
-        runChildUpdate: true
-      })
-    }
+
+    scene.alienbullets = scene.physics.add.group({
+      classType: Bullet,
+      runChildUpdate: true
+    })
+
   }
   spawnAliens() {
     let b = this.getCenter();

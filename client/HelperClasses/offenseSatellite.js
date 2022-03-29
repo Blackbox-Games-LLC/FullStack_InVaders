@@ -6,15 +6,37 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
-    this.setSize(50, 50);
-    this.setDepth(2);
+    this.setDepth(1);
 
-    this.scene = scene
-    this.target = null
-    this.health = 50;
-    this.shotdelay = 2000
+    const explode = scene.sound.add('alien-blowup', { volume: 0.4 });
+    this.scene = scene;
+    this.target = null;
+    this.health = 100;
+    this.shotdelay = 500;
+
+    this.anims.create({
+      key:  "satellite-explosion",
+      frameRate: 25,
+      frames: this.anims.generateFrameNumbers("alien", {start: 2, end: 31})
+    })
+
+    scene.physics.add.overlap(this, scene.alienbullets, () => {
+      if (this.health > 0) {
+        this.health -= 10;
+      } else {
+        explode.play();
+        this.body.stop();
+        this.body.destroy();
+        this.play("satellite-explosion");
+        this.once("animationcomplete", () => {
+          this.destroy();
+          particles.destroy();
+        })
+      }
+    });
 
     const path = new Phaser.Math.Vector2(1, 0);
     path.setToPolar(this.rotation, 1);
@@ -28,7 +50,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       speedX: { min: -10 * px, max: 10 * px },
       accelerationY: 1000 * py,
       accelerationx: 1000 * px,
-      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 2000 } },
+      lifespan: { onEmit: () => { return Phaser.Math.Percent(this.body.speed, 0, 300) * 500 } },
       alpha: { start: 0.5, end: 0, ease: "Sine.easeIn" },
       rotate: { min: -180, max: 180 },
       angle: { min: 30, max: 110 },
@@ -38,7 +60,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       follow: this,
       followOffset: { y: this.height - 60 },
     });
-    particles.setDepth(2);
+    particles.setDepth(0);
 
     this.target = 0
     this.targets = []
@@ -55,7 +77,6 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
       this.scene.physics.moveToObject(this, this.targets[this.target])
 
     } else this.target++
-
 
     if (time > this.shotdelay) {
       let bullet = this.scene.offensebullets.get(0, 0, "offense-bullet");

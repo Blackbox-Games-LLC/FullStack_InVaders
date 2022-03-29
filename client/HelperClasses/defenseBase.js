@@ -22,15 +22,15 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
     this.health = 1000
     this.spawnDelay = 0
 
-    if (!scene.defenseSatellite) {
-      scene.defenseSatellite = scene.physics.add.group({
-        classType: defenseSatellite,
-        scene: scene,
-        runChildUpdate: true,
-        immovable: true,
-        maxSize: 200
-      })
-    }
+
+    scene.defenseSatellite = scene.physics.add.group({
+      classType: defenseSatellite,
+      scene: scene,
+      runChildUpdate: true,
+      immovable: true,
+      maxSize: 200
+    })
+
 
   }
   spawnSatellites() {
@@ -44,7 +44,7 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
     // this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.core)
     if (time > this.spawnDelay) {
       this.spawnSatellites()
-      this.spawnDelay = time * 1.5
+      this.spawnDelay = time * 1.1
     }
   }
 }

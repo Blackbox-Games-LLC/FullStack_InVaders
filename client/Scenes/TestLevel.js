@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import Ship from "../HelperClasses/ship";
 import MotherShip from "../HelperClasses/mothership";
 import Planet from "../HelperClasses/planet";
-import Defense from "../HelperClasses/defenseSatellite";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
@@ -27,9 +26,11 @@ export default class Test extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {frameWidth: 75, frameHeighth: 65});
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
+    this.load.image("offense-exhaust", "assets/offense-satellite-exhaust.png");
     this.load.image("exhaust", "assets/exhaust.png");
     this.load.image("alien_exhaust", "assets/alien_exhaust.png");
     this.load.image("mothership", "assets/mothership.png");
@@ -148,8 +149,12 @@ export default class Test extends Phaser.Scene {
     );
 
     //camera
+<<<<<<< HEAD
     this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5);
     // this.cameras.main.setZoom(0.22, 0.22);
+=======
+    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
+>>>>>>> origin/main
 
     // countDownController
     const timerLabel = this.add
@@ -175,11 +180,11 @@ export default class Test extends Phaser.Scene {
     this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    //win condition
     if (time >= 10000 || this.motherships.getLength() === 0) {
       // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
+      this.scene.start("End_Screen", { win: this.gameWon });
     }
 
     //loss condition
@@ -187,6 +192,7 @@ export default class Test extends Phaser.Scene {
       // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
+      this.scene.start("End_Screen", { loss: this.gameWon });
     }
 
     //ship movement
@@ -209,9 +215,6 @@ export default class Test extends Phaser.Scene {
 
     this.ship.body.velocity.x = 0;
     this.ship.body.velocity.y = 0;
-
-    // this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
-    // this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
 
     //ship bullets
     if (this.fire.isDown && time > this.lastFired) {
