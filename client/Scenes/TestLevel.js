@@ -27,7 +27,7 @@ export default class Test extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {frameWidth: 75, frameHeighth: 65});
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -57,14 +57,14 @@ export default class Test extends Phaser.Scene {
   }
 
   create() {
-    // this.Music = this.sys.game.globals.music;
-    // if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-    //   this.bg = this.sound.add("bg");
-    //   this.bg.play({
-    //     loop: true,
-    //   });
-    //   this.Music.bgMusicPlaying = true;
-    // }
+    this.Music = this.sys.game.globals.music
+    if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
+      this.bg = this.sound.add('bg', { volume: 0.5 })
+      this.bg.play({
+        loop: true
+      })
+      this.Music.bgMusicPlaying = true;
+    }
 
     this.lastFired = 0;
     this.angle1 = 0;
@@ -105,7 +105,6 @@ export default class Test extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
-
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -152,7 +151,6 @@ export default class Test extends Phaser.Scene {
     );
 
     //camera
-
     this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
     // countDownController
     const timerLabel = this.add
@@ -164,7 +162,8 @@ export default class Test extends Phaser.Scene {
       .setScrollFactor(0, 0);
 
     this.countdown = new CountdownController(this, timerLabel);
-    //this.countdown.start(this.handleCountDownFinished.bind(this));
+    this.countdown.start(this.handleCountDownFinished.bind(this));
+
 
     //This manages game time within the scene.
     this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
@@ -176,7 +175,7 @@ export default class Test extends Phaser.Scene {
     this.ColliderHelper = new ColliderHelper(this);
   }
 
-  
+
 
   handleCountDownFinished() {
     //this.player.active=false
