@@ -153,7 +153,7 @@ export default class Test extends Phaser.Scene {
 
     //camera
 
-    this.cameras.main.setPosition(0,0).startFollow(this.ship).setZoom(1, 1)
+    this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
     // countDownController
     const timerLabel = this.add
       .text(1500, -400, "CountDown", {
@@ -167,7 +167,7 @@ export default class Test extends Phaser.Scene {
     //this.countdown.start(this.handleCountDownFinished.bind(this));
 
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
+    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
     function changeWin(){
       this.gameWon = true
     }
