@@ -60,22 +60,6 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       }
     });
 
-    scene.physics.add.overlap(this, scene.offensebullets, () => {
-      if (this.health > 0) {
-        this.health -= 10;
-      } else {
-        this.playerTarget = false
-        blowup.play()
-        this.body.stop()
-        this.body.destroy()
-        this.play("blowup")
-        this.once("animationcomplete", () => {
-          this.destroy();
-          particles.destroy()
-        })
-      }
-    });
-
     //alien planet collision
     scene.physics.add.collider(this, scene.planet, () => {
       this.playerTarget = false
@@ -89,7 +73,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       })
     });
 
-    //alien planet collision
+    //alien satellite collision
     scene.physics.add.collider(this, scene.defenseSatellite, () => {
       blowup.play()
       this.body.stop()

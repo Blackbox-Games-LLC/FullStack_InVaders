@@ -6,24 +6,37 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, spritekey);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
-    this.setSize(50, 50);
     this.setDepth(1);
+
+    const explode = scene.sound.add('alien-blowup', { volume: 0.4 });
+    this.scene = scene;
+    this.target = null;
+    this.health = 100;
+    this.shotdelay = 500;
+
+    this.anims.create({
+      key:  "satellite-explosion",
+      frameRate: 25,
+      frames: this.anims.generateFrameNumbers("alien", {start: 2, end: 31})
+    })
 
     scene.physics.add.overlap(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {
+        explode.play();
         this.body.stop();
         this.body.destroy();
+        this.play("satellite-explosion");
+        this.once("animationcomplete", () => {
+          this.destroy();
+          particles.destroy();
+        })
       }
     });
-
-    this.scene = scene
-    this.target = null
-    this.health = 50;
-    this.shotdelay = 2000
 
     const path = new Phaser.Math.Vector2(1, 0);
     path.setToPolar(this.rotation, 1);
