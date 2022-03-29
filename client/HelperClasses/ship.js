@@ -5,13 +5,14 @@ import Bullet from "./bullets";
 export default class Ship extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, "ship");
+    this.scene = scene
     scene.add.existing(this);
     scene.physics.add.existing(this);
     
     this.setDrag(300);
     this.setAngularDrag(100);
     this.setMaxVelocity(1000);
-    this.setDepth(2);
+    this.setDepth(1);
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
 
@@ -23,12 +24,12 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.anims.create({
       key: "explode",
       frameRate: 25,
-      frames: this.anims.generateFrameNumbers("alien", { start: 2, end: 31 }),
+      frames: this.anims.generateFrameNumbers("mExplode", { start: 0, end: 47 }),
     })
 
     //ship stats
     this.health = 1000;
-    this.hp = new HealthBar(this.scene, 1500, -200, this.health, 600, 60)
+    this.hp = new HealthBar(this.scene, 1500, 0, this.health, 600, 60)
     this.hp.followCamera()
 
     // damage from aliens blasters
@@ -36,6 +37,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       if (this.health > 0) {
         this.health -= 10;
       } else {
+        this.alienTarget = false;
         explode.play();
         this.body.stop();
         this.body.destroy();
