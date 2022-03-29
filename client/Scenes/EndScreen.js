@@ -22,9 +22,9 @@ export default class EndScreen extends Phaser.Scene {
         });
     }
     create() {
-        this.scores.map(current => {
-            //new Score()
-        })
+        // this.scores.map(current => {
+        //     //new Score()
+        // })
 
         if(this.loss){
             this.message = this.add.text(

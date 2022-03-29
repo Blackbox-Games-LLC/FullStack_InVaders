@@ -7,6 +7,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, "ship");
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    
     this.setDrag(300);
     this.setAngularDrag(100);
     this.setMaxVelocity(1000);
@@ -14,24 +15,37 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
 
-    // damage from aliens blasters
-    scene.physics.add.overlap(this, scene.alienbullets, () => {
-      if (this.health > 0) {
-        this.health -= 10;
-      } else {
-        this.body.stop();
-        this.body.destroy();
-        // particles.destroy()
-      }
-    });
-
     //sounds
+    const explode = scene.sound.add('motherboom', { volume: 0.6 })
     this.shoot = scene.sound.add('playerShot', { volume: 0.3 })
+
+    //animations
+    this.anims.create({
+      key: "explode",
+      frameRate: 25,
+      frames: this.anims.generateFrameNumbers("alien", { start: 2, end: 31 }),
+    })
 
     //ship stats
     this.health = 1000;
     this.hp = new HealthBar(this.scene, 1500, -200, this.health, 600, 60)
     this.hp.followCamera()
+
+    // damage from aliens blasters
+    scene.physics.add.overlap(this, scene.alienbullets, () => {
+      if (this.health > 0) {
+        this.health -= 10;
+      } else {
+        explode.play();
+        this.body.stop();
+        this.body.destroy();
+        this.play("explode");
+        this.once("animationcomplete", () => {
+          this.destroy();
+          particles.destroy();
+        })
+      }
+    });
 
     //player bullets group
     scene.playerbullets = scene.physics.add.group({

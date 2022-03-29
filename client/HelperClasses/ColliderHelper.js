@@ -2,7 +2,7 @@ export default class ColliderHelper {
     constructor(scene) {
         //alien kamakazi Damage
         scene.physics.add.overlap(scene.planet, scene.aliens, () => {
-            scene.planet.health -= 100
+            scene.planet.health -= 200
             console.log(scene.planet.health)
         })
 
