@@ -5,33 +5,49 @@ import Bullet from "./bullets";
 export default class Ship extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, "ship");
+    this.scene = scene
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    
     this.setDrag(300);
     this.setAngularDrag(100);
     this.setMaxVelocity(1000);
-    this.setDepth(2);
+    this.setDepth(1);
     this.setCollideWorldBounds(false, true);
     this.setImmovable(true);
+
+    //sounds
+    const explode = scene.sound.add('motherboom', { volume: 0.6 })
+    this.shoot = scene.sound.add('playerShot', { volume: 0.3 })
+
+    //animations
+    this.anims.create({
+      key: "explode",
+      frameRate: 25,
+      frames: this.anims.generateFrameNumbers("mExplode", { start: 0, end: 47 }),
+    })
+
+    //ship stats
+    this.health = 1000;
+    this.hp = new HealthBar(this.scene, 1500, 0, this.health, 600, 60)
+    this.hp.followCamera()
 
     // damage from aliens blasters
     scene.physics.add.overlap(this, scene.alienbullets, () => {
       if (this.health > 0) {
         this.health -= 10;
       } else {
+        this.alienTarget = false;
+        explode.play();
         this.body.stop();
         this.body.destroy();
-        // particles.destroy()
+        this.play("explode");
+        this.once("animationcomplete", () => {
+          this.destroy();
+          particles.destroy();
+        })
       }
     });
-
-    //sounds
-    this.shoot = scene.sound.add('playerShot', { volume: 0.3 })
-
-    //ship stats
-    this.health = 1000;
-    this.hp = new HealthBar(this.scene, 1500, -200, this.health, 600, 60)
-    this.hp.followCamera()
 
     //player bullets group
     scene.playerbullets = scene.physics.add.group({

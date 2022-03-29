@@ -129,7 +129,7 @@ export default class Test extends Phaser.Scene {
     this.mothership3 = this.motherships.get(0, 3000);
     this.mothership4 = this.motherships.get(4000, 3000);
 
-    //controlls
+    //player ship controls
     this.cursors = this.input.keyboard.addKeys({
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
@@ -161,6 +161,7 @@ export default class Test extends Phaser.Scene {
   update(time) {
     this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
+
 
     if (time >= 10000 || this.motherships.getLength() === 0) {
       // this.physics.pause()
