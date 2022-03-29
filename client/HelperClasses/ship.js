@@ -29,7 +29,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
 
     //ship stats
     this.health = 1000;
-    this.hp = new HealthBar(this.scene, 1500, 0, this.health, 600, 60)
+    this.hp = new HealthBar(this.scene, 1500, 250, this.health, 600, 60)
     this.hp.followCamera()
 
     // damage from aliens blasters

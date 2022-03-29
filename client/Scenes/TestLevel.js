@@ -138,10 +138,10 @@ export default class Test extends Phaser.Scene {
     this.fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     //camera
-    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5)
+    this.cameras.main.setPosition(0,0).startFollow(this.ship).setZoom(1, 1)
 
     // countDownController
-    const timerLabel = this.add.text(1500, -400, "1000", {
+    const timerLabel = this.add.text(1500, 100, "1000", {
       fontSize: 150,
       fontStyle: "bold",
       color: "#32a852",
@@ -162,7 +162,7 @@ export default class Test extends Phaser.Scene {
     this.gameWon = false;
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-    if (time >= 10000 || this.motherships.getLength() === 0) {
+    if (time >= 1000000 || this.motherships.getLength() === 0) {
       // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
@@ -207,6 +207,9 @@ export default class Test extends Phaser.Scene {
         this.lastFired = time + 100;
       }
     }
+
+    this.bg.tilePositionX += this.ship.body.deltaX() * 0.5;
+    this.bg.tilePositionY += this.ship.body.deltaY() * 0.5;
 
     //counter
     this.countdown.update();
