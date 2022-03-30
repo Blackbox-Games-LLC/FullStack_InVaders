@@ -10,8 +10,8 @@ import Music from "../HelperClasses/MusicHandler";
 
 var config = {
   type: Phaser.AUTO,
-  width: 4098,
-  height: 3072,
+  width: 5098,
+  height: 2800,
   parent: "game",
   dom: {
     createContainer: true,
