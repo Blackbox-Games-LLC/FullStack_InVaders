@@ -10,6 +10,7 @@ export default class TitleScene extends Phaser.Scene {
     //  this.load.image('background','assets/title.png')
     this.load.html("form", "/assets/text/form.html");
     this.load.image("title", "/assets/titlescreen.png");
+    this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4")
   }
 
   create() {
@@ -38,6 +39,10 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     });
 
+  
+
+    let video = this.add.video(720, 600, "intro-video").setPosition(2000, 800);
+    video.play(true);
 
     this.returnKey = this.nameInput.addListener("click");
 
