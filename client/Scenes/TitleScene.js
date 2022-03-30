@@ -42,7 +42,7 @@ export default class TitleScene extends Phaser.Scene {
   
 
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
-    // video.play(true);
+    video.play(true);
 
     this.returnKey = this.nameInput.addListener("click");
 
