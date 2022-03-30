@@ -40,10 +40,9 @@ const seed = async () => {
       })
     );
 
-    console.log(green("Seeding success!"));
     db.close();
   } catch (err) {
-    console.error(red("Oh noes! Something went wrong!"));
+
     console.error(err);
     db.close();
   }
