@@ -10,6 +10,7 @@ export default class TitleScene extends Phaser.Scene {
     //  this.load.image('background','assets/title.png')
     this.load.html("form", "/assets/text/form.html");
     this.load.image("title", "/assets/titlescreen.png");
+    this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4")
   }
 
   create() {
@@ -22,6 +23,7 @@ export default class TitleScene extends Phaser.Scene {
 
     //console.log("inputname", this.nameInput);
 
+  
     this.message = this.add.text(
       1000,
       50,
@@ -35,40 +37,43 @@ export default class TitleScene extends Phaser.Scene {
         padding: { left: 10, right: 10, top: 10, bottom: 10 },
       }
     );
-    this.message = this.add.text(700, 200, "Controls", {
-      color: "#FFFFFF",
-      fontSize: 75,
-      fontStyle: "bold",
-    });
-    this.message = this.add.text(700, 300, "Press Key for movement : ", {
-      backgroundColor: "#2372C0",
-      fontSize: 80,
-      fontFamily: "Ultra",
-    });
-    this.message = this.add.text(700, 400, "Move Forward .... W ", {
-      color: "#FFFFFF",
-      fontSize: 80,
-      fontStyle: "bold",
-      backgroundColor: "#7B9D1E",
-    });
-    this.message = this.add.text(700, 500, "Move Left .... A ", {
-      color: "#FFFFFF",
-      fontSize: 80,
-      fontStyle: "bold",
-      backgroundColor: "#7B9D1E",
-    });
-    this.message = this.add.text(700, 600, "Move Right .... D ", {
-      color: "#FFFFFF",
-      fontSize: 80,
-      fontStyle: "bold",
-      backgroundColor: "#7B9D1E",
-    });
-    this.message = this.add.text(700, 700, "Fire Attack .... SPACE ", {
-      color: "#FFFFFF",
-      fontSize: 80,
-      fontStyle: "bold",
-      backgroundColor: "#D0021B",
-    });
+
+    let video = this.add.video(720, 600, "intro-video").setPosition(2000, 800);
+    video.play(true);
+    // this.message = this.add.text(700, 200, "Controls", {
+    //   color: "#FFFFFF",
+    //   fontSize: 75,
+    //   fontStyle: "bold",
+    // });
+    // this.message = this.add.text(700, 300, "Press Key for movement : ", {
+    //   backgroundColor: "#2372C0",
+    //   fontSize: 80,
+    //   fontFamily: "Ultra",
+    // });
+    // this.message = this.add.text(700, 400, "Move Forward .... W ", {
+    //   color: "#FFFFFF",
+    //   fontSize: 80,
+    //   fontStyle: "bold",
+    //   backgroundColor: "#7B9D1E",
+    // });
+    // this.message = this.add.text(700, 500, "Move Left .... A ", {
+    //   color: "#FFFFFF",
+    //   fontSize: 80,
+    //   fontStyle: "bold",
+    //   backgroundColor: "#7B9D1E",
+    // });
+    // this.message = this.add.text(700, 600, "Move Right .... D ", {
+    //   color: "#FFFFFF",
+    //   fontSize: 80,
+    //   fontStyle: "bold",
+    //   backgroundColor: "#7B9D1E",
+    // });
+    // this.message = this.add.text(700, 700, "Fire Attack .... SPACE ", {
+    //   color: "#FFFFFF",
+    //   fontSize: 80,
+    //   fontStyle: "bold",
+    //   backgroundColor: "#D0021B",
+    // });
     // this.message = this.add
     //   .text(2000, 1000, "Hello", {
     //     color: "#FFFFFF",
