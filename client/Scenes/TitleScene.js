@@ -53,6 +53,7 @@ export default class TitleScene extends Phaser.Scene {
 
       if (event.target.name === "playButton") {
         this.scene.switch("Test_Level");
+        video.stop()
       }
     });
   }
