@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import axios from "axios";
-
+import Test from "./TestLevel";
 
 
 export default class EndScreen extends Phaser.Scene {
@@ -57,6 +57,8 @@ export default class EndScreen extends Phaser.Scene {
     }
 
     clickButton() {
+        this.scene.remove("Test_Level")
+        this.scene.add("Test_Level", Test)
         this.scene.start("Test_Level");
     }
 }
