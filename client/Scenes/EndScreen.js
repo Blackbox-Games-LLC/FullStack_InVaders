@@ -13,18 +13,15 @@ export default class EndScreen extends Phaser.Scene {
     }
 
     preload() {
-        this.User = this.sys.game.globals.User
-        this.load.rexAwait(async (successCallback, failureCallback) => {
-            if (this.User.id) {
-                this.scores = await axios.get(`/api/score/${this.User.id}`);
-                successCallback();
-            }
-        });
+        // this.User = this.sys.game.globals.User
+        // this.load.rexAwait(async (successCallback, failureCallback) => {
+        //     if (this.User.id) {
+        //         this.scores = await axios.get(`/api/score/${this.User.id}`);
+        //         successCallback();
+        //     }
+        // });
     }
     create() {
-        // this.scores.map(current => {
-        //     //new Score()
-        // })
 
         if (this.loss) {
             this.message = this.add.text(
