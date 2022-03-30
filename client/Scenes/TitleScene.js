@@ -15,7 +15,7 @@ export default class TitleScene extends Phaser.Scene {
 
   create() {
     this.add.image(2000, 1500, "title").setDisplaySize(6500,3000)
-    this.nameInput = this.add.dom(2000, 1500).createFromCache("form");
+    this.nameInput = this.add.dom(2500, 1600).createFromCache("form");
     this.nameInput.width = 400;
     this.nameInput.displayWidth = 400;
     this.nameInput.height = 250;
@@ -41,8 +41,8 @@ export default class TitleScene extends Phaser.Scene {
 
   
 
-    let video = this.add.video(720, 600, "intro-video").setPosition(2000, 800);
-    video.play(true);
+    let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
+    // video.play(true);
 
     this.returnKey = this.nameInput.addListener("click");
 
