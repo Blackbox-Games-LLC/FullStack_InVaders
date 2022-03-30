@@ -189,7 +189,7 @@ export default class Test extends Phaser.Scene {
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-
+    //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
       // this.physics.pause()
       this.gameWon = true;
