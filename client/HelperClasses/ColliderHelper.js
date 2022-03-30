@@ -1,5 +1,3 @@
-import Ship from "./ship";
-
 export default class ColliderHelper {
     constructor(scene) {
         //alien kamakazi Damage
@@ -33,7 +31,7 @@ export default class ColliderHelper {
                 explode.play();
                 scene.ship.body.destroy();
                 scene.ship.play("explode");
-                
+
             }
         });
     }
