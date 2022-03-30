@@ -1,5 +1,4 @@
 const { db } = require("./server/db");
-const { green, red } = require("chalk");
 
 const User = require("./server/db/user");
 const Score = require("./server/db/score");
