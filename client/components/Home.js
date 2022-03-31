@@ -39,6 +39,7 @@ const User = new CurrentUser
 const music = new Music
 game.globals = { User, music }
 
+
 game.scene.add("End_Screen", EndScreen);
 game.scene.add("Title_Scene", TitleScene);
 game.scene.add("Login_Scene", LoginScene);
