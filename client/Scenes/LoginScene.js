@@ -71,7 +71,7 @@ export default class LoginScene extends Phaser.Scene {
       name.value = "";
     });
   }
-  update() {}
+  update() { }
   clickButton() {
     this.scene.switch("Test_Level");
   }

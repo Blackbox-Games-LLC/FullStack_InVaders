@@ -14,17 +14,17 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(3000, 1000, "title").setDisplaySize(4000, 2240)
-    this.nameInput = this.add.dom(2500, 1200).createFromCache("form");
-    this.nameInput.width = 400;
-    this.nameInput.displayWidth = 400;
-    this.nameInput.height = 250;
-    this.nameInput.displayHeight = 250;
+    this.add.image(2550, 1400, "title").setDisplaySize(5098, 2800)
+    let x = 5098 / window.innerWidth
+    let y = 2800 / window.innerHeight
+    this.nameInput = this.add.dom(5098 / 2, 2800 / 2).createFromCache("form")
+    this.nameInput.setScale(Math.max(x, y))
+
 
     //console.log("inputname", this.nameInput);
 
 
-    
+
     this.message = this.add.text(1700, 1400, "Forward - W | Left - A | Right - D", {
       color: "#FFFFFF",
       fontSize: 80,
@@ -39,7 +39,7 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     });
 
-  
+
 
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
     video.play(true);
