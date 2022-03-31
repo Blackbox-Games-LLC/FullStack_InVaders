@@ -25,6 +25,7 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
         this.health -= 10;
         this.hp.decrease(this.health)
       } else {
+        scene.motherShipsDestroyed += 1
         mblowup.play()
         this.hp.delete()
         this.body.destroy()
