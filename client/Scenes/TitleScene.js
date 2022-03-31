@@ -25,7 +25,7 @@ export default class TitleScene extends Phaser.Scene {
 
 
 
-    this.message = this.add.text(1700, 1400, "Forward - W | Left - A | Right - D", {
+    this.message = this.add.text(1400, 1400, "Forward - W | Backward - S | Left - A | Right - D", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
@@ -39,25 +39,72 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     });
 
+    //list of levels
 
+    this.message = this.add.text(2200, 1800, "SELECT A LEVEL", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    })
+
+    var earth = this.add.text(2200, 1900, "EARTH", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    })
+
+    var uranus = this.add.text(2200, 2000, "URANUS LOL", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    })
+    var venus = this.add.text(2200, 2100, "VENUS", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    })
 
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
-    video.play(true);
+    // video.play(true);
 
-    this.returnKey = this.nameInput.addListener("click");
+    earth.setInteractive({useHandCursor: true})
+    earth.on('pointerdown', ()=>this.clickButtonEarth())
+    uranus.setInteractive({useHandCursor: true})
+    uranus.on('pointerdown', ()=>this.clickButtonUranus())
+    venus.setInteractive({useHandCursor: true})
+    venus.on('pointerdown', ()=>this.clickButtonVenus())
 
-    this.returnKey.on("click", async (event) => {
-      if (event.target.name === "loginButton") {
-        this.scene.switch("Login_Scene");
-      }
-
-      if (event.target.name === "playButton") {
-        this.scene.switch("Test_Level");
-        video.stop()
-      }
-    });
   }
-  // clickButton() {
-  //   this.scene.switch("Test_Level");
-  // }
+
+  clickButtonEarth() {
+    this.scene.start("Test_Level");
+  }
+  clickButtonUranus(){
+    this.scene.start("Uranus")
+  }
+  clickButtonVenus(){
+    this.scene.start("Venus")
+  }
 }
+
+
+    
+
+
+
+    // this.returnKey = this.nameInput.addListener("click");
+
+    // this.returnKey.on("click", async (event) => {
+    //   if (event.target.name === "loginButton") {
+    //     this.scene.switch("Login_Scene");
+    //   }
+
+    //   if (event.target.name === "playButton") {
+    //     this.scene.switch("Test_Level");
+    //     video.stop()
+    //   }
+    // });
