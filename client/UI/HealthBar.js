@@ -40,9 +40,6 @@ export default class HealthBar extends Phaser.Physics.Arcade.Sprite {
 
     const margin = 2;
 
-    // this.bar.fillStyle(0x00FF00);
-    // this.bar.fillRect(x, y, width + margin, height + margin);
-
     this.bar.fillStyle(0xffffff);
     this.bar.fillRect(x + margin, y + margin, width - margin, height - margin);
 
