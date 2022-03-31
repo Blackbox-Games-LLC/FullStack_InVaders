@@ -10,9 +10,9 @@ export default class EndScreen extends Phaser.Scene {
     init(data) {
         // this.loss = data.loss
         // this.win = data.win
-        this.loss = this.loss
-        this.win = this.win
-        this.score = 100
+        this.loss = data.loss
+        this.win = data.win
+        this.score = data.score
     }
 
     preload() {
