@@ -9,7 +9,6 @@ import gameOver from "../HelperClasses/gameCondition";
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 
-
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
   countdown;
@@ -27,7 +26,10 @@ export default class Test extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
+      frameWidth: 75,
+      frameHeighth: 65,
+    });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -57,12 +59,12 @@ export default class Test extends Phaser.Scene {
   }
 
   create() {
-    this.Music = this.sys.game.globals.music
+    this.Music = this.sys.game.globals.music;
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add('bg', { volume: 0.5 })
+      this.bg = this.sound.add("bg", { volume: 0.5 });
       this.bg.play({
-        loop: true
-      })
+        loop: true,
+      });
       this.Music.bgMusicPlaying = true;
     }
 
@@ -75,7 +77,7 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
     this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-  
+
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
@@ -172,18 +174,15 @@ export default class Test extends Phaser.Scene {
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
-
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
-    function changeWin(){
-      this.gameWon = true
+    this.timedEvent = this.time.delayedCall(1000, changeWin, [], this);
+    function changeWin() {
+      this.gameWon = true;
     }
 
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
-
-
 
   handleCountDownFinished() {
     //this.player.active=false

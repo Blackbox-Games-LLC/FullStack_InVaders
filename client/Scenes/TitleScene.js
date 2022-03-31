@@ -9,7 +9,7 @@ export default class TitleScene extends Phaser.Scene {
   preload() {
     //  this.load.image('background','assets/title.png')
     this.load.image("title", "/assets/titlescreen-min.png");
-    this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4")
+    this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4");
   }
 
   create() {
@@ -35,7 +35,6 @@ export default class TitleScene extends Phaser.Scene {
     });
 
 
-
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
     video.play(true);
 
@@ -48,7 +47,7 @@ export default class TitleScene extends Phaser.Scene {
 
       if (event.target.name === "playButton") {
         this.scene.switch("Test_Level");
-        video.stop()
+        video.stop();
       }
     });
   }
