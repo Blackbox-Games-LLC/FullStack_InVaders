@@ -15,7 +15,7 @@ var config = {
   parent: "game",
   scale: {
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH
+    autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
   },
   dom: {
     createContainer: true,
@@ -47,12 +47,12 @@ game.globals = { User, music }
 
 game.scene.add("End_Screen", EndScreen);
 game.scene.add("Title_Scene", TitleScene);
-game.scene.add("Login_Scene", LoginScene);
+//game.scene.add("Login_Scene", LoginScene);
 game.scene.add("Test_Level", Test);
-// game.scene.start("Title_Scene");
+game.scene.start("Title_Scene");
 //game.scene.start("End_Screen");
 //game.scene.start("Login_Scene");
-game.scene.start("Test_Level");
+//game.scene.start("Test_Level");
 
 const Home = () => {
   return <div id="game"></div>;

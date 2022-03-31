@@ -8,17 +8,12 @@ export default class TitleScene extends Phaser.Scene {
 
   preload() {
     //  this.load.image('background','assets/title.png')
-    this.load.html("form", "/assets/text/form.html");
     this.load.image("title", "/assets/titlescreen-min.png");
     this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4")
   }
 
   create() {
     this.add.image(2550, 1400, "title").setDisplaySize(5098, 2800)
-    let x = 5098 / window.innerWidth
-    let y = 2800 / window.innerHeight
-    this.nameInput = this.add.dom(5098 / 2, 2800 / 2).createFromCache("form")
-    this.nameInput.setScale(Math.max(x, y))
 
 
     //console.log("inputname", this.nameInput);
