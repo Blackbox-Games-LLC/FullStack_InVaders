@@ -176,7 +176,7 @@ export default class Test extends Phaser.Scene {
 
 
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
+    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
     function changeWin(){
       this.gameWon = true
     }
@@ -185,13 +185,6 @@ export default class Test extends Phaser.Scene {
     this.ColliderHelper = new ColliderHelper(this);
   }
 
-
-
-  handleCountDownFinished() {
-    //this.player.active=false
-    //const {width,height}=this.scale
-    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
-  }
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
