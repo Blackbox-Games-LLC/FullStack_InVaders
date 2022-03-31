@@ -10,17 +10,17 @@ import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 
 
-export default class Test extends Phaser.Scene {
+export default class Venus extends Phaser.Scene {
   /** @type {CountdownController} */
   countdown;
 
   constructor() {
-    super("Test_Level");
+    super("Venus");
   }
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
-    this.load.image("planet", "assets/earth-transparent-min.png");
+    this.load.image("planet", "assets/venus.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
@@ -75,7 +75,6 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
     this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-    this.aliensDestroyed = 0
   
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
@@ -95,7 +94,7 @@ export default class Test extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1).setDisplaySize(1200,1200)
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -196,18 +195,18 @@ export default class Test extends Phaser.Scene {
 
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
-      this.score = this.aliensDestroyed
+      // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", { win: this.gameWon, score: this.aliensDestroyed });
+      this.scene.start("End_Screen", { win: this.gameWon });
     }
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      this.score = this.aliensDestroyed
+      // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", { loss: this.gameWon, score: this.aliensDestroyed });
+      this.scene.start("End_Screen", { loss: this.gameWon });
     }
 
     //ship movement

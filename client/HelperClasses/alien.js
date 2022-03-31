@@ -48,6 +48,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       if (this.health > 0) {
         this.health -= 20;
       } else {
+        scene.aliensDestroyed += 1
         this.playerTarget = false
         blowup.play()
         this.body.stop()
