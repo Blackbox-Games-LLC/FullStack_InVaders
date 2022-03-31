@@ -185,6 +185,12 @@ export default class Test extends Phaser.Scene {
     this.ColliderHelper = new ColliderHelper(this);
   }
 
+  handleCountDownFinished() {
+    //this.player.active=false
+    //const {width,height}=this.scale
+    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+  }
+
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
