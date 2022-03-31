@@ -38,18 +38,6 @@ export default class TitleScene extends Phaser.Scene {
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
     video.play(true);
 
-    this.returnKey = this.nameInput.addListener("click");
-
-    this.returnKey.on("click", async (event) => {
-      if (event.target.name === "loginButton") {
-        this.scene.switch("Login_Scene");
-      }
-
-      if (event.target.name === "playButton") {
-        this.scene.switch("Test_Level");
-        video.stop();
-      }
-    });
   }
   // clickButton() {
   //   this.scene.switch("Test_Level");
