@@ -164,7 +164,7 @@ export default class Test extends Phaser.Scene {
       .text(2300, -400, "CountDown", {
         fontSize: 150,
         fontStyle: "bold",
-        color: "#32a852",
+        color: "#00FF00",
       })
       .setScrollFactor(0, 0)
       .setDepth(2)
