@@ -76,6 +76,7 @@ export default class Test extends Phaser.Scene {
     this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
+    this.motherShipsDestroyed = 0
   
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
@@ -196,18 +197,28 @@ export default class Test extends Phaser.Scene {
 
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
-      this.score = this.aliensDestroyed
+      this.aliensScore = this.aliensDestroyed
+      this.motherShipScore = this.motherShipsDestroyed
       this.gameWon = true;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", { win: this.gameWon, score: this.aliensDestroyed });
+      this.scene.start("End_Screen", { 
+        win: this.gameWon, 
+        aliensScore: this.aliensDestroyed,
+        motherShipScore: this.motherShipsDestroyed
+      });
     }
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      this.score = this.aliensDestroyed
+      this.aliensScore = this.aliensDestroyed
+      this.motherShipScore = this.motherShipsDestroyed
       this.gameWon = false;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", { loss: this.gameWon, score: this.aliensDestroyed });
+      this.scene.start("End_Screen", { 
+        loss: this.gameWon, 
+        aliensScore: this.aliensDestroyed,
+        motherShipScore: this.motherShipsDestroyed
+       });
     }
 
     //ship movement
