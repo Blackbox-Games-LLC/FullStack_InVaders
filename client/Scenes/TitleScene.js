@@ -32,7 +32,7 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     });
 
-    this.message = this.add.text(2200, 1600, "Attack - SPACE ", {
+    this.message = this.add.text(2200, 1500, "Attack - SPACE ", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",

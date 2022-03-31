@@ -8,8 +8,11 @@ export default class EndScreen extends Phaser.Scene {
         super("End_Screen");
     }
     init(data) {
-        this.loss = data.loss
-        this.win = data.win
+        // this.loss = data.loss
+        // this.win = data.win
+        this.loss = this.loss
+        this.win = this.win
+        this.score = 100
     }
 
     preload() {
@@ -22,18 +25,17 @@ export default class EndScreen extends Phaser.Scene {
         // });
     }
     create() {
-
-        if (this.loss) {
+        if (this.loss, this.score) {
             this.message = this.add.text(
-                900, 900, "Lol you suck", {
+                900, 900, `Lol you suck. Number of Aliens destroyed: ${this.score}`, {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",
             }
             )
-        } else if (this.win) {
+        } else if (this.win, this.score) {
             this.message = this.add.text(
-                900, 900, "you successfully defended planet fullstack!", {
+                900, 900, `you successfully defended planet fullstack!. Number of Aliens destroyed: ${this.score}`, {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",
