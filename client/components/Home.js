@@ -13,6 +13,10 @@ var config = {
   width: 5098,
   height: 2800,
   parent: "game",
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  },
   dom: {
     createContainer: true,
   },
@@ -35,6 +39,7 @@ var config = {
 };
 
 const game = new Phaser.Game(config);
+
 const User = new CurrentUser
 const music = new Music
 game.globals = { User, music }
