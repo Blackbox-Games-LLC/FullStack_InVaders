@@ -13,7 +13,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
     //stats
     this.playerTarget = true
     this.health = 60;
-    // this.shotdelay = 2000
+    this.shotdelay = 2000
 
     //sounds
     const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
