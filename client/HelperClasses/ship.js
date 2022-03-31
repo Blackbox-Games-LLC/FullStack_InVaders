@@ -13,7 +13,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.setAngularDrag(100);
     this.setMaxVelocity(1000);
     this.setDepth(1);
-    this.setCollideWorldBounds(false, true);
+    this.setCollideWorldBounds(true, true);
     this.setImmovable(true);
 
     //sounds
@@ -29,7 +29,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
 
     //ship stats
     this.health = 1000;
-    this.hp = new HealthBar(this.scene, 1500, 50, this.health, 600, 60)
+    this.hp = new HealthBar(this.scene, 2475, 700, this.health, 150, 20)
     this.hp.followCamera()
 
     // damage from aliens blasters

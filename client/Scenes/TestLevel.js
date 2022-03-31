@@ -74,6 +74,8 @@ export default class Test extends Phaser.Scene {
     this.distance3 = 1000;
     this.angle3 = 0;
     this.gameWon = false;
+    this.physics.world.setBounds(-1500, -1500, 8000, 6000)
+  
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
@@ -105,6 +107,7 @@ export default class Test extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
+
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -145,6 +148,7 @@ export default class Test extends Phaser.Scene {
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
+      backward: Phaser.Input.Keyboard.KeyCodes.S
     });
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -152,18 +156,18 @@ export default class Test extends Phaser.Scene {
 
     //camera
 
-    this.cameras.main.startFollow(this.ship).setZoom(0.5, 0.5);
-    // this.cameras.main.setZoom(0.22, 0.22);
-
     this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
+
+
     // countDownController
     const timerLabel = this.add
-      .text(1500, -400, "CountDown", {
+      .text(2300, -400, "CountDown", {
         fontSize: 150,
         fontStyle: "bold",
         color: "#32a852",
       })
-      .setScrollFactor(0, 0);
+      .setScrollFactor(0, 0)
+      .setDepth(2)
 
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
@@ -189,7 +193,7 @@ export default class Test extends Phaser.Scene {
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
-
+    //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
       // this.physics.pause()
       this.gameWon = true;
@@ -217,6 +221,12 @@ export default class Test extends Phaser.Scene {
       this.physics.velocityFromRotation(
         this.ship.rotation,
         50000,
+        this.ship.body.acceleration
+      );
+    } else if (this.cursors.backward.isDown) {
+      this.physics.velocityFromRotation(
+        this.ship.rotation,
+        -50000,
         this.ship.body.acceleration
       );
     } else {
