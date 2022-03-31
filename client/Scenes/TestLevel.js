@@ -161,12 +161,13 @@ export default class Test extends Phaser.Scene {
 
     // countDownController
     const timerLabel = this.add
-      .text(1500, -400, "CountDown", {
+      .text(2300, -400, "CountDown", {
         fontSize: 150,
         fontStyle: "bold",
         color: "#32a852",
       })
-      .setScrollFactor(0, 0);
+      .setScrollFactor(0, 0)
+      .setDepth(2)
 
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
