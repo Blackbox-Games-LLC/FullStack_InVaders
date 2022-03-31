@@ -1,6 +1,6 @@
 export default class CurrentUser {
     constructor() {
-        this._id = 1,
+        this._id = null,
             this._username = null
     }
     set id(value) {

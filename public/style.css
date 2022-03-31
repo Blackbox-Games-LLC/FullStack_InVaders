@@ -27,6 +27,11 @@ body {
   font-stretch: expanded;
 }
 
+.error {
+  color: white;
+  margin-right: 20px;
+}
+
 #input-form {
   padding: 15px;
   background-color: #000000;

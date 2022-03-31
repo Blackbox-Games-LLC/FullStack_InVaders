@@ -9,9 +9,13 @@ router.post("/", async (req, res, next) => {
         username: req.body.username,
       },
     });
-    res.send(singleUser);
+    if (singleUser) {
+      res.send(singleUser);
+    } else {
+      throw new Error("User Not Found")
+    }
   } catch (err) {
-    console.log("error is:", err);
+    next(err)
   }
 });
 
