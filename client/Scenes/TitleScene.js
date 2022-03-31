@@ -9,13 +9,13 @@ export default class TitleScene extends Phaser.Scene {
   preload() {
     //  this.load.image('background','assets/title.png')
     this.load.html("form", "/assets/text/form.html");
-    this.load.image("title", "/assets/titlescreen.png");
+    this.load.image("title", "/assets/titlescreen-min.png");
     this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4")
   }
 
   create() {
-    this.add.image(2000, 1500, "title").setDisplaySize(6500,3000)
-    this.nameInput = this.add.dom(2500, 1600).createFromCache("form");
+    this.add.image(3000, 1000, "title").setDisplaySize(4000, 2240)
+    this.nameInput = this.add.dom(2500, 1200).createFromCache("form");
     this.nameInput.width = 400;
     this.nameInput.displayWidth = 400;
     this.nameInput.height = 250;
@@ -25,14 +25,14 @@ export default class TitleScene extends Phaser.Scene {
 
 
     
-    this.message = this.add.text(1700, 2300, "Forward - W | Left - A | Right - D", {
+    this.message = this.add.text(1700, 1400, "Forward - W | Left - A | Right - D", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    this.message = this.add.text(2200, 2400, "Attack - SPACE ", {
+    this.message = this.add.text(2200, 1600, "Attack - SPACE ", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
