@@ -74,7 +74,6 @@ export default class Test extends Phaser.Scene {
     this.distance3 = 1000;
     this.angle3 = 0;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-
     this.aliensDestroyed = 0
   
   
