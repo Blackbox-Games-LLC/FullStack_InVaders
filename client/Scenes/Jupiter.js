@@ -100,10 +100,15 @@ export default class Jupiter extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1500, 1500).setDepth(1);
-    this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
+    
+    // Create core for orbiting defense satellites
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
+
+    // Set plant and its health
+    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1500, 1500).setDepth(1);
+    this.planet.health = 25000;
+    this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
 
     //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add
@@ -113,7 +118,7 @@ export default class Jupiter extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
-    this.ship.health = 2500
+    this.ship.health = 1500
 
 
     //spawn attackBases
