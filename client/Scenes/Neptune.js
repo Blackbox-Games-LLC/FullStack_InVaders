@@ -5,33 +5,29 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
-
+ 
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
-import HealthPickup from "../HelperClasses/healthPickup";
 
-export default class Test extends Phaser.Scene {
+
+export default class Neptune extends Phaser.Scene {
   /** @type {CountdownController} */
   countdown;
 
   constructor() {
-    super("Test_Level");
+    super("Neptune");
   }
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
-    this.load.image("health_pickup", "assets/energy_health.png")
-    this.load.image("planet", "assets/earth-transparent-min.png");
+    this.load.image("planet", "assets/neptune.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
-      frameWidth: 75,
-      frameHeighth: 65,
-    });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -56,18 +52,17 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
-    this.load.audio("pickup", "assets/pickup.mp3")
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
   }
 
   create() {
-    this.Music = this.sys.game.globals.music;
+    this.Music = this.sys.game.globals.music
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add("bg", { volume: 0.5 });
+      this.bg = this.sound.add('bg', { volume: 0.5 })
       this.bg.play({
-        loop: true,
-      });
+        loop: true
+      })
       this.Music.bgMusicPlaying = true;
     }
 
@@ -78,17 +73,20 @@ export default class Test extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
+    this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
+    this.motherShipsDestroyed = 0
+  
 
-    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
+    this.sun = this.add.sprite(-1250, 1500, "sun").setDisplaySize(1000, 1000).setDepth(1);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
-      .tileSprite(2824, 1024, 14000, 10000, "background")
+      .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
-      .sprite(4000, 1200, "galaxy")
+      .sprite(4000, 3200, "galaxy")
       .setDisplaySize(3000, 3000);
     // galaxy spin
     this.tweens.add({
@@ -98,7 +96,7 @@ export default class Test extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1300, 1300).setDepth(1);
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -176,35 +174,34 @@ export default class Test extends Phaser.Scene {
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
+
+    //This manages game time within the scene.
+    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
+    function changeWin(){
+      this.gameWon = true
+    }
+
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
 
   handleCountDownFinished() {
-    this.countdowndone = true
-  }
-  hDelay = 0
-  spawnHealth(time, delay) {
-    //health lifespan is 5000
-    if (time > this.hDelay) {
-      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.hDelay = time + delay
-    }
+    //this.player.active=false
+    //const {width,height}=this.scale
+    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
   }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
-    this.motherShipsDestroyed = 4 - this.motherships.getLength()
-
-    this.spawnHealth(time, 6000)
 
     //win condition
-    if (this.countdowndone === true || this.motherships.getLength() === 0) {
+    if (this.gameWon === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed
       this.motherShipScore = this.motherShipsDestroyed
+      this.gameWon = true;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", {
-        condition: true,
+      this.scene.start("End_Screen", { 
+        win: this.gameWon, 
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
       });
@@ -214,12 +211,13 @@ export default class Test extends Phaser.Scene {
     if (this.planet.health <= 0 || this.ship.health <= 0) {
       this.aliensScore = this.aliensDestroyed
       this.motherShipScore = this.motherShipsDestroyed
+      this.gameWon = false;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", {
-        condition: false,
+      this.scene.start("End_Screen", { 
+        loss: this.gameWon, 
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
-      });
+       });
     }
 
     //ship movement

@@ -17,7 +17,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
 
     //sounds
     const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
-    this.shoot = scene.sound.add('alienShot', { volume: 0.1 })
+    this.shoot = scene.sound.add('alienShot', { volume: 0.08 })
 
     //animations
     this.anims.create({
@@ -48,6 +48,7 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       if (this.health > 0) {
         this.health -= 20;
       } else {
+        scene.aliensDestroyed += 1
         this.playerTarget = false
         blowup.play()
         this.body.stop()
