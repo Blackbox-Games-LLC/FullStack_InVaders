@@ -33,7 +33,7 @@ export default class EndScreen extends Phaser.Scene {
             )
         } else if (this.condition === true) {
             this.message = this.add.text(
-                900, 900, `You successfully defended planet fullstack!. Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
+                900, 900, `You successfully defended planet fullstack! Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",
