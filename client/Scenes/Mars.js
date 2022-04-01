@@ -82,8 +82,8 @@ export default class Mars extends Phaser.Scene {
   
 
     this.sun = this.add.sprite(2500, -200, "sun").setDisplaySize(3000, 3000).setDepth(1);
-    this.phobos = this.add.sprite(-200, 1500, "phobos").setDisplaySize(150, 150).setDepth(1);
-    this.deimos = this.add.sprite(2500, 2500, "deimos").setDisplaySize(150, 150).setDepth(1);
+    this.phobos = this.add.sprite(3500, 1000, "phobos").setDisplaySize(150, 150).setDepth(1).setAngle(215);
+    this.deimos = this.add.sprite(-1500, 1500, "deimos").setDisplaySize(150, 150).setDepth(1).setAngle(-210);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
