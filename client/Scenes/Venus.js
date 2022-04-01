@@ -77,14 +77,14 @@ export default class Venus extends Phaser.Scene {
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
   
 
-    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
+    this.sun = this.add.sprite(-500, 2000, "sun").setDepth(1).setDisplaySize(3000, 3000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
-      .sprite(4000, 1200, "galaxy")
+      .sprite(2000, 4000, "galaxy")
       .setDisplaySize(3000, 3000);
     // galaxy spin
     this.tweens.add({
@@ -94,7 +94,7 @@ export default class Venus extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1).setDisplaySize(1200,1200)
+    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1).setDisplaySize(1350,1350)
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
