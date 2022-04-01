@@ -12,12 +12,15 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
 
     this.health = 1000;
     this.spawnDelay = 0
-    this.hp = new HealthBar(this.scene, this.x-200, this.y+100, this.health, 400, 25)
+    this.hp = new HealthBar(this.scene, this.x - 200, this.y + 100, this.health, 400, 25)
 
     this.setSize(400, 550);
     this.setCollideWorldBounds(true);
     this.setDepth(2)
     this.setImmovable(true);
+
+    //sounds
+    const mblowup = scene.sound.add('motherboom', { volume: 0.8 })
 
     //player bullet damage
     scene.physics.add.overlap(this, scene.playerbullets, () => {
@@ -44,8 +47,6 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
       console.log("Player Health: ", scene.ship.health)
     })
 
-    //sounds
-    const mblowup = scene.sound.add('motherboom', { volume: 0.8 })
 
     //animation
     this.anims.create({

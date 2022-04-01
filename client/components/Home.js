@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Phaser from "phaser";
 import Test from "../Scenes/TestLevel";
 import Mercury from "../Scenes/Mercury";
@@ -23,7 +24,7 @@ var config = {
   parent: "game",
   scale: {
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH
+    autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
   },
   dom: {
     createContainer: true,
@@ -31,7 +32,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false,
+      debug: true,
       gravity: { scale: 0 },
     },
   },
@@ -71,6 +72,17 @@ game.scene.start("Title_Scene");
 // game.scene.start("Test_Level");
 
 const Home = () => {
+  const loggedIn = useSelector(state => state.user)
+  const user = game.globals.User
+  if (loggedIn.username) {
+    user.id = loggedIn.id
+    user.username = loggedIn.username
+    console.log(user)
+  } else {
+    user.id = null
+    user.username = null
+    console.log(user)
+  }
   return <div id="game"></div>;
 };
 
