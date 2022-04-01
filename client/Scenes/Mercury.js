@@ -10,17 +10,17 @@ import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 
 
-export default class Mars extends Phaser.Scene {
+export default class Mercury extends Phaser.Scene {
   /** @type {CountdownController} */
   countdown;
 
   constructor() {
-    super("Mars");
+    super("Mercury");
   }
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
-    this.load.image("planet", "assets/mars.png");
+    this.load.image("planet", "assets/mercury.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
@@ -79,14 +79,14 @@ export default class Mars extends Phaser.Scene {
     this.motherShipsDestroyed = 0
   
 
-    this.sun = this.add.sprite(2500, -200, "sun").setDisplaySize(3000, 3000).setDepth(1);
+    this.sun = this.add.sprite(-500, 1500, "sun").setDisplaySize(4000, 4000).setDepth(1);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
-      .sprite(1000, 3500, "galaxy")
+      .sprite(-2000, -500, "galaxy")
       .setDisplaySize(3000, 3000);
     // galaxy spin
     this.tweens.add({
@@ -96,7 +96,7 @@ export default class Mars extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1350, 1350).setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1500, 1500).setDepth(1);
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -108,7 +108,7 @@ export default class Mars extends Phaser.Scene {
       .setVisible(false);
 
     //spawn ship
-    this.ship = new Ship(this, 2000, 250);
+    this.ship = new Ship(this, 2750, 1500);
 
 
     //spawn attackBases
@@ -118,8 +118,8 @@ export default class Mars extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.attackBases.get(2000, 2100).setAngle(-180);
-    this.attackBases.get(2000, 900);
+    this.attackBases.get(2000, 2250).setAngle(-180);
+    this.attackBases.get(2000, 750);
 
     //spawn defenseBases
     this.defenseBases = this.physics.add.group({
@@ -129,8 +129,8 @@ export default class Mars extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.defenseBases.get(1400, 1500).setAngle(-90);
-    this.defenseBases.get(2625, 1500).setAngle(90);
+    this.defenseBases.get(2450, 1250).setAngle(65);
+    this.defenseBases.get(2250, 2050).setAngle(150);
 
     //spawn mothership
     this.motherships = this.physics.add.group({
@@ -140,10 +140,10 @@ export default class Mars extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.mothership1 = this.motherships.get(-1000, 1000);
-    this.mothership2 = this.motherships.get(4500, 1000);
-    this.mothership3 = this.motherships.get(-1000, 2250);
-    this.mothership4 = this.motherships.get(4500, 2250);
+    this.mothership1 = this.motherships.get(3000, -500);
+    this.mothership2 = this.motherships.get(4500, 0);
+    this.mothership3 = this.motherships.get(3000, 3500);
+    this.mothership4 = this.motherships.get(4500, 3000);
 
     //player ship controls
     this.cursors = this.input.keyboard.addKeys({
