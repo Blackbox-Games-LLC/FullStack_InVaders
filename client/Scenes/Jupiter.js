@@ -41,8 +41,10 @@ export default class Jupiter extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("sun", "assets/sun.png");
-    this.load.image("moon1", "assets/moon1.png");
-    this.load.image("moon2", "assets/moon6.png");
+    this.load.image("io", "assets/io.png");
+    this.load.image("europa", "assets/europa.png");
+    this.load.image("ganymede", "assets/ganymede.png");
+    this.load.image("callisto", "assets/callisto.png");
     this.load.spritesheet("alien", "assets/alien-invader.png", {
       frameWidth: 75,
       frameHeight: 65,
@@ -79,9 +81,11 @@ export default class Jupiter extends Phaser.Scene {
     this.motherShipsDestroyed = 0
   
 
-    this.sun = this.add.sprite(4750, 1450, "sun").setDisplaySize(2000, 2000).setDepth(1);
-    this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
-    this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
+    this.sun = this.add.sprite(5500, 1450, "sun").setDisplaySize(2000, 2000).setDepth(1);
+    this.io = this.add.sprite(3000, 1500, "io").setDisplaySize(150, 150).setDepth(1);
+    this.europa = this.add.sprite(1500, 200, "europa").setDisplaySize(150, 150).setDepth(1);
+    this.ganymede = this.add.sprite(-500, 2000, "ganymede").setDisplaySize(250, 250).setDepth(1);
+    this.callisto = this.add.sprite(-2000, 1500, "callisto").setDisplaySize(50, 50).setDepth(1);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
@@ -96,10 +100,15 @@ export default class Jupiter extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1350, 1350).setDepth(1);
-    this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
+    
+    // Create core for orbiting defense satellites
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
+
+    // Set plant and its health
+    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1500, 1500).setDepth(1);
+    this.planet.health = 25000;
+    this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
 
     //The base starts as invisible but renders after 100000 seconds
     this.command = this.physics.add
@@ -109,6 +118,7 @@ export default class Jupiter extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
+    this.ship.health = 1500
 
 
     //spawn attackBases
@@ -118,8 +128,10 @@ export default class Jupiter extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.attackBases.get(2000, 2100).setAngle(-180);
-    this.attackBases.get(2000, 900);
+    this.attackBases.get(2000, 2200).setAngle(180);
+    this.attackBases.get(2000, 800).setAngle(0);
+    this.attackBases.get(2550, 1100).setAngle(60);
+    this.attackBases.get(1450, 1850).setAngle(240)
 
     //spawn defenseBases
     this.defenseBases = this.physics.add.group({
@@ -129,21 +141,23 @@ export default class Jupiter extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.defenseBases.get(1400, 1500).setAngle(-90);
-    this.defenseBases.get(2625, 1500).setAngle(90);
+    this.defenseBases.get(2550, 1850).setAngle(120);
+    this.defenseBases.get(1500, 1100).setAngle(300);
 
     //spawn mothership
     this.motherships = this.physics.add.group({
       classType: MotherShip,
       scene: this,
-      maxSize: 4,
+      maxSize: 6,
       immovable: true,
       runChildUpdate: true,
     });
-    this.mothership1 = this.motherships.get();
-    this.mothership2 = this.motherships.get(4000, 0);
-    this.mothership3 = this.motherships.get(0, 3000);
-    this.mothership4 = this.motherships.get(4000, 3000);
+    this.mothership1 = this.motherships.get(-1000, -1000);
+    this.mothership2 = this.motherships.get(2000, -1000);
+    this.mothership3 = this.motherships.get(5000, -1000);
+    this.mothership4 = this.motherships.get(-1000, 3500);
+    this.mothership5 = this.motherships.get(2000, 3500);
+    this.mothership6 = this.motherships.get(5000, 3500);
 
     //player ship controls
     this.cursors = this.input.keyboard.addKeys({
