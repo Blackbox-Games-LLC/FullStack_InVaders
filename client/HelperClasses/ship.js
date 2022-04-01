@@ -8,7 +8,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    
+
     this.setDrag(300);
     this.setAngularDrag(100);
     this.setMaxVelocity(1000);

@@ -25,7 +25,7 @@ export default class CountdownController {
    * @param {()=>void} callback
    * @param {number} duration
    */
-  start(callback, duration = 3000) {
+  start(callback, duration = 300000) {
     this.stop();
 
     this.finishedCallback = callback;

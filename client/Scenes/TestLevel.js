@@ -8,7 +8,7 @@ import DefenseBase from "../HelperClasses/defenseBase";
 
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
-
+import HealthPickup from "../HelperClasses/healthPickup";
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -20,6 +20,7 @@ export default class Test extends Phaser.Scene {
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
+    this.load.image("health_pickup", "assets/energy_health.png")
     this.load.image("planet", "assets/earth-transparent-min.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
@@ -27,7 +28,10 @@ export default class Test extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
+      frameWidth: 75,
+      frameHeighth: 65,
+    });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -52,17 +56,18 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
+    this.load.audio("pickup", "assets/pickup.mp3")
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
   }
 
   create() {
-    this.Music = this.sys.game.globals.music
+    this.Music = this.sys.game.globals.music;
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add('bg', { volume: 0.5 })
+      this.bg = this.sound.add("bg", { volume: 0.5 });
       this.bg.play({
-        loop: true
-      })
+        loop: true,
+      });
       this.Music.bgMusicPlaying = true;
     }
 
@@ -75,14 +80,12 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
-  
-  
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
-      .tileSprite(1024, 1024, 16392, 12288, "background")
+      .tileSprite(2824, 1024, 14000, 10000, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
       .sprite(4000, 1200, "galaxy")
@@ -177,21 +180,31 @@ export default class Test extends Phaser.Scene {
     this.ColliderHelper = new ColliderHelper(this);
   }
 
-  handleCountDownFinished() { 
+  handleCountDownFinished() {
     this.countdowndone = true
+  }
+  hDelay = 0
+  spawnHealth(time, delay) {
+    //health lifespan is 5000
+    if (time > this.hDelay) {
+      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.hDelay = time + delay
+    }
   }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
-    this.motherShipsDestroyed = this.motherships.getLength() - 4
+    this.motherShipsDestroyed = 4 - this.motherships.getLength()
+
+    this.spawnHealth(time, 6000)
 
     //win condition
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed
       this.motherShipScore = this.motherShipsDestroyed
       this.command.setVisible(true);
-      this.scene.start("End_Screen", { 
-        condition: true, 
+      this.scene.start("End_Screen", {
+        condition: true,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
       });
@@ -202,11 +215,11 @@ export default class Test extends Phaser.Scene {
       this.aliensScore = this.aliensDestroyed
       this.motherShipScore = this.motherShipsDestroyed
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", { 
-        condition: false, 
+      this.scene.start("End_Screen", {
+        condition: false,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
-       });
+      });
     }
 
     //ship movement

@@ -8,17 +8,12 @@ export default class TitleScene extends Phaser.Scene {
 
   preload() {
     //  this.load.image('background','assets/title.png')
-    this.load.html("form", "/assets/text/form.html");
     this.load.image("title", "/assets/titlescreen-min.png");
-    this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4")
+    this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4");
   }
 
   create() {
     this.add.image(2550, 1400, "title").setDisplaySize(5098, 2800)
-    let x = 5098 / window.innerWidth
-    let y = 2800 / window.innerHeight
-    this.nameInput = this.add.dom(5098 / 2, 2800 / 2).createFromCache("form")
-    this.nameInput.setScale(Math.max(x, y))
 
 
     //console.log("inputname", this.nameInput);
@@ -110,30 +105,30 @@ export default class TitleScene extends Phaser.Scene {
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
-    
+
 
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
     // video.play(true);
 
-    earth.setInteractive({useHandCursor: true})
-    earth.on('pointerdown', ()=>this.clickButtonEarth())
-    mercury.setInteractive({useHandCursor: true})
-    mercury.on('pointerdown', ()=>this.clickButtonMercury())
-    venus.setInteractive({useHandCursor: true})
-    venus.on('pointerdown', ()=>this.clickButtonVenus())
-    mars.setInteractive({useHandCursor: true})
-    mars.on('pointerdown', ()=>this.clickButtonMars())
-    jupiter.setInteractive({useHandCursor: true})
-    jupiter.on('pointerdown', ()=>this.clickButtonJupiter())
-    saturn.setInteractive({useHandCursor: true})
-    saturn.on('pointerdown', ()=>this.clickButtonSaturn())
-    uranus.setInteractive({useHandCursor: true})
-    uranus.on('pointerdown', ()=>this.clickButtonUranus())
-    neptune.setInteractive({useHandCursor: true})
-    neptune.on('pointerdown', ()=>this.clickButtonNeptune())
-    pluto.setInteractive({useHandCursor: true})
-    pluto.on('pointerdown', ()=>this.clickButtonPluto())
-    
+    earth.setInteractive({ useHandCursor: true })
+    earth.on('pointerdown', () => this.clickButtonEarth())
+    mercury.setInteractive({ useHandCursor: true })
+    mercury.on('pointerdown', () => this.clickButtonMercury())
+    venus.setInteractive({ useHandCursor: true })
+    venus.on('pointerdown', () => this.clickButtonVenus())
+    mars.setInteractive({ useHandCursor: true })
+    mars.on('pointerdown', () => this.clickButtonMars())
+    jupiter.setInteractive({ useHandCursor: true })
+    jupiter.on('pointerdown', () => this.clickButtonJupiter())
+    saturn.setInteractive({ useHandCursor: true })
+    saturn.on('pointerdown', () => this.clickButtonSaturn())
+    uranus.setInteractive({ useHandCursor: true })
+    uranus.on('pointerdown', () => this.clickButtonUranus())
+    neptune.setInteractive({ useHandCursor: true })
+    neptune.on('pointerdown', () => this.clickButtonNeptune())
+    pluto.setInteractive({ useHandCursor: true })
+    pluto.on('pointerdown', () => this.clickButtonPluto())
+
 
   }
 
@@ -143,31 +138,31 @@ export default class TitleScene extends Phaser.Scene {
   clickButtonMercury() {
     this.scene.start("Mercury");
   }
-  clickButtonVenus(){
+  clickButtonVenus() {
     this.scene.start("Venus")
   }
-  clickButtonMars(){
+  clickButtonMars() {
     this.scene.start("Mars")
   }
-  clickButtonJupiter(){
+  clickButtonJupiter() {
     this.scene.start("Jupiter")
   }
-  clickButtonSaturn(){
+  clickButtonSaturn() {
     this.scene.start("Saturn")
   }
-  clickButtonUranus(){
+  clickButtonUranus() {
     this.scene.start("Uranus")
   }
-  clickButtonNeptune(){
+  clickButtonNeptune() {
     this.scene.start("Neptune")
   }
-  clickButtonPluto(){
+  clickButtonPluto() {
     this.scene.start("Pluto")
   }
 }
 
 
-    
+
 
 
 

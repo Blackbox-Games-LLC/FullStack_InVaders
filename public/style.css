@@ -5,3 +5,38 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+#navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  color: white;
+  background-color: brown;
+}
+
+.btn-lgn {
+  color: #931c22;
+  font-stretch: expanded;
+}
+
+.btn-register {
+  color: #931c22;
+  font-stretch: expanded;
+}
+
+.error {
+  color: white;
+  margin-right: 20px;
+}
+
+#input-form {
+  padding: 15px;
+  background-color: #000000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content
+}

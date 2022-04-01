@@ -18,12 +18,12 @@ const users = [
   },
 ];
 const scores = [
-  { userId: 1, time: "00:07:12", aliens: 10, motherships: 2 },
-  { userId: 2, time: "00:06:12", aliens: 12, motherships: 1 },
-  { userId: 2, time: "00:33:12", aliens: 15, motherships: 2 },
-  { userId: 3, time: "00:09:12", aliens: 16, motherships: 3 },
-  { userId: 4, time: "00:05:03", aliens: 11, motherships: 4 },
-  { userId: 1, time: "00:09:49", aliens: 22, motherships: 1 },
+  { userId: 1, time: "00:07:12", aliens: 10, motherships: 2, level: 1 },
+  { userId: 2, time: "00:06:12", aliens: 12, motherships: 1, level: 2 },
+  { userId: 2, time: "00:33:12", aliens: 15, motherships: 2, level: 2 },
+  { userId: 3, time: "00:09:12", aliens: 16, motherships: 3, level: 2 },
+  { userId: 4, time: "00:05:03", aliens: 11, motherships: 4, level: 2 },
+  { userId: 1, time: "00:09:49", aliens: 22, motherships: 1, level: 2 },
 ];
 const seed = async () => {
   try {
@@ -42,7 +42,6 @@ const seed = async () => {
 
     db.close();
   } catch (err) {
-
     console.error(err);
     db.close();
   }
