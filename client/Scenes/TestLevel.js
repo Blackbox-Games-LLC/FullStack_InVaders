@@ -79,7 +79,7 @@ export default class Test extends Phaser.Scene {
     this.motherShipsDestroyed = 0
   
 
-    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
+    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(3000, 3000).setDepth(1);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add

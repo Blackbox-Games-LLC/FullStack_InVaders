@@ -53,42 +53,95 @@ export default class TitleScene extends Phaser.Scene {
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
+    });
+
+    var venus = this.add.text(2200, 2000, "VENUS", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
     })
 
-    var uranus = this.add.text(2200, 2000, "URANUS LOL", {
+    var mars = this.add.text(2200, 2100, "MARS", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    });
+
+    var jupiter = this.add.text(2200, 2200, "JUPITER", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    });
+
+    var saturn = this.add.text(2200, 2300, "SATURN", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    });
+
+    var uranus = this.add.text(2200, 2400, "URANUS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
-    var venus = this.add.text(2200, 2100, "VENUS", {
+
+    var neptune = this.add.text(2200, 2500, "NEPTUNE", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
+    
 
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
     // video.play(true);
 
     earth.setInteractive({useHandCursor: true})
     earth.on('pointerdown', ()=>this.clickButtonEarth())
-    uranus.setInteractive({useHandCursor: true})
-    uranus.on('pointerdown', ()=>this.clickButtonUranus())
     venus.setInteractive({useHandCursor: true})
     venus.on('pointerdown', ()=>this.clickButtonVenus())
+    mars.setInteractive({useHandCursor: true})
+    mars.on('pointerdown', ()=>this.clickButtonMars())
+    jupiter.setInteractive({useHandCursor: true})
+    jupiter.on('pointerdown', ()=>this.clickButtonJupiter())
+    saturn.setInteractive({useHandCursor: true})
+    saturn.on('pointerdown', ()=>this.clickButtonSaturn())
+    uranus.setInteractive({useHandCursor: true})
+    uranus.on('pointerdown', ()=>this.clickButtonUranus())
+    neptune.setInteractive({useHandCursor: true})
+    neptune.on('pointerdown', ()=>this.clickButtonNeptune())
+    
+    
 
   }
 
   clickButtonEarth() {
     this.scene.start("Test_Level");
   }
-  clickButtonUranus(){
-    this.scene.start("Uranus")
-  }
   clickButtonVenus(){
     this.scene.start("Venus")
   }
+  clickButtonMars(){
+    this.scene.start("Mars")
+  }
+  clickButtonJupiter(){
+    this.scene.start("Jupiter")
+  }
+  clickButtonSaturn(){
+    this.scene.start("Saturn")
+  }
+  clickButtonUranus(){
+    this.scene.start("Uranus")
+  }
+  clickButtonNeptune(){
+    this.scene.start("Neptune")
+  }
+  
 }
 
 
