@@ -82,6 +82,7 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
+    
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
@@ -113,6 +114,7 @@ export default class Test extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
+
 
 
     //spawn attackBases

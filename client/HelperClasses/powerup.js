@@ -10,14 +10,13 @@ export default class PowerUp extends Phaser.Physics.Arcade.Sprite {
         this.setScale(0.15, 0.15)
         this.setCircle(250, 0, 5)
 
-        const pickup = scene.sound.add('pickup', { volume: 0.8 })
+        const pickup = scene.sound.add('pickup', { volume: 0.10 })
 
         scene.physics.add.overlap(this, scene.ship, () => {
-            if (scene.ship.health <= 950) {
-                scene.ship.health += 50
-                pickup.play()
-                this.destroy()
-            }
+            pickup.play()
+            this.destroy()
+            scene.ship.invulnerable = true
+            console.log(scene.ship.invulnerable)
         })
     }
 }
