@@ -25,7 +25,7 @@ export default class EndScreen extends Phaser.Scene {
     create() {
         if (this.condition === false) {
             this.message = this.add.text(
-                900, 900, `Game Over Try again next time!. Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
+                900, 900, `Game Over You stink! Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",
@@ -33,7 +33,7 @@ export default class EndScreen extends Phaser.Scene {
             )
         } else if (this.condition === true) {
             this.message = this.add.text(
-                900, 900, `you successfully defended planet fullstack!. Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
+                900, 900, `You successfully defended planet fullstack!. Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",
