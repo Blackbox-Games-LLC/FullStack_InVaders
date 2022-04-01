@@ -85,7 +85,7 @@ export default class Test extends Phaser.Scene {
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
-      .tileSprite(1024, 1024, 10000, 6000, "background")
+      .tileSprite(2824, 1024, 14000, 10000, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
       .sprite(4000, 1200, "galaxy")
@@ -194,7 +194,7 @@ export default class Test extends Phaser.Scene {
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
-    this.motherShipsDestroyed = this.motherships.getLength() - 4
+    this.motherShipsDestroyed = 4 - this.motherships.getLength()
 
     this.spawnHealth(time, 6000)
 
