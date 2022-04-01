@@ -55,42 +55,56 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     });
 
-    var venus = this.add.text(2200, 2000, "VENUS", {
+    var mercury = this.add.text(2200, 2000, "MERCURY", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    });
+
+    var venus = this.add.text(2200, 2100, "VENUS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var mars = this.add.text(2200, 2100, "MARS", {
+    var mars = this.add.text(2200, 2200, "MARS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var jupiter = this.add.text(2200, 2200, "JUPITER", {
+    var jupiter = this.add.text(2200, 2300, "JUPITER", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var saturn = this.add.text(2200, 2300, "SATURN", {
+    var saturn = this.add.text(2200, 2400, "SATURN", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var uranus = this.add.text(2200, 2400, "URANUS", {
+    var uranus = this.add.text(2200, 2500, "URANUS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var neptune = this.add.text(2200, 2500, "NEPTUNE", {
+    var neptune = this.add.text(2200, 2600, "NEPTUNE", {
+      color: "#FFFFFF",
+      fontSize: 80,
+      fontStyle: "bold",
+      backgroundColor: "#000000",
+    })
+
+    var pluto = this.add.text(2200, 2700, "PLUTO", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
@@ -103,6 +117,8 @@ export default class TitleScene extends Phaser.Scene {
 
     earth.setInteractive({useHandCursor: true})
     earth.on('pointerdown', ()=>this.clickButtonEarth())
+    mercury.setInteractive({useHandCursor: true})
+    mercury.on('pointerdown', ()=>this.clickButtonMercury())
     venus.setInteractive({useHandCursor: true})
     venus.on('pointerdown', ()=>this.clickButtonVenus())
     mars.setInteractive({useHandCursor: true})
@@ -115,13 +131,17 @@ export default class TitleScene extends Phaser.Scene {
     uranus.on('pointerdown', ()=>this.clickButtonUranus())
     neptune.setInteractive({useHandCursor: true})
     neptune.on('pointerdown', ()=>this.clickButtonNeptune())
-    
+    pluto.setInteractive({useHandCursor: true})
+    pluto.on('pointerdown', ()=>this.clickButtonPluto())
     
 
   }
 
   clickButtonEarth() {
     this.scene.start("Test_Level");
+  }
+  clickButtonMercury() {
+    this.scene.start("Mercury");
   }
   clickButtonVenus(){
     this.scene.start("Venus")
@@ -141,7 +161,9 @@ export default class TitleScene extends Phaser.Scene {
   clickButtonNeptune(){
     this.scene.start("Neptune")
   }
-  
+  clickButtonPluto(){
+    this.scene.start("Pluto")
+  }
 }
 
 
