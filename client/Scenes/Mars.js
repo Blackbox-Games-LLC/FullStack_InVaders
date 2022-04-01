@@ -5,7 +5,7 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
-import gameOver from "../HelperClasses/gameCondition";
+ 
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 
@@ -79,14 +79,14 @@ export default class Mars extends Phaser.Scene {
     this.motherShipsDestroyed = 0
   
 
-    this.sun = this.add.sprite(1000, 3500, "sun").setDisplaySize(3000, 3000).setDepth(1);
+    this.sun = this.add.sprite(2500, -200, "sun").setDisplaySize(3000, 3000).setDepth(1);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
-      .sprite(2500, -200, "galaxy")
+      .sprite(1000, 3500, "galaxy")
       .setDisplaySize(3000, 3000);
     // galaxy spin
     this.tweens.add({
@@ -108,7 +108,7 @@ export default class Mars extends Phaser.Scene {
       .setVisible(false);
 
     //spawn ship
-    this.ship = new Ship(this, 1200, 1200);
+    this.ship = new Ship(this, 2000, 250);
 
 
     //spawn attackBases
@@ -140,10 +140,10 @@ export default class Mars extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.mothership1 = this.motherships.get();
-    this.mothership2 = this.motherships.get(4000, 0);
-    this.mothership3 = this.motherships.get(0, 3000);
-    this.mothership4 = this.motherships.get(4000, 3000);
+    this.mothership1 = this.motherships.get(-1000, 1000);
+    this.mothership2 = this.motherships.get(4500, 1000);
+    this.mothership3 = this.motherships.get(-1000, 2250);
+    this.mothership4 = this.motherships.get(4500, 2250);
 
     //player ship controls
     this.cursors = this.input.keyboard.addKeys({

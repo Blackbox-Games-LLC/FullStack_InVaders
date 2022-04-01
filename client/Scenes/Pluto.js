@@ -10,17 +10,17 @@ import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 
 
-export default class Uranus extends Phaser.Scene {
+export default class Pluto extends Phaser.Scene {
   /** @type {CountdownController} */
   countdown;
 
   constructor() {
-    super("Uranus");
+    super("Pluto");
   }
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
-    this.load.image("planet", "assets/uranus.png");
+    this.load.image("planet", "assets/pluto.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
@@ -75,16 +75,18 @@ export default class Uranus extends Phaser.Scene {
     this.angle3 = 0;
     this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
+    this.aliensDestroyed = 0
+    this.motherShipsDestroyed = 0
   
 
-    this.sun = this.add.sprite(2250, -100, "sun").setDisplaySize(1000, 1000).setDepth(1);
+    this.sun = this.add.sprite(-1750, -300, "sun").setDisplaySize(600, 600).setDepth(1);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
-      .sprite(-1000, 2000, "galaxy")
+      .sprite(4000, 1200, "galaxy")
       .setDisplaySize(3000, 3000);
     // galaxy spin
     this.tweens.add({
@@ -94,7 +96,7 @@ export default class Uranus extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1300, 1300).setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1350, 1350).setDepth(1);
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -174,7 +176,7 @@ export default class Uranus extends Phaser.Scene {
 
 
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
+    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
     function changeWin(){
       this.gameWon = true
     }
@@ -183,30 +185,39 @@ export default class Uranus extends Phaser.Scene {
     this.ColliderHelper = new ColliderHelper(this);
   }
 
-
-
   handleCountDownFinished() {
     //this.player.active=false
     //const {width,height}=this.scale
     //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
   }
+
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
-      // this.physics.pause()
+      this.aliensScore = this.aliensDestroyed
+      this.motherShipScore = this.motherShipsDestroyed
       this.gameWon = true;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", { win: this.gameWon });
+      this.scene.start("End_Screen", { 
+        win: this.gameWon, 
+        aliensScore: this.aliensDestroyed,
+        motherShipScore: this.motherShipsDestroyed
+      });
     }
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      // this.physics.pause()
+      this.aliensScore = this.aliensDestroyed
+      this.motherShipScore = this.motherShipsDestroyed
       this.gameWon = false;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", { loss: this.gameWon });
+      this.scene.start("End_Screen", { 
+        loss: this.gameWon, 
+        aliensScore: this.aliensDestroyed,
+        motherShipScore: this.motherShipsDestroyed
+       });
     }
 
     //ship movement

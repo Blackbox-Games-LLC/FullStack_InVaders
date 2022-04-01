@@ -7,8 +7,7 @@ export default class EndScreen extends Phaser.Scene {
         super("End_Screen");
     }
     init(data) {
-        this.loss = data.loss
-        this.win = data.win
+        this.condition = data.condition
         this.aliensScore = data.aliensScore
         this.motherShipScore = data.motherShipScore
     }
@@ -23,17 +22,17 @@ export default class EndScreen extends Phaser.Scene {
         // });
     }
     create() {
-        if (this.loss, this.aliensScore, this.motherShipScore) {
+        if (this.condition === false) {
             this.message = this.add.text(
-                900, 900, `Lol you suck. Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
+                900, 900, `Game Over You stink! Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",
             }
             )
-        } else if (this.win, this.aliensScore, this.motherShipScore) {
+        } else if (this.condition === true) {
             this.message = this.add.text(
-                900, 900, `you successfully defended planet fullstack!. Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
+                900, 900, `You successfully defended planet fullstack! Number of Aliens destroyed: ${this.aliensScore}. Number of MotherShips Destroyed: ${this.motherShipScore}`, {
                 color: "#FFFFFF",
                 fontSize: 50,
                 fontStyle: "bold",

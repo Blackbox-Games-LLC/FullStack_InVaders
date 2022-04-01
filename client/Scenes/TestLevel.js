@@ -5,7 +5,7 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
-import gameOver from "../HelperClasses/gameCondition";
+
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
@@ -78,13 +78,11 @@ export default class Test extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
-    this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
+
     this.aliensDestroyed = 0
-    this.motherShipsDestroyed = 0
 
-
-    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(3000, 3000).setDepth(1);
+    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
@@ -179,20 +177,12 @@ export default class Test extends Phaser.Scene {
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
-    //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(100000, changeWin, [], this)
-    function changeWin() {
-      this.gameWon = true
-    }
-
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
 
   handleCountDownFinished() {
-    //this.player.active=false
-    //const {width,height}=this.scale
-    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+    this.countdowndone = true
   }
   hDelay = 0
   spawnHealth(time, delay) {
@@ -205,17 +195,17 @@ export default class Test extends Phaser.Scene {
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
+    this.motherShipsDestroyed = this.motherships.getLength() - 4
 
     this.spawnHealth(time, 6000)
 
     //win condition
-    if (this.gameWon === true || this.motherships.getLength() === 0) {
+    if (this.countdowndone === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed
       this.motherShipScore = this.motherShipsDestroyed
-      this.gameWon = true;
       this.command.setVisible(true);
       this.scene.start("End_Screen", {
-        win: this.gameWon,
+        condition: true,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
       });
@@ -225,10 +215,9 @@ export default class Test extends Phaser.Scene {
     if (this.planet.health <= 0 || this.ship.health <= 0) {
       this.aliensScore = this.aliensDestroyed
       this.motherShipScore = this.motherShipsDestroyed
-      this.gameWon = false;
       this.planet.setVisible(false);
       this.scene.start("End_Screen", {
-        loss: this.gameWon,
+        condition: false,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
       });
