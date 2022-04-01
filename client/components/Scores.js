@@ -5,7 +5,7 @@ import { fetchScore } from "../redux/scoreReducer";
 export default function Scores() {
   const user = useSelector((state) => state.user);
   const scores = useSelector((state) => state.score);
-  //console.log("scoressss", scores);
+  console.log("scoressss", scores);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,8 +14,21 @@ export default function Scores() {
     }
   }, [user.id]);
 
+  let orderedScores = []
+
+  scores.forEach(element => {
+    let num = element.level
+    if (orderedScores[num]) {
+      orderedScores[num].push(element)
+    } else {
+      orderedScores[num] = []
+      orderedScores[num].push(element)
+    }
+    console.log(orderedScores)
+  });
+
   return (
-    <div>
+    <div className="test">
       <table>
         <thead>
           <tr>
