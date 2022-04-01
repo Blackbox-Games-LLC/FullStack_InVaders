@@ -16,7 +16,7 @@ var config = {
   parent: "game",
   scale: {
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+    autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
   },
   dom: {
     createContainer: true,
@@ -41,10 +41,9 @@ var config = {
 
 const game = new Phaser.Game(config);
 
-const User = new CurrentUser
-const music = new Music
-game.globals = { User, music }
-
+const User = new CurrentUser();
+const music = new Music();
+game.globals = { User, music };
 
 game.scene.add("End_Screen", EndScreen);
 game.scene.add("Title_Scene", TitleScene);
@@ -56,16 +55,16 @@ game.scene.start("Title_Scene");
 //game.scene.start("Test_Level");
 
 const Home = () => {
-  const loggedIn = useSelector(state => state.user)
-  const user = game.globals.User
+  const loggedIn = useSelector((state) => state.user);
+  const user = game.globals.User;
   if (loggedIn.username) {
-    user.id = loggedIn.id
-    user.username = loggedIn.username
-    console.log(user)
+    user.id = loggedIn.id;
+    user.username = loggedIn.username;
+    console.log(user);
   } else {
-    user.id = null
-    user.username = null
-    console.log(user)
+    user.id = null;
+    user.username = null;
+    console.log(user);
   }
   return <div id="game"></div>;
 };
