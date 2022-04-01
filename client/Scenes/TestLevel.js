@@ -236,6 +236,7 @@ export default class Test extends Phaser.Scene {
       });
     }
 
+
     //ship movement
     if (this.cursors.left.isDown) {
       this.ship.setAngularVelocity(-150);
