@@ -56,10 +56,8 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       classType: Bullet,
       runChildUpdate: true,
     });
+    
 
-    // if(this.invulnerable = true){
-    //   game.time.events.add(6000, this.changeVul, this)
-    // }
     
 
     //particles
@@ -89,7 +87,4 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       followOffset: { y: this.height - 100 },
     });
   }
-  // changeVul(){
-  //   this.invulnerable = false
-  // }
 }
