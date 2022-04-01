@@ -29,6 +29,11 @@ tr {
 .btn-register {
   color: #931c22;
   font-stretch: expanded;
+  margin-right: 20px;
+}
+
+.response {
+  display: flex;
 }
 
 .error {
@@ -50,14 +55,35 @@ tr {
   background-color: rgb(50, 46, 46);
   align-content: stretch;
   justify-content: space-evenly;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-radius: 50px;
+}
+
+.text-center {
+  margin-top: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error {
+  display: flex;
   align-items: center;
 }
 
 #input-form {
   padding: 15px;
-  background-color: #000000;
+  background-color: #5662835f;
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: fit-content
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+#app {
+  width: 100%
 }
