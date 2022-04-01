@@ -9,27 +9,25 @@ import gameOver from "../HelperClasses/gameCondition";
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 
-export default class Test extends Phaser.Scene {
+
+export default class Venus extends Phaser.Scene {
   /** @type {CountdownController} */
   countdown;
 
   constructor() {
-    super("Test_Level");
+    super("Venus");
   }
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
-    this.load.image("planet", "assets/earth-transparent-min.png");
+    this.load.image("planet", "assets/venus.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
     this.load.image("offense-base", "assets/offense-base.png");
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
-      frameWidth: 75,
-      frameHeighth: 65,
-    });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -59,12 +57,12 @@ export default class Test extends Phaser.Scene {
   }
 
   create() {
-    this.Music = this.sys.game.globals.music;
+    this.Music = this.sys.game.globals.music
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add("bg", { volume: 0.5 });
+      this.bg = this.sound.add('bg', { volume: 0.5 })
       this.bg.play({
-        loop: true,
-      });
+        loop: true
+      })
       this.Music.bgMusicPlaying = true;
     }
 
@@ -77,18 +75,16 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
     this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-    this.aliensDestroyed = 0
-    this.motherShipsDestroyed = 0
+  
 
-
-    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(3000, 3000).setDepth(1);
+    this.sun = this.add.sprite(-500, 2000, "sun").setDepth(1).setDisplaySize(3000, 3000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
-      .sprite(4000, 1200, "galaxy")
+      .sprite(2000, 4000, "galaxy")
       .setDisplaySize(3000, 3000);
     // galaxy spin
     this.tweens.add({
@@ -98,7 +94,7 @@ export default class Test extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1).setDisplaySize(1350,1350)
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -176,9 +172,10 @@ export default class Test extends Phaser.Scene {
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
+
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
-    function changeWin() {
+    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
+    function changeWin(){
       this.gameWon = true
     }
 
@@ -186,39 +183,30 @@ export default class Test extends Phaser.Scene {
     this.ColliderHelper = new ColliderHelper(this);
   }
 
+
+
   handleCountDownFinished() {
     //this.player.active=false
     //const {width,height}=this.scale
     //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
   }
-
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
+      // this.physics.pause()
       this.gameWon = true;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", {
-        win: this.gameWon,
-        aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
-      });
+      this.scene.start("End_Screen", { win: this.gameWon });
     }
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
+      // this.physics.pause()
       this.gameWon = false;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", {
-        loss: this.gameWon,
-        aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
-      });
+      this.scene.start("End_Screen", { loss: this.gameWon });
     }
 
     //ship movement
