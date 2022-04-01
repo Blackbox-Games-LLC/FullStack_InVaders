@@ -40,21 +40,21 @@ export default class EndScreen extends Phaser.Scene {
             }
             )
         }
-      );
+
+
+
+        var playAgain = this.add.text(1000, 1000, "Click Here to play again", {
+            color: "#FFFFFF",
+            fontSize: 50,
+            fontStyle: "bold",
+        });
+        playAgain.setInteractive({ useHandCursor: true });
+        playAgain.on("pointerdown", () => this.clickButton());
     }
 
-    var playAgain = this.add.text(1000, 1000, "Click Here to play again", {
-        color: "#FFFFFF",
-        fontSize: 50,
-        fontStyle: "bold",
-    });
-playAgain.setInteractive({ useHandCursor: true });
-playAgain.on("pointerdown", () => this.clickButton());
-  }
-
-clickButton() {
-    this.scene.remove("Test_Level");
-    this.scene.add("Test_Level", Test);
-    this.scene.start("Test_Level");
-}
+    clickButton() {
+        this.scene.remove("Test_Level");
+        this.scene.add("Test_Level", Test);
+        this.scene.start("Test_Level");
+    }
 }

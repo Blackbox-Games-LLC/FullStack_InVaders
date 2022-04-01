@@ -8,6 +8,7 @@ import DefenseBase from "../HelperClasses/defenseBase";
 import gameOver from "../HelperClasses/gameCondition";
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
+import HealthPickup from "../HelperClasses/healthPickup";
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -19,6 +20,7 @@ export default class Test extends Phaser.Scene {
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
+    this.load.image("health_pickup", "assets/energy_health.png")
     this.load.image("planet", "assets/earth-transparent-min.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
@@ -54,6 +56,7 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
+    this.load.audio("pickup", "assets/pickup.mp3")
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
   }
@@ -85,7 +88,7 @@ export default class Test extends Phaser.Scene {
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
     this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
-      .tileSprite(1024, 1024, 16392, 12288, "background")
+      .tileSprite(1024, 1024, 10000, 6000, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
       .sprite(4000, 1200, "galaxy")
@@ -177,7 +180,7 @@ export default class Test extends Phaser.Scene {
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
+    this.timedEvent = this.time.delayedCall(100000, changeWin, [], this)
     function changeWin() {
       this.gameWon = true
     }
@@ -191,9 +194,19 @@ export default class Test extends Phaser.Scene {
     //const {width,height}=this.scale
     //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
   }
+  hDelay = 0
+  spawnHealth(time, delay) {
+    //health lifespan is 5000
+    if (time > this.hDelay) {
+      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.hDelay = time + delay
+    }
+  }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
+
+    this.spawnHealth(time, 6000)
 
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
