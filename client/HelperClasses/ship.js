@@ -18,6 +18,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
 
     //sounds
     const explode = scene.sound.add('motherboom', { volume: 0.6 })
+    const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
     this.shoot = scene.sound.add('playerShot', { volume: 0.3 })
 
     //animations
@@ -29,6 +30,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
 
     //ship stats
     this.health = 1000;
+    this.invulnerable = false
     this.hp = new HealthBar(this.scene, 2475, 700, this.health, 150, 20)
     this.hp.followCamera()
 
@@ -54,6 +56,9 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       classType: Bullet,
       runChildUpdate: true,
     });
+    
+
+    
 
     //particles
     const particles = scene.add.particles("exhaust").setDepth(1);
