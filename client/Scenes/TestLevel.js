@@ -79,7 +79,6 @@ export default class Test extends Phaser.Scene {
     this.distance3 = 1000;
     this.angle3 = 0;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-
     this.aliensDestroyed = 0
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
