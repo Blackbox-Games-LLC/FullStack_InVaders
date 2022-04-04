@@ -86,6 +86,20 @@ export default class Alien extends Phaser.Physics.Arcade.Sprite {
       })
     });
 
+    //if ship has powerup. it can smash thru aliens HEHEHEHEEHEH
+    if(scene.ship.invulnerable === true){
+      scene.physics.add.collider(this, scene.ship, ()=>{
+        blowup.play()
+        this.body.stop()
+        this.body.destroy()
+        this.play("blowup")
+        this.once("animationcomplete", () => {
+          this.destroy();
+          particles.destroy()
+        })
+      })
+    }
+
     //alien AI switch
     let angle1 = 0
     scene.physics.add.overlap(this, scene.zone, () => {
