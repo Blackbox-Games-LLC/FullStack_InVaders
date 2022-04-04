@@ -187,28 +187,51 @@ export default class Venus extends Phaser.Scene {
   }
 
   handleCountDownFinished() {
-    //this.player.active=false
-    //const {width,height}=this.scale
-    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+    this.countdowndone = true 
   }
+
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
+    this.motherShipsDestroyed = 4 - this.motherships.getLength()
 
     //win condition
-    if (this.gameWon === true || this.motherships.getLength() === 0) {
-      // this.physics.pause()
-      this.gameWon = true;
+    // if (this.gameWon === true || this.motherships.getLength() === 0) {
+    //   // this.physics.pause()
+    //   this.gameWon = true;
+    //   this.command.setVisible(true);
+    //   this.scene.start("End_Screen", { win: this.gameWon });
+    // }
+
+    if (this.countdowndone === true || this.motherships.getLength() === 0) {
+      this.aliensScore = this.aliensDestroyed
+      this.motherShipScore = this.motherShipsDestroyed
       this.command.setVisible(true);
-      this.scene.start("End_Screen", { win: this.gameWon });
+      this.scene.start("End_Screen", {
+        condition: true,
+        aliensScore: this.aliensDestroyed,
+        motherShipScore: this.motherShipsDestroyed
+      });
     }
 
     //loss condition
+    // if (this.planet.health <= 0 || this.ship.health <= 0) {
+    //   // this.physics.pause()
+    //   this.gameWon = false;
+    //   this.planet.setVisible(false);
+    //   this.scene.start("End_Screen", { loss: this.gameWon });
+    // }
+
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      // this.physics.pause()
-      this.gameWon = false;
+      this.aliensScore = this.aliensDestroyed
+      this.motherShipScore = this.motherShipsDestroyed
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", { loss: this.gameWon });
+      this.scene.start("End_Screen", {
+        condition: false,
+        aliensScore: this.aliensDestroyed,
+        motherShipScore: this.motherShipsDestroyed
+      });
     }
+
 
     //ship movement
     if (this.cursors.left.isDown) {

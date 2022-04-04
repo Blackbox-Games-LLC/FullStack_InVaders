@@ -16,17 +16,17 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   preload() {
-    //  this.load.image('background','assets/title.png')
     this.load.image("title", "/assets/titlescreen-min.png");
     this.load.video("intro-video", "/assets/Fullstack_Invaders.mp4");
+    this.load.image("logo", "/assets/logo.png")
   }
 
   create() {
     this.add.image(2550, 1400, "title").setDisplaySize(5098, 2800)
+    this.add.image(2500, 300, "logo").setDisplaySize(4000 ,300)
 
-
-    //console.log("inputname", this.nameInput);
-
+    let video = this.add.video(800, 600, "intro-video").setPosition(2500, 900);
+    // video.play(true);
 
 
     this.message = this.add.text(1400, 1400, "Forward - W | Backward - S | Left - A | Right - D", {
@@ -80,35 +80,35 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     });
 
-    var jupiter = this.add.text(2200, 2300, "JUPITER", {
+    var jupiter = this.add.text(2600, 2100, "JUPITER", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var saturn = this.add.text(2200, 2400, "SATURN", {
+    var saturn = this.add.text(2200, 2300, "SATURN", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var uranus = this.add.text(2200, 2500, "URANUS", {
+    var uranus = this.add.text(2600, 2000, "URANUS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var neptune = this.add.text(2200, 2600, "NEPTUNE", {
+    var neptune = this.add.text(2600,1900, "NEPTUNE", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var pluto = this.add.text(2200, 2700, "PLUTO", {
+    var pluto = this.add.text(2700, 2200, "PLUTO", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
@@ -116,8 +116,6 @@ export default class TitleScene extends Phaser.Scene {
     })
 
 
-    let video = this.add.video(800, 600, "intro-video").setPosition(2500, 600);
-    // video.play(true);
 
     earth.setInteractive({ useHandCursor: true })
     earth.on('pointerdown', () => this.clickButtonEarth())

@@ -53,6 +53,7 @@ export default class Test extends Phaser.Scene {
       frameWidth: 75,
       frameHeight: 65,
     });
+    this.load.image("aura", "assets/powerup-aura.png")
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
@@ -210,21 +211,21 @@ export default class Test extends Phaser.Scene {
     }
   }
 
-  // removePowerDelay = 0
-  // removePower(time, delay){
-  //   if(time > this.removePowerDelay){
-  //     this.ship.invulnerable = false
-  //     this.removePowerDelay = time + delay
-  //   }
-  // }
+  removePowerDelay = 0
+  removePower(time, delay){
+    if(time > this.removePowerDelay){
+      this.ship.invulnerable = false
+      this.removePowerDelay = time + delay
+    }
+  }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
     this.motherShipsDestroyed = 4 - this.motherships.getLength();
 
-    this.spawnHealth(time, 6000);
-    this.spawnPower(time, 8000);
-    // this.removePower(time, 4000)
+    this.spawnHealth(time, 6000)
+    this.spawnPower(time, 8000)
+    this.removePower(time, 10000)
 
     //win condition
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
