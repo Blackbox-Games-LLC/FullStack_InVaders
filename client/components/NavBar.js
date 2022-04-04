@@ -36,13 +36,13 @@ const NavBar = () => {
             <div>
                 {error && error.response && <div className="error">{error.response.data}</div>}
                 <input value={user} onChange={handleChange} placeholder="User Name" />
-                <button type="submit" className="btn-lgn" onClick={handleLogin} >Loggin</button>
+                <button type="submit" className="btn-lgn" onClick={handleLogin} >Log in</button>
                 <button type="submit" className="btn-register" onClick={handleReg} >Register</button>
             </div>
         )
             :
             <div>
-                <button type="submit" className="btn-lgn" onClick={handleLogOut}>Loggout</button>
+                <button type="submit" className="btn-lgn" onClick={handleLogOut}>Log out</button>
                 <button type="submit" className="btn-lgn">Scores</button>
             </div>
         }
