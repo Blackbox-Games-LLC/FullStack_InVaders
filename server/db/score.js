@@ -23,6 +23,11 @@ const Score = db.define(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    winOrLoss: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    }
   },
   {
     timestamps: false,

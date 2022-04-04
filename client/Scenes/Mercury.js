@@ -150,16 +150,15 @@ export default class Mercury extends Phaser.Scene {
     this.mothership3 = this.motherships.get(3000, 3500);
     this.mothership4 = this.motherships.get(4500, 3000);
 
-    //player ship controls
     this.cursors = this.input.keyboard.addKeys({
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
       backward: Phaser.Input.Keyboard.KeyCodes.S,
-    });
+    }, false);
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+      , false);
 
     //camera
 

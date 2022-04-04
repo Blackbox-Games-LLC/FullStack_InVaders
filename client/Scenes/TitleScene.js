@@ -1,5 +1,14 @@
 import axios from "axios";
 import Phaser from "phaser";
+import Test from "../Scenes/TestLevel";
+import Mercury from "../Scenes/Mercury";
+import Venus from "../Scenes/Venus";
+import Mars from "../Scenes/Mars";
+import Jupiter from "../Scenes/Jupiter";
+import Saturn from "../Scenes/Saturn";
+import Uranus from "../Scenes/Uranus";
+import Neptune from "../Scenes/Neptune";
+import Pluto from "../Scenes/Pluto";
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -133,30 +142,48 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   clickButtonEarth() {
+    this.scene.remove("Test_Level");
+    this.scene.add("Test_Level", Test);
     this.scene.start("Test_Level");
   }
   clickButtonMercury() {
+    this.scene.remove("Mercury");
+    this.scene.add("Mercury", Mercury);
     this.scene.start("Mercury");
   }
   clickButtonVenus() {
+    this.scene.remove("Venus");
+    this.scene.add("Venus", Venus);
     this.scene.start("Venus")
   }
   clickButtonMars() {
+    this.scene.remove("Mars");
+    this.scene.add("Mars", Mars);
     this.scene.start("Mars")
   }
   clickButtonJupiter() {
+    this.scene.remove("Jupiter");
+    this.scene.add("Jupiter", Jupiter);
     this.scene.start("Jupiter")
   }
   clickButtonSaturn() {
+    this.scene.remove("Saturn");
+    this.scene.add("Saturn", Saturn);
     this.scene.start("Saturn")
   }
   clickButtonUranus() {
+    this.scene.remove("Uranus");
+    this.scene.add("Uranus", Uranus);
     this.scene.start("Uranus")
   }
   clickButtonNeptune() {
+    this.scene.remove("Neptune");
+    this.scene.add("Neptune", Neptune);
     this.scene.start("Neptune")
   }
   clickButtonPluto() {
+    this.scene.remove("Pluto");
+    this.scene.add("Pluto", Pluto);
     this.scene.start("Pluto")
   }
 }

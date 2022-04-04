@@ -31,7 +31,7 @@ router.post("/:userId", async (req, res, next) => {
     const userId = req.params.userId;
     const singleUser = await User.findByPk(userId);
     console.log("singleUser", singleUser);
-    const score = new Score(req.body);
+    const score = await Score.create(req.body);
     console.log("score", score);
     singleUser.addScore(score);
     res.send(score);

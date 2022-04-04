@@ -154,10 +154,10 @@ export default class Test extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
       backward: Phaser.Input.Keyboard.KeyCodes.S,
-    });
+    }, false);
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+      , false);
     //camera
 
     this.cameras.main
