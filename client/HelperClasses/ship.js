@@ -60,14 +60,6 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       runChildUpdate: true,
     });
     
-  
-    //gotta fix this and make aura appear logic based
-    const aura = scene.add.sprite(2550, 675, "aura").setDepth(1).setDisplaySize(300,300)
-    aura.setScrollFactor(0,0)
-    aura.setVisible(false)
-
-
-  
 
     //particles
     const particles = scene.add.particles("exhaust").setDepth(1);
