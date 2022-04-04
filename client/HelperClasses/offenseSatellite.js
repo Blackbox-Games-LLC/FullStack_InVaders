@@ -74,7 +74,7 @@ export default class Offense extends Phaser.Physics.Arcade.Sprite {
     if (this.targets[this.target]) {
 
       this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.targets[this.target])
-      this.scene.physics.moveToObject(this, this.targets[this.target], 150)
+      this.scene.physics.accelerateToObject(this, this.targets[this.target], 250, 750, 750)
 
     } else this.target++
 

@@ -8,6 +8,8 @@ import DefenseBase from "../HelperClasses/defenseBase";
  
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
+import HealthPickup from "../HelperClasses/healthPickup";
+import PowerUp from "../HelperClasses/powerup";
 
 
 export default class Saturn extends Phaser.Scene {
@@ -41,19 +43,25 @@ export default class Saturn extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("sun", "assets/sun.png");
-    this.load.image("moon1", "assets/moon1.png");
-    this.load.image("moon2", "assets/moon6.png");
+    this.load.image("enceladus", "assets/enceladus.png");
+    this.load.image("rhea", "assets/rhea.png");
+    this.load.image("titan", "assets/titan.png");
+    this.load.image("iapetus", "assets/iapetus.png");
     this.load.spritesheet("alien", "assets/alien-invader.png", {
       frameWidth: 75,
       frameHeight: 65,
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
+    this.load.image("health_pickup", "assets/energy_health.png")
+    this.load.image("powerup", "assets/powerup.png")
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
+    this.load.audio("pickup", "assets/pickup.mp3");
+
   }
 
   create() {
@@ -73,20 +81,21 @@ export default class Saturn extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
-    this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
     this.motherShipsDestroyed = 0
   
 
-    this.sun = this.add.sprite(-1000, 450, "sun").setDisplaySize(1000, 1000).setDepth(1);
-    this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
-    this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
+    this.sun = this.add.sprite(-1000, 450, "sun").setDisplaySize(750, 750).setDepth(1);
+    this.enceladus = this.add.sprite(1000, 2500, "enceladus").setDisplaySize(100, 100).setDepth(1);
+    this.rhea = this.add.sprite(3000, 1500, "rhea").setDisplaySize(150, 150).setDepth(1);
+    this.titan = this.add.sprite(-1500, 1500, "titan").setDisplaySize(450, 450).setDepth(1);
+    this.iapetus = this.add.sprite(4500, 2500, "iapetus").setDisplaySize(150, 150).setDepth(1);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
     this.galaxy = this.add
-      .sprite(3000, 3000, "galaxy")
+      .sprite(-1000, 3000, "galaxy")
       .setDisplaySize(3000, 3000);
     // galaxy spin
     this.tweens.add({
@@ -140,10 +149,10 @@ export default class Saturn extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.mothership1 = this.motherships.get();
-    this.mothership2 = this.motherships.get(4000, 0);
-    this.mothership3 = this.motherships.get(0, 3000);
-    this.mothership4 = this.motherships.get(4000, 3000);
+    this.mothership1 = this.motherships.get(2500, -500);
+    this.mothership2 = this.motherships.get(3500, -500);
+    this.mothership3 = this.motherships.get(500, 4000);
+    this.mothership4 = this.motherships.get(1500, 4000);
 
     //player ship controls
     this.cursors = this.input.keyboard.addKeys({
@@ -175,33 +184,55 @@ export default class Saturn extends Phaser.Scene {
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
 
-    //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(10000, changeWin, [], this)
-    function changeWin(){
-      this.gameWon = true
-    }
-
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
 
+  hDelay = 0
+  spawnHealth(time, delay) {
+    //health lifespan is 5000
+    if (time > this.hDelay) {
+      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.hDelay = time + delay
+    }
+  }
+
+  powerUpDelay = 0
+  spawnPower(time, delay){
+    if(time > this.powerUpDelay){
+      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.powerUpDelay = time + delay
+    }
+  }
+
+  removePowerDelay = 0
+  removePower(time, delay){
+    if(time > this.removePowerDelay){
+      this.ship.invulnerable = false
+      this.removePowerDelay = time + delay
+    }
+  }
+
   handleCountDownFinished() {
-    //this.player.active=false
-    //const {width,height}=this.scale
-    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+    this.countdowndone = true
   }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
+    this.motherShipsDestroyed = 4 - this.motherships.getLength();
+
+    this.spawnHealth(time, 6000)
+    this.spawnPower(time, 8000)
+    this.removePower(time, 4000)
+
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
-      this.gameWon = true;
+      this.aliensScore = this.aliensDestroyed;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.command.setVisible(true);
       this.scene.start("End_Screen", { 
-        win: this.gameWon, 
+        condition: true, 
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
       });
@@ -209,9 +240,8 @@ export default class Saturn extends Phaser.Scene {
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
-      this.gameWon = false;
+      this.aliensScore = this.aliensDestroyed;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.planet.setVisible(false);
       this.scene.start("End_Screen", { 
         loss: this.gameWon, 
