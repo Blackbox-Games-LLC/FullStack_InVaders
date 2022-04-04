@@ -78,8 +78,6 @@ export default class Venus extends Phaser.Scene {
   
 
     this.sun = this.add.sprite(-500, 2000, "sun").setDepth(1).setDisplaySize(3000, 3000);
-    this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
-    this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
@@ -138,10 +136,10 @@ export default class Venus extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.mothership1 = this.motherships.get();
-    this.mothership2 = this.motherships.get(4000, 0);
-    this.mothership3 = this.motherships.get(0, 3000);
-    this.mothership4 = this.motherships.get(4000, 3000);
+    this.mothership1 = this.motherships.get(-500, 1250);
+    this.mothership2 = this.motherships.get(1000, 0);
+    this.mothership3 = this.motherships.get(3000, 0);
+    this.mothership4 = this.motherships.get(4500, 1250);
 
     //player ship controls
     this.cursors = this.input.keyboard.addKeys({

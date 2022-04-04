@@ -10,6 +10,9 @@ import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
 
+import PowerUp from "../HelperClasses/powerup";
+
+
 
 export default class Jupiter extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -52,6 +55,8 @@ export default class Jupiter extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
+    this.load.image("health_pickup", "assets/energy_health.png");
+    this.load.image("powerup", "assets/powerup.png");
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
@@ -203,6 +208,24 @@ export default class Jupiter extends Phaser.Scene {
     if (time > this.hDelay) {
       new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
       this.hDelay = time + delay
+    }
+
+
+  }
+
+  powerUpDelay = 0
+  spawnPower(time, delay){
+    if(time > this.powerUpDelay){
+      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.powerUpDelay = time + delay
+    }
+  }
+
+  removePowerDelay = 0
+  removePower(time, delay){
+    if(time > this.removePowerDelay){
+      this.ship.invulnerable = false
+      this.removePowerDelay = time + delay
     }
   }
 
