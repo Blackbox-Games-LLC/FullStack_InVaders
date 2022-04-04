@@ -8,6 +8,8 @@ import DefenseBase from "../HelperClasses/defenseBase";
  
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
+import HealthPickup from "../HelperClasses/healthPickup";
+import PowerUp from "../HelperClasses/powerup";
 
 
 export default class Jupiter extends Phaser.Scene {
@@ -51,9 +53,12 @@ export default class Jupiter extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
+    this.load.image("health_pickup", "assets/energy_health.png");
+    this.load.image("powerup", "assets/powerup.png");
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
+    this.load.audio("pickup", "assets/pickup.mp3");
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
   }
@@ -75,10 +80,8 @@ export default class Jupiter extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
-    this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
-    this.motherShipsDestroyed = 0
   
 
     this.sun = this.add.sprite(5500, 1450, "sun").setDisplaySize(2000, 2000).setDepth(1);
@@ -189,33 +192,53 @@ export default class Jupiter extends Phaser.Scene {
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
 
-    //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(500000, changeWin, [], this)
-    function changeWin(){
-      this.gameWon = true
-    }
-
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
 
   handleCountDownFinished() {
-    //this.player.active=false
-    //const {width,height}=this.scale
-    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+    this.countdowndone = true
+  }
+
+  hDelay = 0
+  spawnHealth(time, delay) {
+    //health lifespan is 5000
+    if (time > this.hDelay) {
+      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.hDelay = time + delay
+    }
+  }
+
+  powerUpDelay = 0
+  spawnPower(time, delay){
+    if(time > this.powerUpDelay){
+      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.powerUpDelay = time + delay
+    }
+  }
+
+  removePowerDelay = 0
+  removePower(time, delay){
+    if(time > this.removePowerDelay){
+      this.ship.invulnerable = false
+      this.removePowerDelay = time + delay
+    }
   }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
+    this.motherShipsDestroyed = 6 - this.motherships.getLength();
+
+    this.spawnHealth(time, 6000);
+
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed
       this.motherShipScore = this.motherShipsDestroyed
-      this.gameWon = true;
       this.command.setVisible(true);
       this.scene.start("End_Screen", { 
-        win: this.gameWon, 
+        condition: true,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
       });
@@ -224,11 +247,10 @@ export default class Jupiter extends Phaser.Scene {
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
       this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
-      this.gameWon = false;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.planet.setVisible(false);
       this.scene.start("End_Screen", { 
-        loss: this.gameWon, 
+        condition: false, 
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed
        });
