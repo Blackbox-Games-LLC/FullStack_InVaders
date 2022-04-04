@@ -43,7 +43,7 @@ export default class AttackBase extends Phaser.Physics.Arcade.Sprite {
   update(time) {
     if (time > this.spawnDelay) {
       this.spawnSatellites()
-      this.spawnDelay = time * 1.2
+      this.spawnDelay = time * 1.4
     }
   }
 }
