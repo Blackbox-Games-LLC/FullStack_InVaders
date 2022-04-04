@@ -5,14 +5,12 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
- 
+
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
 
 import PowerUp from "../HelperClasses/powerup";
-
-
 
 export default class Jupiter extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -31,7 +29,10 @@ export default class Jupiter extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
+      frameWidth: 75,
+      frameHeighth: 65,
+    });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -66,12 +67,12 @@ export default class Jupiter extends Phaser.Scene {
   }
 
   create() {
-    this.Music = this.sys.game.globals.music
+    this.Music = this.sys.game.globals.music;
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add('bg', { volume: 0.5 })
+      this.bg = this.sound.add("bg", { volume: 0.5 });
       this.bg.play({
-        loop: true
-      })
+        loop: true,
+      });
       this.Music.bgMusicPlaying = true;
     }
 
@@ -82,15 +83,29 @@ export default class Jupiter extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
-    this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-    this.aliensDestroyed = 0
-  
+    this.physics.world.setBounds(-1500, -1500, 8000, 6000);
+    this.aliensDestroyed = 0;
 
-    this.sun = this.add.sprite(5500, 1450, "sun").setDisplaySize(2000, 2000).setDepth(1);
-    this.io = this.add.sprite(3000, 1500, "io").setDisplaySize(150, 150).setDepth(1);
-    this.europa = this.add.sprite(1500, 200, "europa").setDisplaySize(150, 150).setDepth(1);
-    this.ganymede = this.add.sprite(-500, 2000, "ganymede").setDisplaySize(250, 250).setDepth(1);
-    this.callisto = this.add.sprite(-2000, 1500, "callisto").setDisplaySize(50, 50).setDepth(1);
+    this.sun = this.add
+      .sprite(5500, 1450, "sun")
+      .setDisplaySize(2000, 2000)
+      .setDepth(1);
+    this.io = this.add
+      .sprite(3000, 1500, "io")
+      .setDisplaySize(150, 150)
+      .setDepth(1);
+    this.europa = this.add
+      .sprite(1500, 200, "europa")
+      .setDisplaySize(150, 150)
+      .setDepth(1);
+    this.ganymede = this.add
+      .sprite(-500, 2000, "ganymede")
+      .setDisplaySize(250, 250)
+      .setDepth(1);
+    this.callisto = this.add
+      .sprite(-2000, 1500, "callisto")
+      .setDisplaySize(50, 50)
+      .setDepth(1);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
@@ -105,13 +120,15 @@ export default class Jupiter extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    
+
     // Create core for orbiting defense satellites
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
 
     // Set plant and its health
-    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1500, 1500).setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet")
+      .setDisplaySize(1500, 1500)
+      .setDepth(1);
     this.planet.health = 25000;
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
 
@@ -123,8 +140,7 @@ export default class Jupiter extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
-    this.ship.health = 1500
-
+    this.ship.health = 1500;
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -136,7 +152,7 @@ export default class Jupiter extends Phaser.Scene {
     this.attackBases.get(2000, 2200).setAngle(180);
     this.attackBases.get(2000, 800).setAngle(0);
     this.attackBases.get(2550, 1100).setAngle(60);
-    this.attackBases.get(1450, 1850).setAngle(240)
+    this.attackBases.get(1450, 1850).setAngle(240);
 
     //spawn defenseBases
     this.defenseBases = this.physics.add.group({
@@ -169,16 +185,17 @@ export default class Jupiter extends Phaser.Scene {
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
-      backward: Phaser.Input.Keyboard.KeyCodes.S
-    });
+      backward: Phaser.Input.Keyboard.KeyCodes.S,
+    }, false);
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+      , false);
 
     //camera
 
-    this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
-
+    this.cameras.main
+      .startFollow(this.ship, false, 1, 1, 0, -750)
+      .setZoom(0.75, 0.75);
 
     // countDownController
     const timerLabel = this.add
@@ -188,44 +205,49 @@ export default class Jupiter extends Phaser.Scene {
         color: "#00FF00",
       })
       .setScrollFactor(0, 0)
-      .setDepth(2)
+      .setDepth(2);
 
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
-
 
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
 
   handleCountDownFinished() {
-    this.countdowndone = true
+    this.countdowndone = true;
   }
 
-  hDelay = 0
+  hDelay = 0;
   spawnHealth(time, delay) {
     //health lifespan is 5000
     if (time > this.hDelay) {
-      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.hDelay = time + delay
-    }
-
-
-  }
-
-  powerUpDelay = 0
-  spawnPower(time, delay){
-    if(time > this.powerUpDelay){
-      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.powerUpDelay = time + delay
+      new HealthPickup(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.hDelay = time + delay;
     }
   }
 
-  removePowerDelay = 0
-  removePower(time, delay){
-    if(time > this.removePowerDelay){
-      this.ship.invulnerable = false
-      this.removePowerDelay = time + delay
+  powerUpDelay = 0;
+  spawnPower(time, delay) {
+    if (time > this.powerUpDelay) {
+      new PowerUp(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.powerUpDelay = time + delay;
+    }
+  }
+
+  removePowerDelay = 0;
+  removePower(time, delay) {
+    if (time > this.removePowerDelay) {
+      this.ship.invulnerable = false;
+      this.removePowerDelay = time + delay;
     }
   }
 
@@ -238,26 +260,28 @@ export default class Jupiter extends Phaser.Scene {
 
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
+      this.aliensScore = this.aliensDestroyed;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", { 
+      this.scene.start("End_Screen", {
         condition: true,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
+        motherShipScore: this.motherShipsDestroyed,
+        level: 5,
       });
     }
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      this.aliensScore = this.aliensDestroyed
+      this.aliensScore = this.aliensDestroyed;
       this.motherShipScore = this.motherShipsDestroyed;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", { 
-        condition: false, 
+      this.scene.start("End_Screen", {
+        condition: false,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
-       });
+        motherShipScore: this.motherShipsDestroyed,
+        level: 5,
+      });
     }
 
     //ship movement

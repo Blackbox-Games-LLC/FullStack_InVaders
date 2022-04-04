@@ -21,8 +21,8 @@ export default class Test extends Phaser.Scene {
 
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
-    this.load.image("health_pickup", "assets/energy_health.png")
-    this.load.image("powerup", "assets/powerup.png")
+    this.load.image("health_pickup", "assets/energy_health.png");
+    this.load.image("powerup", "assets/powerup.png");
     this.load.image("planet", "assets/earth-transparent-min.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
@@ -58,7 +58,7 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
-    this.load.audio("pickup", "assets/pickup.mp3")
+    this.load.audio("pickup", "assets/pickup.mp3");
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
   }
@@ -80,9 +80,8 @@ export default class Test extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
-    this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-    this.aliensDestroyed = 0
-    
+    this.physics.world.setBounds(-1500, -1500, 8000, 6000);
+    this.aliensDestroyed = 0;
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
@@ -114,8 +113,6 @@ export default class Test extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
-
-
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -156,15 +153,16 @@ export default class Test extends Phaser.Scene {
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
-      backward: Phaser.Input.Keyboard.KeyCodes.S
-    });
+      backward: Phaser.Input.Keyboard.KeyCodes.S,
+    }, false);
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+      , false);
     //camera
 
-    this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
-
+    this.cameras.main
+      .startFollow(this.ship, false, 1, 1, 0, -750)
+      .setZoom(0.75, 0.75);
 
     // countDownController
     const timerLabel = this.add
@@ -174,7 +172,7 @@ export default class Test extends Phaser.Scene {
         color: "#00FF00",
       })
       .setScrollFactor(0, 0)
-      .setDepth(2)
+      .setDepth(2);
 
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
@@ -184,23 +182,31 @@ export default class Test extends Phaser.Scene {
   }
 
   handleCountDownFinished() {
-    this.countdowndone = true
+    this.countdowndone = true;
   }
 
-  hDelay = 0
+  hDelay = 0;
   spawnHealth(time, delay) {
     //health lifespan is 5000
     if (time > this.hDelay) {
-      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.hDelay = time + delay
+      new HealthPickup(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.hDelay = time + delay;
     }
   }
 
-  powerUpDelay = 0
-  spawnPower(time, delay){
-    if(time > this.powerUpDelay){
-      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.powerUpDelay = time + delay
+  powerUpDelay = 0;
+  spawnPower(time, delay) {
+    if (time > this.powerUpDelay) {
+      new PowerUp(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.powerUpDelay = time + delay;
     }
   }
 
@@ -214,38 +220,37 @@ export default class Test extends Phaser.Scene {
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
-    this.motherShipsDestroyed = 4 - this.motherships.getLength()
+    this.motherShipsDestroyed = 4 - this.motherships.getLength();
 
-    this.spawnHealth(time, 6000)
-    this.spawnPower(time, 8000)
+    this.spawnHealth(time, 6000);
+    this.spawnPower(time, 8000);
     // this.removePower(time, 4000)
 
     //win condition
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
+      this.aliensScore = this.aliensDestroyed;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.command.setVisible(true);
       this.scene.start("End_Screen", {
         condition: true,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
+        motherShipScore: this.motherShipsDestroyed,
+        level: 1,
       });
     }
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
+      this.aliensScore = this.aliensDestroyed;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.planet.setVisible(false);
       this.scene.start("End_Screen", {
         condition: false,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
+        motherShipScore: this.motherShipsDestroyed,
+        level: 1,
       });
     }
-
-
-
 
     //ship movement
     if (this.cursors.left.isDown) {

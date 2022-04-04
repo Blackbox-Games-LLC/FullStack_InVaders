@@ -11,11 +11,6 @@ const Score = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    time: {
-      type: Sequelize.TIME,
-      allowNull: false,
-      // defaultValue: Sequelize.NOW,
-    },
     aliens: {
       type: Sequelize.INTEGER,
       defaultValue: 0,
@@ -28,6 +23,11 @@ const Score = db.define(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    winOrLoss: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    }
   },
   {
     timestamps: false,

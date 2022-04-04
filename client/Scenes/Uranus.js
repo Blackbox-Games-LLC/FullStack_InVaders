@@ -5,12 +5,11 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
- 
+
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
 import PowerUp from "../HelperClasses/powerup";
-
 
 export default class Uranus extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -29,7 +28,10 @@ export default class Uranus extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
+      frameWidth: 75,
+      frameHeighth: 65,
+    });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -51,8 +53,8 @@ export default class Uranus extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
-    this.load.image("health_pickup", "assets/energy_health.png")
-    this.load.image("powerup", "assets/powerup.png")
+    this.load.image("health_pickup", "assets/energy_health.png");
+    this.load.image("powerup", "assets/powerup.png");
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
@@ -62,12 +64,12 @@ export default class Uranus extends Phaser.Scene {
   }
 
   create() {
-    this.Music = this.sys.game.globals.music
+    this.Music = this.sys.game.globals.music;
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add('bg', { volume: 0.5 })
+      this.bg = this.sound.add("bg", { volume: 0.5 });
       this.bg.play({
-        loop: true
-      })
+        loop: true,
+      });
       this.Music.bgMusicPlaying = true;
     }
 
@@ -80,12 +82,20 @@ export default class Uranus extends Phaser.Scene {
     this.angle3 = 0;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000);
 
-    this.aliensDestroyed = 0
-  
+    this.aliensDestroyed = 0;
 
-    this.sun = this.add.sprite(1250, -1000, "sun").setDisplaySize(1000, 1000).setDepth(1);
-    this.miranda = this.add.sprite(1000, 1500, "miranda").setDisplaySize(150, 150).setDepth(1);
-    this.titania = this.add.sprite(4500, 2500, "titania").setDisplaySize(350, 350).setDepth(1);
+    this.sun = this.add
+      .sprite(1250, -1000, "sun")
+      .setDisplaySize(1000, 1000)
+      .setDepth(1);
+    this.miranda = this.add
+      .sprite(1000, 1500, "miranda")
+      .setDisplaySize(150, 150)
+      .setDepth(1);
+    this.titania = this.add
+      .sprite(4500, 2500, "titania")
+      .setDisplaySize(350, 350)
+      .setDepth(1);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
@@ -100,7 +110,9 @@ export default class Uranus extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(1300, 1300).setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet")
+      .setDisplaySize(1300, 1300)
+      .setDepth(1);
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -113,7 +125,6 @@ export default class Uranus extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
-
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -154,16 +165,17 @@ export default class Uranus extends Phaser.Scene {
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
-      backward: Phaser.Input.Keyboard.KeyCodes.S
-    });
+      backward: Phaser.Input.Keyboard.KeyCodes.S,
+    }, false);
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+      , false);
 
     //camera
 
-    this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
-
+    this.cameras.main
+      .startFollow(this.ship, false, 1, 1, 0, -750)
+      .setZoom(0.75, 0.75);
 
     // countDownController
     const timerLabel = this.add
@@ -173,7 +185,7 @@ export default class Uranus extends Phaser.Scene {
         color: "#00FF00",
       })
       .setScrollFactor(0, 0)
-      .setDepth(2)
+      .setDepth(2);
 
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
@@ -182,40 +194,45 @@ export default class Uranus extends Phaser.Scene {
     this.ColliderHelper = new ColliderHelper(this);
   }
 
-    handleCountDownFinished() {
-      this.countdowndone = true
-    }
-  
-  hDelay = 0
+  handleCountDownFinished() {
+    this.countdowndone = true;
+  }
+
+  hDelay = 0;
   spawnHealth(time, delay) {
     //health lifespan is 5000
     if (time > this.hDelay) {
-      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.hDelay = time + delay
+      new HealthPickup(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.hDelay = time + delay;
     }
   }
 
-  powerUpDelay = 0
-  spawnPower(time, delay){
-    if(time > this.powerUpDelay){
-      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.powerUpDelay = time + delay
+  powerUpDelay = 0;
+  spawnPower(time, delay) {
+    if (time > this.powerUpDelay) {
+      new PowerUp(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.powerUpDelay = time + delay;
     }
   }
 
-  removePowerDelay = 0
-  removePower(time, delay){
-    if(time > this.removePowerDelay){
-      this.ship.invulnerable = false
-      this.removePowerDelay = time + delay
+  removePowerDelay = 0;
+  removePower(time, delay) {
+    if (time > this.removePowerDelay) {
+      this.ship.invulnerable = false;
+      this.removePowerDelay = time + delay;
     }
   }
-
-
-
 
   handleCountDownFinished() {
-    this.countdowndone = true
+    this.countdowndone = true;
   }
 
   update(time) {
@@ -229,25 +246,27 @@ export default class Uranus extends Phaser.Scene {
 
     //win condition
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
+      this.aliensScore = this.aliensDestroyed;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.command.setVisible(true);
       this.scene.start("End_Screen", {
         condition: true,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
+        motherShipScore: this.motherShipsDestroyed,
+        level: 7,
       });
     }
 
     //loss condition
     if (this.planet.health <= 0 || this.ship.health <= 0) {
-      this.aliensScore = this.aliensDestroyed
-      this.motherShipScore = this.motherShipsDestroyed
+      this.aliensScore = this.aliensDestroyed;
+      this.motherShipScore = this.motherShipsDestroyed;
       this.planet.setVisible(false);
       this.scene.start("End_Screen", {
         condition: false,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
+        motherShipScore: this.motherShipsDestroyed,
+        level: 7,
       });
     }
 
