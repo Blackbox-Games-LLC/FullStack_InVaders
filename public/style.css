@@ -7,7 +7,7 @@ body {
 }
 
 tr {
-  color: white
+  color: white;
 }
 
 #navBar {
@@ -43,7 +43,7 @@ tr {
 
 .test {
   display: flex;
-  height: 60%;
+  height: fit-content;
   z-index: 2;
   top: 50%;
   bottom: 50%;
@@ -85,5 +85,5 @@ tr {
 }
 
 #app {
-  width: 100%
+  width: 100%;
 }

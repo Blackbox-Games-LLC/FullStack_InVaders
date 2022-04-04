@@ -14,55 +14,49 @@ export default function Scores() {
     }
   }, [user.id]);
 
-  let orderedScores = []
+  let orderedScores = [];
 
-  scores.forEach(element => {
-    let num = element.level
+  scores.forEach((element) => {
+    let num = element.level;
     if (orderedScores[num]) {
-      orderedScores[num].push(element)
+      orderedScores[num].push(element);
     } else {
-      orderedScores[num] = []
-      orderedScores[num].push(element)
+      orderedScores[num] = [];
+      orderedScores[num].push(element);
     }
-    console.log(orderedScores)
+    console.log(orderedScores);
   });
 
   return (
     <div className="test">
-      {
-        orderedScores.map((level, idx) => {
-          console.log(level)
-          if (level !== null) {
-            return (
-              <div className="text-center">
-                <h3>{`Level ${idx}`}</h3>
-                < table key={idx}>
-                  <thead>
-                    <tr>
-                      <th>Motherships Killed |</th>
-                      <th>Aliens Killed |</th>
-                      <th>Best Time</th>
-                    </tr>
-                  </thead>
-                  <tbody className="data">
-                    {
-                      level.map((score, idj) => {
-                        return (
-                          <tr key={idj}>
-                            <td>{score.motherships}</td>
-                            <td>{score.aliens}</td>
-                            <td>{score.time}</td>
-                          </tr>
-                        );
-                      })
-                    }
-                  </tbody>
-                </table>
-              </div>
-            )
-          }
-        })
-      }
-    </div >
+      {orderedScores.map((level, idx) => {
+        console.log(level);
+        if (level !== null) {
+          return (
+            <div className="text-center">
+              <h3>{`Level ${idx}`}</h3>
+              <table key={idx}>
+                <thead>
+                  <tr>
+                    <th>Motherships Killed |</th>
+                    <th>Aliens Killed </th>
+                  </tr>
+                </thead>
+                <tbody className="data">
+                  {level.map((score, idj) => {
+                    return (
+                      <tr key={idj}>
+                        <td>{score.motherships}</td>
+                        <td>{score.aliens}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+      })}
+    </div>
   );
 }

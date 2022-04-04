@@ -18,7 +18,7 @@ router.get("/:userId", async (req, res, next) => {
       where: {
         userId: userId,
       },
-      order: [["time", "DESC"]], // order by from last score
+      order: [["aliens", "DESC"]], // order by from last score
     });
     res.send(singleUserAllScore);
   } catch (err) {
@@ -39,14 +39,5 @@ router.post("/:userId", async (req, res, next) => {
     console.log("erro is:", err);
   }
 });
-
-// router.post("/:userId", async (req, res, next) => {
-//   try {
-//     const newScore = await Score.create(req.body);
-//     res.send(newScore);
-//   } catch (err) {
-//     console.log("error is:", err);
-//   }
-// });
 
 module.exports = router;

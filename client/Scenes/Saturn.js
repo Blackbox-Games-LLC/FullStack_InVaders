@@ -5,12 +5,11 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
- 
+
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
 import PowerUp from "../HelperClasses/powerup";
-
 
 export default class Saturn extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -29,7 +28,10 @@ export default class Saturn extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
+      frameWidth: 75,
+      frameHeighth: 65,
+    });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -53,24 +55,23 @@ export default class Saturn extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
-    this.load.image("health_pickup", "assets/energy_health.png")
-    this.load.image("powerup", "assets/powerup.png")
+    this.load.image("health_pickup", "assets/energy_health.png");
+    this.load.image("powerup", "assets/powerup.png");
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
     this.load.audio("pickup", "assets/pickup.mp3");
-
   }
 
   create() {
-    this.Music = this.sys.game.globals.music
+    this.Music = this.sys.game.globals.music;
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add('bg', { volume: 0.5 })
+      this.bg = this.sound.add("bg", { volume: 0.5 });
       this.bg.play({
-        loop: true
-      })
+        loop: true,
+      });
       this.Music.bgMusicPlaying = true;
     }
 
@@ -81,16 +82,30 @@ export default class Saturn extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
-    this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-    this.aliensDestroyed = 0
-    this.motherShipsDestroyed = 0
-  
+    this.physics.world.setBounds(-1500, -1500, 8000, 6000);
+    this.aliensDestroyed = 0;
+    this.motherShipsDestroyed = 0;
 
-    this.sun = this.add.sprite(-1000, 450, "sun").setDisplaySize(750, 750).setDepth(1);
-    this.enceladus = this.add.sprite(1000, 2500, "enceladus").setDisplaySize(100, 100).setDepth(1);
-    this.rhea = this.add.sprite(3000, 1500, "rhea").setDisplaySize(150, 150).setDepth(1);
-    this.titan = this.add.sprite(-1500, 1500, "titan").setDisplaySize(450, 450).setDepth(1);
-    this.iapetus = this.add.sprite(4500, 2500, "iapetus").setDisplaySize(150, 150).setDepth(1);
+    this.sun = this.add
+      .sprite(-1000, 450, "sun")
+      .setDisplaySize(750, 750)
+      .setDepth(1);
+    this.enceladus = this.add
+      .sprite(1000, 2500, "enceladus")
+      .setDisplaySize(100, 100)
+      .setDepth(1);
+    this.rhea = this.add
+      .sprite(3000, 1500, "rhea")
+      .setDisplaySize(150, 150)
+      .setDepth(1);
+    this.titan = this.add
+      .sprite(-1500, 1500, "titan")
+      .setDisplaySize(450, 450)
+      .setDepth(1);
+    this.iapetus = this.add
+      .sprite(4500, 2500, "iapetus")
+      .setDisplaySize(150, 150)
+      .setDepth(1);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
@@ -105,7 +120,9 @@ export default class Saturn extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDisplaySize(3375, 1350).setDepth(1);
+    this.planet = new Planet(this, 2000, 1500, "planet")
+      .setDisplaySize(3375, 1350)
+      .setDepth(1);
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -118,7 +135,6 @@ export default class Saturn extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
-
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -159,7 +175,7 @@ export default class Saturn extends Phaser.Scene {
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
-      backward: Phaser.Input.Keyboard.KeyCodes.S
+      backward: Phaser.Input.Keyboard.KeyCodes.S,
     });
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -167,8 +183,9 @@ export default class Saturn extends Phaser.Scene {
 
     //camera
 
-    this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
-
+    this.cameras.main
+      .startFollow(this.ship, false, 1, 1, 0, -750)
+      .setZoom(0.75, 0.75);
 
     // countDownController
     const timerLabel = this.add
@@ -178,43 +195,50 @@ export default class Saturn extends Phaser.Scene {
         color: "#00FF00",
       })
       .setScrollFactor(0, 0)
-      .setDepth(2)
+      .setDepth(2);
 
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
-
 
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
 
-  hDelay = 0
+  hDelay = 0;
   spawnHealth(time, delay) {
     //health lifespan is 5000
     if (time > this.hDelay) {
-      new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.hDelay = time + delay
+      new HealthPickup(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.hDelay = time + delay;
     }
   }
 
-  powerUpDelay = 0
-  spawnPower(time, delay){
-    if(time > this.powerUpDelay){
-      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
-      this.powerUpDelay = time + delay
+  powerUpDelay = 0;
+  spawnPower(time, delay) {
+    if (time > this.powerUpDelay) {
+      new PowerUp(
+        this,
+        Phaser.Math.Between(300, 3700),
+        Phaser.Math.Between(300, 2800)
+      );
+      this.powerUpDelay = time + delay;
     }
   }
 
-  removePowerDelay = 0
-  removePower(time, delay){
-    if(time > this.removePowerDelay){
-      this.ship.invulnerable = false
-      this.removePowerDelay = time + delay
+  removePowerDelay = 0;
+  removePower(time, delay) {
+    if (time > this.removePowerDelay) {
+      this.ship.invulnerable = false;
+      this.removePowerDelay = time + delay;
     }
   }
 
   handleCountDownFinished() {
-    this.countdowndone = true
+    this.countdowndone = true;
   }
 
   update(time) {
@@ -222,19 +246,20 @@ export default class Saturn extends Phaser.Scene {
 
     this.motherShipsDestroyed = 4 - this.motherships.getLength();
 
-    this.spawnHealth(time, 6000)
-    this.spawnPower(time, 8000)
-    this.removePower(time, 4000)
+    this.spawnHealth(time, 6000);
+    this.spawnPower(time, 8000);
+    this.removePower(time, 4000);
 
     //win condition
     if (this.gameWon === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed;
       this.motherShipScore = this.motherShipsDestroyed;
       this.command.setVisible(true);
-      this.scene.start("End_Screen", { 
-        condition: true, 
+      this.scene.start("End_Screen", {
+        condition: true,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
+        motherShipScore: this.motherShipsDestroyed,
+        level: 6,
       });
     }
 
@@ -243,11 +268,12 @@ export default class Saturn extends Phaser.Scene {
       this.aliensScore = this.aliensDestroyed;
       this.motherShipScore = this.motherShipsDestroyed;
       this.planet.setVisible(false);
-      this.scene.start("End_Screen", { 
-        loss: this.gameWon, 
+      this.scene.start("End_Screen", {
+        loss: this.gameWon,
         aliensScore: this.aliensDestroyed,
-        motherShipScore: this.motherShipsDestroyed
-       });
+        motherShipScore: this.motherShipsDestroyed,
+        level: 6,
+      });
     }
 
     //ship movement
