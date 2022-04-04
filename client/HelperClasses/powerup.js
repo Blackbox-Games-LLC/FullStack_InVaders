@@ -16,6 +16,7 @@ export default class PowerUp extends Phaser.Physics.Arcade.Sprite {
             pickup.play()
             this.destroy()
             scene.ship.invulnerable = true
+            
         })
     }
 }

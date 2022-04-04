@@ -33,6 +33,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.invulnerable = false
     this.hp = new HealthBar(this.scene, 2475, 700, this.health, 150, 20)
     this.hp.followCamera()
+    
 
     // damage from aliens blasters
     scene.physics.add.overlap(this, scene.alienbullets, () => {
