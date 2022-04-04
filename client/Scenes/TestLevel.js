@@ -47,7 +47,8 @@ export default class Test extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("sun", "assets/sun.png");
-    this.load.image("themoon", "assets/themoon.png");
+    this.load.image("moon1", "assets/moon1.png");
+    this.load.image("moon2", "assets/moon6.png");
     this.load.spritesheet("alien", "assets/alien-invader.png", {
       frameWidth: 75,
       frameHeight: 65,
@@ -57,7 +58,7 @@ export default class Test extends Phaser.Scene {
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
     this.load.audio("playerShot", "assets/playerbullet.mp3");
     this.load.audio("alienShot", "assets/alienshot.mp3");
-    this.load.audio("pickup", "assets/pickup.mp3");
+    this.load.audio("pickup", "assets/pickup.mp3")
     this.load.audio("motherboom", "assets/motherboom.mp3");
     this.load.audio("bg", "assets/bg.mp3");
   }
@@ -79,12 +80,13 @@ export default class Test extends Phaser.Scene {
     this.distance1 = 750;
     this.distance3 = 1000;
     this.angle3 = 0;
-    this.physics.world.setBounds(-1500, -1500, 8000, 6000);
+    this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
     
 
-    this.sun = this.add.sprite(-1500, 750, "sun").setDisplaySize(2500, 2750).setAngle(30).setDepth(1);
-    this.themoon = this.add.sprite(3000, 3500, "themoon").setDisplaySize(350, 350).setDepth(1);
+    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
+    this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
+    this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
     this.bg = this.add
       .tileSprite(2824, 1024, 14000, 10000, "background")
       .setScrollFactor(0.8);
@@ -159,7 +161,6 @@ export default class Test extends Phaser.Scene {
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-
     //camera
 
     this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
@@ -203,13 +204,13 @@ export default class Test extends Phaser.Scene {
     }
   }
 
-  removePowerDelay = 0
-  removePower(time, delay){
-    if(time > this.removePowerDelay){
-      this.ship.invulnerable = false
-      this.removePowerDelay = time + delay
-    }
-  }
+  // removePowerDelay = 0
+  // removePower(time, delay){
+  //   if(time > this.removePowerDelay){
+  //     this.ship.invulnerable = false
+  //     this.removePowerDelay = time + delay
+  //   }
+  // }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
@@ -217,7 +218,7 @@ export default class Test extends Phaser.Scene {
 
     this.spawnHealth(time, 6000)
     this.spawnPower(time, 8000)
-    this.removePower(time, 4000)
+    // this.removePower(time, 4000)
 
     //win condition
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
