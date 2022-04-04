@@ -9,7 +9,9 @@ import DefenseBase from "../HelperClasses/defenseBase";
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
+
 import PowerUp from "../HelperClasses/powerup";
+
 
 
 export default class Jupiter extends Phaser.Scene {
@@ -207,6 +209,8 @@ export default class Jupiter extends Phaser.Scene {
       new HealthPickup(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
       this.hDelay = time + delay
     }
+
+
   }
 
   powerUpDelay = 0
