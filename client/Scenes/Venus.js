@@ -5,10 +5,9 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
- 
+
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
-
 
 export default class Venus extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -27,7 +26,10 @@ export default class Venus extends Phaser.Scene {
     this.load.image("ship", "assets/spaceship-sprite.png");
     this.load.image("defense", "assets/space-wall-defense.png");
     this.load.image("offense", "assets/space-wall-offense.png");
-    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", { frameWidth: 75, frameHeighth: 65 });
+    this.load.spritesheet("satellite-explosion", "assets/satellite-explosion", {
+      frameWidth: 75,
+      frameHeighth: 65,
+    });
     this.load.image("laser_bullet", "assets/medium_laser_bullets.png");
     this.load.image("alien_bullet", "assets/alien-laser.png");
     this.load.image("offense-bullet", "assets/offense-bullets.png");
@@ -57,12 +59,12 @@ export default class Venus extends Phaser.Scene {
   }
 
   create() {
-    this.Music = this.sys.game.globals.music
+    this.Music = this.sys.game.globals.music;
     if (this.Music.musicOn === true && this.Music.bgMusicPlaying === false) {
-      this.bg = this.sound.add('bg', { volume: 0.5 })
+      this.bg = this.sound.add("bg", { volume: 0.5 });
       this.bg.play({
-        loop: true
-      })
+        loop: true,
+      });
       this.Music.bgMusicPlaying = true;
     }
 
@@ -74,10 +76,12 @@ export default class Venus extends Phaser.Scene {
     this.distance3 = 1000;
     this.angle3 = 0;
     this.gameWon = false;
-    this.physics.world.setBounds(-1500, -1500, 8000, 6000)
-  
+    this.physics.world.setBounds(-1500, -1500, 8000, 6000);
 
-    this.sun = this.add.sprite(-500, 2000, "sun").setDepth(1).setDisplaySize(3000, 3000);
+    this.sun = this.add
+      .sprite(-500, 2000, "sun")
+      .setDepth(1)
+      .setDisplaySize(3000, 3000);
     this.bg = this.add
       .tileSprite(1024, 1024, 16392, 12288, "background")
       .setScrollFactor(0.8);
@@ -92,7 +96,9 @@ export default class Venus extends Phaser.Scene {
       ease: "Linear",
       loop: 10,
     });
-    this.planet = new Planet(this, 2000, 1500, "planet").setDepth(1).setDisplaySize(1350,1350)
+    this.planet = new Planet(this, 2000, 1500, "planet")
+      .setDepth(1)
+      .setDisplaySize(1350, 1350);
     this.add.image(this.planet.x, this.planet.y, "boomplanet").setDepth(0);
     this.core = this.physics.add.sprite(2000, 1500, "defense");
     this.core.setDepth(-1).setCircle(750, -700, -700);
@@ -105,7 +111,6 @@ export default class Venus extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
-
 
     //spawn attackBases
     this.attackBases = this.physics.add.group({
@@ -146,16 +151,17 @@ export default class Venus extends Phaser.Scene {
       forward: Phaser.Input.Keyboard.KeyCodes.W,
       right: Phaser.Input.Keyboard.KeyCodes.D,
       left: Phaser.Input.Keyboard.KeyCodes.A,
-      backward: Phaser.Input.Keyboard.KeyCodes.S
-    });
+      backward: Phaser.Input.Keyboard.KeyCodes.S,
+    }, false);
     this.fire = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+      , false);
 
     //camera
 
-    this.cameras.main.startFollow(this.ship, false, 1, 1, 0, -750).setZoom(0.75, 0.75)
-
+    this.cameras.main
+      .startFollow(this.ship, false, 1, 1, 0, -750)
+      .setZoom(0.75, 0.75);
 
     // countDownController
     const timerLabel = this.add
@@ -165,23 +171,20 @@ export default class Venus extends Phaser.Scene {
         color: "#00FF00",
       })
       .setScrollFactor(0, 0)
-      .setDepth(2)
+      .setDepth(2);
 
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountDownFinished.bind(this));
 
-
     //This manages game time within the scene.
-    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this)
-    function changeWin(){
-      this.gameWon = true
+    this.timedEvent = this.time.delayedCall(300000, changeWin, [], this);
+    function changeWin() {
+      this.gameWon = true;
     }
 
     //keep at end
     this.ColliderHelper = new ColliderHelper(this);
   }
-
-
 
   handleCountDownFinished() {
     this.countdowndone = true 
