@@ -204,13 +204,13 @@ export default class Test extends Phaser.Scene {
     }
   }
 
-  // removePowerDelay = 0
-  // removePower(time, delay){
-  //   if(time > this.removePowerDelay){
-  //     this.ship.invulnerable = false
-  //     this.removePowerDelay = time + delay
-  //   }
-  // }
+  removePowerDelay = 0
+  removePower(time, delay){
+    if(time > this.removePowerDelay){
+      this.ship.invulnerable = false
+      this.removePowerDelay = time + delay
+    }
+  }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
@@ -218,7 +218,7 @@ export default class Test extends Phaser.Scene {
 
     this.spawnHealth(time, 6000)
     this.spawnPower(time, 8000)
-    // this.removePower(time, 4000)
+    this.removePower(time, 10000)
 
     //win condition
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
