@@ -1,20 +1,28 @@
-import React, { Component } from 'react'
-import Home from './components/Home';
-import NavBar from './components/NavBar';
+import React, { Component } from "react";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
+import Home from "./components/Home";
+import Scores from "./components/Scores";
+import NavBar from "./components/NavBar";
+import { useSelector } from "react-redux";
 
 /**
  * COMPONENT
  */
-export default class Routes extends Component {
+const Routes = () => {
+  const loggedIn = useSelector((state) => state.user)
 
-  render() {
-    return (
-      <div>
-        <NavBar />
-        <Home />
-      </div>
-    )
-  }
+  return (
+    <BrowserRouter>
+      <NavBar />
+      <Switch>
+        {loggedIn.username &&
+          <Route exact path="/scores" name="Scores" component={Scores} />
+        }
+        <Route exact path="/" name="Home" component={Home} />
+      </Switch>
+    </BrowserRouter>
+  );
+
 }
 
-
+export default Routes
