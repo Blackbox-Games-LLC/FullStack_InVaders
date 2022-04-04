@@ -9,6 +9,7 @@ import DefenseBase from "../HelperClasses/defenseBase";
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
+import PowerUp from "../HelperClasses/powerup";
 
 export default class Test extends Phaser.Scene {
   /** @type {CountdownController} */
@@ -21,6 +22,7 @@ export default class Test extends Phaser.Scene {
   preload() {
     this.load.image("background", "assets/starry-background.jpeg");
     this.load.image("health_pickup", "assets/energy_health.png")
+    this.load.image("powerup", "assets/powerup.png")
     this.load.image("planet", "assets/earth-transparent-min.png");
     this.load.image("boomplanet", "assets/destroyedEarth.png");
     this.load.image("defense-base", "assets/defense-base.png");
@@ -80,6 +82,7 @@ export default class Test extends Phaser.Scene {
     this.angle3 = 0;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000)
     this.aliensDestroyed = 0
+    
 
     this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
     this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
@@ -111,6 +114,7 @@ export default class Test extends Phaser.Scene {
 
     //spawn ship
     this.ship = new Ship(this, 1200, 1200);
+
 
 
     //spawn attackBases
@@ -183,6 +187,7 @@ export default class Test extends Phaser.Scene {
   handleCountDownFinished() {
     this.countdowndone = true
   }
+
   hDelay = 0
   spawnHealth(time, delay) {
     //health lifespan is 5000
@@ -192,11 +197,29 @@ export default class Test extends Phaser.Scene {
     }
   }
 
+  powerUpDelay = 0
+  spawnPower(time, delay){
+    if(time > this.powerUpDelay){
+      new PowerUp(this, Phaser.Math.Between(300, 3700), Phaser.Math.Between(300, 2800))
+      this.powerUpDelay = time + delay
+    }
+  }
+
+  removePowerDelay = 0
+  removePower(time, delay){
+    if(time > this.removePowerDelay){
+      this.ship.invulnerable = false
+      this.removePowerDelay = time + delay
+    }
+  }
+
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
     this.motherShipsDestroyed = 4 - this.motherships.getLength()
 
     this.spawnHealth(time, 6000)
+    this.spawnPower(time, 8000)
+    this.removePower(time, 4000)
 
     //win condition
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
@@ -221,6 +244,9 @@ export default class Test extends Phaser.Scene {
         motherShipScore: this.motherShipsDestroyed
       });
     }
+
+
+
 
     //ship movement
     if (this.cursors.left.isDown) {
