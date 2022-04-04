@@ -7,11 +7,11 @@ const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://localhost:5432/${dbName}`,
   {
     logging: false,
-    dialectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    },
+    // dialectOptions: {
+    //   ssl: {
+    //     rejectUnauthorized: false,
+    //   },
+    // },
   }
 );
 
