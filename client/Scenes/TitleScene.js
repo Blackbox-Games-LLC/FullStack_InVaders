@@ -52,63 +52,63 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     })
 
-    var earth = this.add.text(2200, 1900, "EARTH", {
+    var earth = this.add.text(1050, 1900, "EARTH", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var mercury = this.add.text(2200, 2000, "MERCURY", {
+    var mercury = this.add.text(1350, 1900, "MERCURY", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var venus = this.add.text(2200, 2100, "VENUS", {
+    var venus = this.add.text(1750, 1900, "VENUS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var mars = this.add.text(2200, 2200, "MARS", {
+    var mars = this.add.text(2050, 1900, "MARS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var jupiter = this.add.text(2200, 2300, "JUPITER", {
+    var jupiter = this.add.text(2300, 1900, "JUPITER", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var saturn = this.add.text(2600, 1900, "SATURN", {
+    var saturn = this.add.text(2700, 1900, "SATURN", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var uranus = this.add.text(2600, 2000, "URANUS", {
+    var uranus = this.add.text(3050, 1900, "URANUS", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var neptune = this.add.text(2600,2100, "NEPTUNE", {
+    var neptune = this.add.text(3400, 1900, "NEPTUNE", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var pluto = this.add.text(2600, 2200, "PLUTO", {
+    var pluto = this.add.text(3800, 1900, "PLUTO", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",

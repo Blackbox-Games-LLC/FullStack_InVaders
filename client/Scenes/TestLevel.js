@@ -53,7 +53,7 @@ export default class Test extends Phaser.Scene {
       frameWidth: 75,
       frameHeight: 65,
     });
-    this.load.image("aura", "assets/powerup-aura.png")
+    this.load.image("aura", "assets/blue.png")
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("command", "assets/spacebase.png");
     this.load.audio("alien-blowup", "assets/alien-blowup.mp3");
@@ -216,6 +216,7 @@ export default class Test extends Phaser.Scene {
     if(time > this.removePowerDelay){
       this.ship.invulnerable = false
       this.removePowerDelay = time + delay
+      this.ship.aura.setVisible(false)
     }
   }
 
