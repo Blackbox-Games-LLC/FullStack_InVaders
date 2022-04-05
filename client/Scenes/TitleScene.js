@@ -80,14 +80,14 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     });
 
-    var jupiter = this.add.text(2600, 2100, "JUPITER", {
+    var jupiter = this.add.text(2200, 2300, "JUPITER", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     });
 
-    var saturn = this.add.text(2200, 2300, "SATURN", {
+    var saturn = this.add.text(2600, 1900, "SATURN", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
@@ -101,14 +101,14 @@ export default class TitleScene extends Phaser.Scene {
       backgroundColor: "#000000",
     })
 
-    var neptune = this.add.text(2600,1900, "NEPTUNE", {
+    var neptune = this.add.text(2600,2100, "NEPTUNE", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
       backgroundColor: "#000000",
     })
 
-    var pluto = this.add.text(2700, 2200, "PLUTO", {
+    var pluto = this.add.text(2600, 2200, "PLUTO", {
       color: "#FFFFFF",
       fontSize: 80,
       fontStyle: "bold",
