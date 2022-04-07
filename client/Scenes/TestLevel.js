@@ -5,7 +5,6 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
-
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
@@ -212,8 +211,8 @@ export default class Test extends Phaser.Scene {
   }
 
   removePowerDelay = 0
-  removePower(time, delay){
-    if(time > this.removePowerDelay){
+  removePower(time, delay) {
+    if (time > this.removePowerDelay) {
       this.ship.invulnerable = false
       this.removePowerDelay = time + delay
       this.ship.aura.setVisible(false)
