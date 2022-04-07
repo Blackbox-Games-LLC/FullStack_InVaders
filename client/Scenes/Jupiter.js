@@ -259,7 +259,7 @@ export default class Jupiter extends Phaser.Scene {
     this.spawnHealth(time, 6000);
 
     //win condition
-    if (this.gameWon === true || this.motherships.getLength() === 0) {
+    if (this.countdowndone === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed;
       this.motherShipScore = this.motherShipsDestroyed;
       this.command.setVisible(true);

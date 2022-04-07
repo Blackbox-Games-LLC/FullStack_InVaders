@@ -77,6 +77,7 @@ export default class Venus extends Phaser.Scene {
     this.angle3 = 0;
     this.gameWon = false;
     this.physics.world.setBounds(-1500, -1500, 8000, 6000);
+    this.aliensDestroyed = 0
 
     this.sun = this.add
       .sprite(-500, 2000, "sun")
@@ -187,20 +188,12 @@ export default class Venus extends Phaser.Scene {
   }
 
   handleCountDownFinished() {
-    this.countdowndone = true 
+    this.countdowndone = true
   }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
     this.motherShipsDestroyed = 4 - this.motherships.getLength()
-
-    //win condition
-    // if (this.gameWon === true || this.motherships.getLength() === 0) {
-    //   // this.physics.pause()
-    //   this.gameWon = true;
-    //   this.command.setVisible(true);
-    //   this.scene.start("End_Screen", { win: this.gameWon });
-    // }
 
     if (this.countdowndone === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed
@@ -212,14 +205,6 @@ export default class Venus extends Phaser.Scene {
         motherShipScore: this.motherShipsDestroyed
       });
     }
-
-    //loss condition
-    // if (this.planet.health <= 0 || this.ship.health <= 0) {
-    //   // this.physics.pause()
-    //   this.gameWon = false;
-    //   this.planet.setVisible(false);
-    //   this.scene.start("End_Screen", { loss: this.gameWon });
-    // }
 
     if (this.planet.health <= 0 || this.ship.health <= 0) {
       this.aliensScore = this.aliensDestroyed

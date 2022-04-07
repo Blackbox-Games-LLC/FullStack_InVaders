@@ -251,7 +251,7 @@ export default class Saturn extends Phaser.Scene {
     this.removePower(time, 4000);
 
     //win condition
-    if (this.gameWon === true || this.motherships.getLength() === 0) {
+    if (this.countdowndone === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed;
       this.motherShipScore = this.motherShipsDestroyed;
       this.command.setVisible(true);
@@ -269,7 +269,7 @@ export default class Saturn extends Phaser.Scene {
       this.motherShipScore = this.motherShipsDestroyed;
       this.planet.setVisible(false);
       this.scene.start("End_Screen", {
-        loss: this.gameWon,
+        condition: false,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed,
         level: 6,
