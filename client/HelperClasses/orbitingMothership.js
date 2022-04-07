@@ -55,7 +55,7 @@ export default class OrbitingMotherShip extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.overlap(this, scene.motherCore, () => {
       this.setPosition(x, y);
       mothershipAngle = Phaser.Math.Angle.Wrap(mothershipAngle - 0.001)
-      Phaser.Math.RotateAroundDistance(this, scene.motherCore.x, scene.motherCore.y, mothershipAngle, 2000)
+      Phaser.Math.RotateAroundDistance(this, scene.core.x, scene.core.y, mothershipAngle, 2000)
     })
 
     
@@ -91,7 +91,7 @@ export default class OrbitingMotherShip extends Phaser.Physics.Arcade.Sprite {
     return alien
   }
   update(time) {
-    this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.planet)
+    this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.core)
     if (time > this.spawnDelay) {
       this.spawnAliens();
       let num = this.scene.motherships.getLength()
