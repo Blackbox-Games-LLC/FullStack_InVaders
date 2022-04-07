@@ -224,8 +224,8 @@ export default class Test extends Phaser.Scene {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
     this.motherShipsDestroyed = 4 - this.motherships.getLength();
 
-    this.spawnHealth(time, 6000)
-    this.spawnPower(time, 8000)
+    this.spawnHealth(time, 10000)
+    this.spawnPower(time, 10000)
     this.removePower(time, 10000)
 
     //win condition
@@ -298,3 +298,5 @@ export default class Test extends Phaser.Scene {
     this.countdown.update();
   }
 }
+
+
