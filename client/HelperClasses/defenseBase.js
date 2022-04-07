@@ -44,7 +44,7 @@ export default class DefenseBase extends Phaser.Physics.Arcade.Sprite {
     // this.rotation = Phaser.Math.Angle.BetweenPoints(this, this.scene.core)
     if (time > this.spawnDelay) {
       this.spawnSatellites()
-      this.spawnDelay = time * 1.1
+      this.spawnDelay = time * 1.3
     }
   }
 }
