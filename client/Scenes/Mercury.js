@@ -190,22 +190,19 @@ export default class Mercury extends Phaser.Scene {
   }
 
   handleCountDownFinished() {
-    //this.player.active=false
-    //const {width,height}=this.scale
-    //this.add.text(width*0.5,height*0.5,"you Lose!",{fontSize:48})
+    this.countdowndone = true;
   }
 
   update(time) {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
 
     //win condition
-    if (this.gameWon === true || this.motherships.getLength() === 0) {
+    if (this.countdowndone === true || this.motherships.getLength() === 0) {
       this.aliensScore = this.aliensDestroyed;
       this.motherShipScore = this.motherShipsDestroyed;
-      this.gameWon = true;
       this.command.setVisible(true);
       this.scene.start("End_Screen", {
-        win: this.gameWon,
+        condition: true,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed,
         level: 2,
@@ -216,10 +213,9 @@ export default class Mercury extends Phaser.Scene {
     if (this.planet.health <= 0 || this.ship.health <= 0) {
       this.aliensScore = this.aliensDestroyed;
       this.motherShipScore = this.motherShipsDestroyed;
-      this.gameWon = false;
       this.planet.setVisible(false);
       this.scene.start("End_Screen", {
-        loss: this.gameWon,
+        condition: false,
         aliensScore: this.aliensDestroyed,
         motherShipScore: this.motherShipsDestroyed,
         level: 2,

@@ -1,6 +1,14 @@
 import Phaser from "phaser";
 import axios from "axios";
-import Test from "./TestLevel";
+import Test from "../Scenes/TestLevel";
+import Mercury from "../Scenes/Mercury";
+import Venus from "../Scenes/Venus";
+import Mars from "../Scenes/Mars";
+import Jupiter from "../Scenes/Jupiter";
+import Saturn from "../Scenes/Saturn";
+import Uranus from "../Scenes/Uranus";
+import Neptune from "../Scenes/Neptune";
+import Pluto from "../Scenes/Pluto";
 
 export default class EndScreen extends Phaser.Scene {
     constructor() {
@@ -76,8 +84,55 @@ export default class EndScreen extends Phaser.Scene {
     }
 
     clickButton() {
-        this.scene.remove("Test_Level");
-        this.scene.add("Test_Level", Test);
-        this.scene.start("Test_Level");
+        switch (this.level) {
+            case 1:
+                this.scene.remove("Test_Level");
+                this.scene.add("Test_Level", Test);
+                this.scene.start("Test_Level");
+                break;
+            case 2:
+                this.scene.remove("Mercury");
+                this.scene.add("Mercury", Mercury);
+                this.scene.start("Mercury");
+                break;
+            case 3:
+                this.scene.remove("Venus");
+                this.scene.add("Venus", Venus);
+                this.scene.start("Venus")
+                break;
+            case 4:
+                this.scene.remove("Mars");
+                this.scene.add("Mars", Mars);
+                this.scene.start("Mars")
+                break;
+            case 5:
+                this.scene.remove("Jupiter");
+                this.scene.add("Jupiter", Jupiter);
+                this.scene.start("Jupiter")
+                break;
+            case 6:
+                this.scene.remove("Saturn");
+                this.scene.add("Saturn", Saturn);
+                this.scene.start("Saturn")
+                break;
+            case 7:
+                this.scene.remove("Uranus");
+                this.scene.add("Uranus", Uranus);
+                this.scene.start("Uranus")
+                break;
+            case 8:
+                this.scene.remove("Neptune");
+                this.scene.add("Neptune", Neptune);
+                this.scene.start("Neptune")
+                break;
+            case 9:
+                this.scene.remove("Pluto");
+                this.scene.add("Pluto", Pluto);
+                this.scene.start("Pluto")
+                break;
+            default:
+                this.scene.start("Title_Scene")
+        }
+
     }
 }
