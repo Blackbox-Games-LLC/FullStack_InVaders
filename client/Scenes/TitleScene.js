@@ -26,7 +26,7 @@ export default class TitleScene extends Phaser.Scene {
     this.add.image(2500, 300, "logo").setDisplaySize(4000 ,300)
 
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 900);
-    // video.play(true);
+    video.play(true);
 
 
     this.message = this.add.text(1400, 1400, "Forward - W | Backward - S | Left - A | Right - D", {
