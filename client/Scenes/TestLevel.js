@@ -46,8 +46,7 @@ export default class Test extends Phaser.Scene {
     });
     this.load.image("galaxy", "assets/galaxy-min.png");
     this.load.image("sun", "assets/sun.png");
-    this.load.image("moon1", "assets/moon1.png");
-    this.load.image("moon2", "assets/moon6.png");
+    this.load.image("themoon", "assets/themoon.png");
     this.load.spritesheet("alien", "assets/alien-invader.png", {
       frameWidth: 75,
       frameHeight: 65,
@@ -83,9 +82,8 @@ export default class Test extends Phaser.Scene {
     this.physics.world.setBounds(-1500, -1500, 8000, 6000);
     this.aliensDestroyed = 0;
 
-    this.sun = this.add.sprite(1000, -100, "sun").setDisplaySize(1000, 1000);
-    this.moon1 = this.add.sprite(-200, 1500, "moon1").setDisplaySize(150, 150);
-    this.moon2 = this.add.sprite(2500, 2500, "moon2").setDisplaySize(150, 150);
+    this.sun = this.add.sprite(-2000, 1000, "sun").setDisplaySize(3000, 3000).setDepth(1);
+    this.themoon = this.add.sprite(2000, 3500, "themoon").setDisplaySize(350, 350).setAngle(45).setDepth(1);
     this.bg = this.add
       .tileSprite(2824, 1024, 14000, 10000, "background")
       .setScrollFactor(0.8);
