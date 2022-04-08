@@ -5,7 +5,6 @@ import Planet from "../HelperClasses/planet";
 import CountdownController from "../UI/CountdownController";
 import AttackBase from "../HelperClasses/attackBase";
 import DefenseBase from "../HelperClasses/defenseBase";
-
 import ColliderHelper from "../HelperClasses/ColliderHelper";
 import Music from "../HelperClasses/MusicHandler";
 import HealthPickup from "../HelperClasses/healthPickup";
@@ -210,8 +209,8 @@ export default class Test extends Phaser.Scene {
   }
 
   removePowerDelay = 0
-  removePower(time, delay){
-    if(time > this.removePowerDelay){
+  removePower(time, delay) {
+    if (time > this.removePowerDelay) {
       this.ship.invulnerable = false
       this.removePowerDelay = time + delay
       this.ship.aura.setVisible(false)
@@ -222,8 +221,8 @@ export default class Test extends Phaser.Scene {
     this.angle3 = Phaser.Math.Angle.Wrap(this.angle3 + 0.01);
     this.motherShipsDestroyed = 4 - this.motherships.getLength();
 
-    this.spawnHealth(time, 6000)
-    this.spawnPower(time, 8000)
+    this.spawnHealth(time, 10000)
+    this.spawnPower(time, 10000)
     this.removePower(time, 10000)
 
     //win condition
@@ -296,3 +295,5 @@ export default class Test extends Phaser.Scene {
     this.countdown.update();
   }
 }
+
+

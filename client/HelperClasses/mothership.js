@@ -44,7 +44,6 @@ export default class MotherShip extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.overlap(this, scene.ship, () => {
       scene.ship.health -= 1
       scene.ship.hp.decrease(scene.ship.health)
-      console.log("Player Health: ", scene.ship.health)
     })
 
 

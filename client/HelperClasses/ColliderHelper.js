@@ -3,7 +3,6 @@ export default class ColliderHelper {
         //alien kamakazi Damage
         scene.physics.add.overlap(scene.planet, scene.aliens, () => {
             scene.planet.health -= 200
-            console.log(scene.planet.health)
         })
 
         //alien Bullet Damage
@@ -26,7 +25,6 @@ export default class ColliderHelper {
             if (scene.ship.health > 0) {
                 scene.ship.health -= 10;
                 scene.ship.hp.decrease(scene.ship.health)
-                console.log("Player Health: ", scene.ship.health)
             } else {
                 explode.play();
                 scene.ship.body.destroy();

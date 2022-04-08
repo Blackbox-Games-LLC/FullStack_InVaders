@@ -21,7 +21,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     const blowup = scene.sound.add('alien-blowup', { volume: 0.4 })
     this.shoot = scene.sound.add('playerShot', { volume: 0.3 })
 
-    this.aura = scene.add.sprite(2550, 675, "aura").setDepth(1).setDisplaySize(350,350)
+    this.aura = scene.add.sprite(2550, 675, "aura").setDepth(1).setDisplaySize(400,400)
     this.aura.setScrollFactor(0,0)
     this.aura.setVisible(false)
 

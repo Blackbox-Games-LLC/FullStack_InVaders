@@ -23,7 +23,7 @@ export default class TitleScene extends Phaser.Scene {
 
   create() {
     this.add.image(2550, 1400, "title").setDisplaySize(5098, 2800)
-    this.add.image(2500, 300, "logo").setDisplaySize(4000 ,300)
+    this.add.image(2500, 300, "logo").setDisplaySize(4000, 300)
 
     let video = this.add.video(800, 600, "intro-video").setPosition(2500, 900);
     video.play(true);
@@ -185,21 +185,3 @@ export default class TitleScene extends Phaser.Scene {
     this.scene.start("Pluto")
   }
 }
-
-
-
-
-
-
-    // this.returnKey = this.nameInput.addListener("click");
-
-    // this.returnKey.on("click", async (event) => {
-    //   if (event.target.name === "loginButton") {
-    //     this.scene.switch("Login_Scene");
-    //   }
-
-    //   if (event.target.name === "playButton") {
-    //     this.scene.switch("Test_Level");
-    //     video.stop()
-    //   }
-    // });
