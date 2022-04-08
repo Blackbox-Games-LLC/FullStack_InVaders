@@ -140,8 +140,8 @@ export default class Saturn extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.attackBases.get(2000, 2100).setAngle(-180);
-    this.attackBases.get(2000, 900);
+    this.attackBases.get(2000, 2150).setAngle(-180);
+    this.attackBases.get(2000, 850);
 
     //spawn defenseBases
     this.defenseBases = this.physics.add.group({
@@ -151,8 +151,8 @@ export default class Saturn extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.defenseBases.get(1400, 1500).setAngle(-90);
-    this.defenseBases.get(2625, 1500).setAngle(90);
+    this.defenseBases.get(1375, 1500).setAngle(-90);
+    this.defenseBases.get(2650, 1500).setAngle(90);
 
     //spawn mothership
     this.motherships = this.physics.add.group({
