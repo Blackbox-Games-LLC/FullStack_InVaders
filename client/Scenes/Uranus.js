@@ -145,7 +145,7 @@ export default class Uranus extends Phaser.Scene {
       runChildUpdate: true,
     });
     this.defenseBases.get(1400, 1500).setAngle(-90);
-    this.defenseBases.get(2625, 1500).setAngle(90);
+    this.defenseBases.get(2600, 1500).setAngle(90);
 
     //spawn mothership
     this.motherships = this.physics.add.group({
