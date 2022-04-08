@@ -123,8 +123,8 @@ export default class Mercury extends Phaser.Scene {
       immovable: true,
       runChildUpdate: true,
     });
-    this.attackBases.get(2000, 2250).setAngle(-180);
-    this.attackBases.get(2000, 750);
+    this.attackBases.get(2000, 2200).setAngle(-180);
+    this.attackBases.get(2000, 800);
 
     //spawn defenseBases
     this.defenseBases = this.physics.add.group({
