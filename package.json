@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "build:dev": "npm run build -- --watch --mode=development",
-    "seed": "node script/seed.js",
+    "seed": "node seed.js",
     "start": "node server",
     "start:dev": "npm run build:dev & npm run start-server",
     "start:dev:logger": "LOGGING=true npm run start:dev",
